@@ -4,15 +4,16 @@
             <h2 class="text-2xl dark:text-white font-semibold text-center mt-8">Resultados do Teste</h2>
             <p class="text-lg text-center text-gray-500 dark:text-gray-200 mb-4">Resultados para o Grupo de
                 Entrevistados ID: 12<br>Total de Participantes: 32</p>
-            <div class="grid md:flex md:flex-col-reverse md:gap-4">
+            <div class="">
                 <div
                     class="bg-gray-100 shdc-shadow-2 rounded-lg overflow-hidden flex flex-wrap items-center justify-center">
-                    <div class="border-t border-gray-200 w-full"></div>
                     <div class="bg-gray-100 flex justify-center text-center items-center md:order-first pt-6"
                          style="height: 300px; width: 300px;">
                         <canvas id="radarChart" class=""></canvas>
                     </div>
-                    </div>
+                </div>
+                <div class="max-w-full mt-6">
+                    @livewire('list-group-result')
                 </div>
             </div>
         </div>
