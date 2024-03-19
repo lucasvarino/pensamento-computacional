@@ -67,7 +67,7 @@
     const myChart = new Chart(ctx, {
         type: 'radar',
         data: {
-            labels: @json($data['labels']),
+            labels: ['Achiever', 'Explorer', 'Socializer', 'Killer'],
             datasets: [{
                 label: 'Tendência',
                 data: @json($data['data']),

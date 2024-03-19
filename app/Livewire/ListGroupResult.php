@@ -33,12 +33,17 @@ class ListGroupResult extends Component implements HasForms, HasTable
             ->paginated()
             ->actions([
                 Action::make('Ver gráfico')
-                    ->action(fn (GroupResult $record) => $record->test())
-                    ->modalContent(view('groupExtended'))
+                    ->action(fn(GroupResult $record) => $record->test())
+                    ->modalContent(function (GroupResult $result) {
+                        $data = ['data' => [$result->achiever, $result->explorer, $result->killer, $result->socializer]];
+                        return view('groupResult', compact('data'));
+                    })
+                    ->modalSubmitAction(false)
                     ->button()
-                ->color('info')
+                    ->color('info')
             ]);
     }
+
     public function render(): View
     {
         return view('livewire.list-group-result');

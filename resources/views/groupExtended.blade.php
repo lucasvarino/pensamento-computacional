@@ -45,5 +45,4 @@
             }
         }
     });
-    Chart.defaults.global.defaultFontColor = "#fff";
 </script>
