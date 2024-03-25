@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\AnswerOption;
 use App\Models\Method;
 use App\Models\Question;
+use App\Models\TestClass;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,7 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             QuestionSeeder::class,
             GroupSeeder::class,
-            AnswerOptionSeeder::class
+            AnswerOptionSeeder::class,
         ]);
     }
 }

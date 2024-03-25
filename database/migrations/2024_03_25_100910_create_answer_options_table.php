@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('answer_options', function (Blueprint $table) {
             $table->id();
             $table->text('title');
-            $table->foreignId('group_id')->nullable();
+            $table->foreignId('group_id')->constrained()->cascadeOnDelete();
             $table->foreignId('question_id')->constrained()->cascadeOnDelete();
             $table->foreignId('method_id')->constrained()->cascadeOnDelete();
             $table->timestamps();

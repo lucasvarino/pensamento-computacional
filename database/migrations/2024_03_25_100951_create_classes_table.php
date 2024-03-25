@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->dateTime('expire_date')->nullable();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('method_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
