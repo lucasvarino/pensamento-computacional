@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('answers', function (Blueprint $table) {
+        Schema::create('bartle_result', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
-            $table->integer('age')->nullable();
+            $table->float('achiever');
+            $table->float('explorer');
+            $table->float('killer');
+            $table->float('socializer');
+            $table->foreignId('answer_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('answers');
+        Schema::dropIfExists('bartle_result');
     }
 };

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->text('name');
+            $table->text('institution');
+            $table->text('url');
             $table->dateTime('expire_date')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('method_id')->constrained()->cascadeOnDelete();

@@ -22,6 +22,8 @@ class TestClassFactory extends Factory
         return [
             'name' => 'Turma ' . $this->faker->numberBetween(1, 9) . '° Ano ' . ucfirst($this->faker->randomLetter()),
             'expire_date' => $this->faker->dateTime(),
+            'institution' => $this->faker->name(),
+            'url' => $this->faker->url(),
             'user_id' => User::first(),
             'method_id' => Method::first()
         ];
