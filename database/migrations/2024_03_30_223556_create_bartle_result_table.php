@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bartle_result', function (Blueprint $table) {
+        Schema::create('bartle_results', function (Blueprint $table) {
             $table->id();
             $table->float('achiever');
             $table->float('explorer');
