@@ -11,6 +11,8 @@ use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Actions\Action;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Illuminate\Support\Facades\DB;
 
@@ -45,9 +47,9 @@ class TestPage extends Page
                 'age' => $states['age']
             ]);
 
-            $states = array_filter($states, fn ($key) => $key !== 'name' && $key !== 'age', ARRAY_FILTER_USE_KEY);
+            $answers = array_filter($states, fn ($key) => $key !== 'name' && $key !== 'age', ARRAY_FILTER_USE_KEY);
 
-            foreach ($states as $response) {
+            foreach ($answers as $response) {
                 AnswerClass::create([
                     'answer_id' => $answer->id,
                     'class_id' => $this->testClass->id,
@@ -55,6 +57,26 @@ class TestPage extends Page
                 ]);
             }
         });
+
+        // Notify the owner of the class
+        Notification::make()
+            ->title('O aluno ' . $states['name']. ' respondeu à pesquisa da turma ' . $this->testClass->name)
+            ->success()
+            ->body('Clique para ver o resultado individual do aluno')
+            ->actions([
+                Action::make('Acessar')
+                ->link()
+                ->url('/')
+            ])
+            ->sendToDatabase($this->testClass->user);
+
+        $this->reset();
+
+        // Notify the current user
+        Notification::make()
+            ->title('Formulário respondido')
+            ->success()
+            ->send();
     }
 
     public function form(Form $form): Form

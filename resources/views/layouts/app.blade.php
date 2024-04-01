@@ -32,6 +32,7 @@
             <!-- Page Content -->
             <main>
                 {{ $slot }}
+                @livewire('database-notifications')
             </main>
         </div>
 
