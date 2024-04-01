@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Pages\Test;
 use App\Filament\Resources\TurmasResource\Pages;
 use App\Filament\Resources\TurmasResource\RelationManagers;
 use App\Models\AnswerOption;
@@ -80,6 +81,7 @@ class TurmaResource extends Resource
     {
         return [
             'index' => Pages\ListTurma::route('/'),
+            'test' => Pages\TestPage::route('{url}/test'),
             'create' => Pages\CreateTurma::route('/create'),
             'edit' => Pages\EditTurma::route('/{record}/edit'),
         ];
