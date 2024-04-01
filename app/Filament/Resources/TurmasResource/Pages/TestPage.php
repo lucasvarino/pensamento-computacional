@@ -11,6 +11,8 @@ use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
@@ -24,11 +26,11 @@ class TestPage extends Page
 
     protected static ?string $title = '';
 
-    protected static ?string $navigationLabel = 'Teste de Bartle';
-
     public TestClass $testClass;
 
     public ?array $data = [];
+
+    public bool $answered = false;
 
     public function mount(string $url): void
     {
@@ -71,6 +73,7 @@ class TestPage extends Page
             ->sendToDatabase($this->testClass->user);
 
         $this->reset();
+        $this->answered = true;
 
         // Notify the current user
         Notification::make()
@@ -82,7 +85,7 @@ class TestPage extends Page
     public function form(Form $form): Form
     {
         $questions = Question::query()
-            ->where('method_id', 1)
+            ->where('method_id', $this->testClass->method->id)
             ->get();
 
         $questions = $questions->map(function (Question $question, $index) {
@@ -104,5 +107,9 @@ class TestPage extends Page
                     ->description('Responda o questionário e em seguida mostraremos o resultado')
                     ->schema($questions),
             ])->statePath('data');
+    }
+
+    public function testResult(Infolist $infolist): Infolist
+    {
     }
 }
