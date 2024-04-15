@@ -5,6 +5,8 @@ namespace App\Filament\Resources\TurmasResource\Pages;
 use App\Filament\Resources\TurmaResource;
 use App\Models\Answer;
 use App\Models\AnswerClass;
+use App\Models\BartleResult;
+use App\Models\Group;
 use App\Models\Question;
 use App\Models\TestClass;
 use Filament\Forms\Components\Radio;
@@ -58,6 +60,33 @@ class TestPage extends Page
                     'answer_option_id' => $response
                 ]);
             }
+
+            $allAnswers = AnswerClass::where('answer_id', $answer->id)->get();
+
+            $achiever = $allAnswers
+                ->filter(fn (AnswerClass $answer) => $answer->answerOption->group_id === 1)
+                ->count() * (100 / 15);
+
+            $explorer = $allAnswers
+                    ->filter(fn (AnswerClass $answer) => $answer->answerOption->group_id === 2)
+                    ->count() * (100 / 15);
+
+            $killer = $allAnswers
+                ->filter(fn (AnswerClass $answer) => $answer->answerOption->group_id === 3)
+                ->count() * (100 / 15);
+
+            $socializer = $allAnswers
+                    ->filter(fn (AnswerClass $answer) => $answer->answerOption->group_id === 4)
+                    ->count() * (100 / 15);
+
+            $this->testResult = BartleResult::create([
+                'achiever' => $achiever,
+                'explorer' => $explorer,
+                'killer' => $killer,
+                'socializer' => $socializer,
+                'answer_id' => $answer->id
+            ]);
+
         });
 
         // Notify the owner of the class
@@ -73,7 +102,6 @@ class TestPage extends Page
             ->sendToDatabase($this->testClass->user);
 
         $this->reset();
-        $this->answered = true;
 
         // Notify the current user
         Notification::make()
@@ -107,9 +135,5 @@ class TestPage extends Page
                     ->description('Responda o questionário e em seguida mostraremos o resultado')
                     ->schema($questions),
             ])->statePath('data');
-    }
-
-    public function testResult(Infolist $infolist): Infolist
-    {
     }
 }

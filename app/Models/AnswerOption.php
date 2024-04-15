@@ -13,4 +13,9 @@ class AnswerOption extends Model
     {
         return $this->belongsTo(Question::class);
     }
+
+    public function answerClasses()
+    {
+        return $this->hasMany(AnswerClass::class);
+    }
 }
