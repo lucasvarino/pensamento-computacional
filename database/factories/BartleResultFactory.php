@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Answer;
+use App\Models\Group;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,10 +19,8 @@ class BartleResultFactory extends Factory
     public function definition(): array
     {
         return [
-            'achiever' => $this->faker->numberBetween(0, 100),
-            'explorer' => $this->faker->numberBetween(0, 100),
-            'killer' => $this->faker->numberBetween(0, 100),
-            'socializer' => $this->faker->numberBetween(0, 100),
+            'group_id' => Group::first(),
+            'value' => $this->faker->numberBetween(0, 100),
             'answer_id' => Answer::first()
         ];
     }

@@ -13,6 +13,7 @@
         "filament/filament": "3.2",
         "filament/tables": "3.2",
         "guzzlehttp/guzzle": "^7.2",
+        "itsgoingd/clockwork": "^5.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.10",

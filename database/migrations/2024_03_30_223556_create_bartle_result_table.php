@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('bartle_results', function (Blueprint $table) {
             $table->id();
-            $table->float('achiever');
-            $table->float('explorer');
-            $table->float('killer');
-            $table->float('socializer');
+            $table->foreignId('group_id')->constrained()->cascadeOnDelete();
+            $table->float('value');
             $table->foreignId('answer_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

@@ -5,19 +5,21 @@ namespace App\Filament\Resources\TurmasResource\Widgets;
 use App\Models\BartleResult;
 use Filament\Widgets\ChartWidget;
 use Filament\Support\RawJs;
+use Illuminate\Support\Collection;
 
 class TestResultChart extends ChartWidget
 {
-    protected static ?string $heading = 'Chart';
+    protected static ?string $heading = 'Teste de Bartle';
+    public array $result;
 
-    public ?BartleResult $result;
+
     protected function getData(): array
     {
         return [
             'datasets' => [
                 [
                     'label' => 'Pontuação',
-                    'data' => [53.33, 66.67, 60, 20]
+                    'data' => $this->result
                 ]
             ],
             'labels' => ['Empreendedor', 'Explorador', 'Assassino', 'Socializador']

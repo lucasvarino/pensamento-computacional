@@ -63,30 +63,16 @@ class TestPage extends Page
 
             $allAnswers = AnswerClass::where('answer_id', $answer->id)->get();
 
-            $achiever = $allAnswers
-                ->filter(fn (AnswerClass $answer) => $answer->answerOption->group_id === 1)
-                ->count() * (100 / 15);
+            $results = collect(range(1, 4))
+                ->map(function ($groupId) use ($allAnswers, $answer) {
+                    $value = $allAnswers
+                            ->filter(fn ($answer) => $answer->answerOption->group_id === $groupId)
+                            ->count() * (100 / 15);
 
-            $explorer = $allAnswers
-                    ->filter(fn (AnswerClass $answer) => $answer->answerOption->group_id === 2)
-                    ->count() * (100 / 15);
+                    return ['group_id' => $groupId, 'value' => $value, 'answer_id' => $answer->id];
+                })->map(fn (array $arr) => BartleResult::create($arr));
 
-            $killer = $allAnswers
-                ->filter(fn (AnswerClass $answer) => $answer->answerOption->group_id === 3)
-                ->count() * (100 / 15);
-
-            $socializer = $allAnswers
-                    ->filter(fn (AnswerClass $answer) => $answer->answerOption->group_id === 4)
-                    ->count() * (100 / 15);
-
-            $this->testResult = BartleResult::create([
-                'achiever' => $achiever,
-                'explorer' => $explorer,
-                'killer' => $killer,
-                'socializer' => $socializer,
-                'answer_id' => $answer->id
-            ]);
-
+            $resultArray = $results->toArray();
         });
 
         // Notify the owner of the class
