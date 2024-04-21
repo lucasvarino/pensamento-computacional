@@ -31,6 +31,11 @@ class TestResultChart extends ChartWidget
         return 'radar';
     }
 
+    protected function getMaxHeight(): ?string
+    {
+        return '600px';
+    }
+
 
     protected function getOptions(): RawJs
     {
@@ -42,6 +47,9 @@ class TestResultChart extends ChartWidget
                     suggestedMax: 80
                 },
             },
+            options: {
+                maintainAspectRatio: false,
+            }
         }
     JS);
     }
