@@ -14,7 +14,7 @@ class Answer extends Model
         return $this->hasMany(AnswerClass::class);
     }
 
-    public function bartleResult()
+    public function bartleResults()
     {
         return $this->hasMany(BartleResult::class);
     }
