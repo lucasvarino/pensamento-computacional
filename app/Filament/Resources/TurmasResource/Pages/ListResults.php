@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\TurmasResource\Pages;
 
 use App\Filament\Resources\TurmaResource;
+use App\Filament\Resources\TurmasResource\Widgets\InlineTestResultChart;
 use App\Models\Answer;
 use App\Models\BartleResult;
 use Filament\Resources\Pages\Page;
@@ -10,6 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use LaraZeus\InlineChart\Tables\Columns\InlineChart;
 
 class ListResults extends Page implements HasTable
 {
@@ -23,6 +25,9 @@ class ListResults extends Page implements HasTable
     {
         $col = $this->getAllColumns();
         return $table->columns([
+            InlineChart::make('Gráfico')->chart(InlineTestResultChart::class)
+                ->maxHeight(300)
+                ->maxWidth(350),
             TextColumn::make('name')->label('Nome'),
             TextColumn::make('age')->label('Idade'),
             ...$col
