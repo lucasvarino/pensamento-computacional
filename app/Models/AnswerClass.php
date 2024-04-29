@@ -15,7 +15,7 @@ class AnswerClass extends Model
         return $this->belongsTo(Answer::class);
     }
 
-    public function class()
+    public function classe()
     {
         return $this->belongsTo(TestClass::class);
     }

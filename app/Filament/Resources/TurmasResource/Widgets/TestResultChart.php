@@ -5,13 +5,13 @@ namespace App\Filament\Resources\TurmasResource\Widgets;
 use App\Models\BartleResult;
 use Filament\Widgets\ChartWidget;
 use Filament\Support\RawJs;
+use Filament\Widgets\Concerns\InteractsWithPageTable;
 use Illuminate\Support\Collection;
 
 class TestResultChart extends ChartWidget
 {
     protected static ?string $heading = 'Teste de Bartle';
     public array $result;
-
 
     protected function getData(): array
     {

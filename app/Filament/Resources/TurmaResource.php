@@ -82,7 +82,7 @@ class TurmaResource extends Resource
         return [
             'index' => Pages\ListTurma::route('/'),
             'test' => Pages\TestPage::route('{url}/test'),
-            'result' => Pages\TestResult::route('{url}/test/{id}/result'),
+            'result' => Pages\TestResult::route('/test/{id}/result'),
             'results' => Pages\ListResults::route('{url}/results'),
             'create' => Pages\CreateTurma::route('/create'),
             'edit' => Pages\EditTurma::route('/{record}/edit'),

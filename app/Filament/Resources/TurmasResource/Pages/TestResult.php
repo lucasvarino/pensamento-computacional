@@ -21,7 +21,7 @@ class TestResult extends Page
     public $formatResult;
 
 
-    public function mount(string $url, $id): void
+    public function mount($id): void
     {
         $this->result = BartleResult::where('answer_id', $id)
             ->with(['group', 'answer'])
