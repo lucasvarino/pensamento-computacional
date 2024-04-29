@@ -4,8 +4,8 @@ namespace App\Filament\Resources\TurmasResource\Pages;
 
 use App\Filament\Resources\TurmaResource;
 use App\Filament\Resources\TurmasResource\Widgets\InlineTestResultChart;
+use App\Filament\Resources\TurmasResource\Widgets\TestResultChart;
 use App\Models\Answer;
-use App\Models\BartleResult;
 use Filament\Resources\Pages\Page;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -40,9 +40,34 @@ class ListResults extends Page implements HasTable
         $textColumns = [];
 
         foreach ($columns as $key => $column) {
-            $textColumns[] = TextColumn::make($column)->state(fn (Answer $answer) => $answer->bartleResults->isNotEmpty() ? $answer->bartleResults[$key]->value . "%" : '');
+            $textColumns[] = TextColumn::make($column)->state(fn(Answer $answer) => $answer->bartleResults->isNotEmpty() ? $answer->bartleResults[$key]->value . "%" : '');
         }
 
         return $textColumns;
+    }
+
+    public function getAverageResults()
+    {
+        $answers = Answer::latest()->get();
+        $groupAverages = collect();
+
+        $answers->flatMap(function ($answer) {
+            return collect($answer->bartleResults);
+        })->groupBy('group_id')->each(function ($results, $groupId) use ($groupAverages) {
+            $average = $results->avg('value');
+
+            $groupAverages->put($groupId, $average);
+        });
+
+        return $groupAverages->values()->all();
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            TestResultChart::make([
+                'result' => $this->getAverageResults()
+            ])
+        ];
     }
 }
