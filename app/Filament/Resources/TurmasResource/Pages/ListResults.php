@@ -2,14 +2,14 @@
 
 namespace App\Filament\Resources\TurmasResource\Pages;
 
+use App\Filament\Exports\BartleResultsExporter;
 use App\Filament\Resources\TurmaResource;
 use App\Filament\Resources\TurmasResource\Widgets\InlineTestResultChart;
 use App\Filament\Resources\TurmasResource\Widgets\TestResultChart;
 use App\Filament\Resources\TurmasResource\Widgets\TestStats;
 use App\Models\Answer;
-use Filament\Pages\Concerns\ExposesTableToWidgets;
 use Filament\Resources\Pages\Page;
-use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -30,9 +30,6 @@ class ListResults extends Page implements HasTable
         $col = $this->getAllColumns();
         return $table
             ->columns([
-            InlineChart::make('Gráfico')->chart(InlineTestResultChart::class)
-                ->maxHeight(300)
-                ->maxWidth(350),
             TextColumn::make('name')->label('Nome')->searchable(),
             TextColumn::make('age')->label('Idade'),
             ...$col
@@ -40,7 +37,9 @@ class ListResults extends Page implements HasTable
             ->recordUrl(fn (Answer $answer): string => TestResult::getUrl(['id' => $answer->id]))
             ->query(Answer::latest()->with('bartleResults'))
             ->bulkActions([
-                BulkAction::make('Exportar em formato csv')
+                ExportBulkAction::make('Exportar em formato csv')
+                    ->exporter(BartleResultsExporter::class)
+                    ->label('Exportar resultados')
             ]);
     }
 
