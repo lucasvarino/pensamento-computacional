@@ -62,7 +62,7 @@ class ListResults extends Page implements HasTable
         $answers->flatMap(function ($answer) {
             return collect($answer->bartleResults);
         })->groupBy('group_id')->each(function ($results, $groupId) use ($groupAverages) {
-            $average = $results->avg('value');
+            $average = round($results->avg('value'), 2);
 
             $groupAverages->put($groupId, $average);
         });
@@ -73,12 +73,17 @@ class ListResults extends Page implements HasTable
     protected function getHeaderWidgets(): array
     {
        $answers = Answer::latest()->get();
+       $percentage = $this->getAverageResults($answers);
         return [
             TestResultChart::make([
-                'result' => $this->getAverageResults($answers),
+                'result' => $percentage,
             ]),
             TestStats::make([
-                'items' => $answers->count()
+                'items' => $answers->count(),
+                'explorador' => $percentage[0] . '%',
+                'empreendedor' => $percentage[1] . '%',
+                'assassino' => $percentage[2] . '%',
+                'socializador' => $percentage[3] . '%'
             ])
         ];
     }

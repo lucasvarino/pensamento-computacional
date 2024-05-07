@@ -77,19 +77,21 @@ class TestPage extends Page
                 })->map(fn (array $arr) => BartleResult::create($arr));
 
             $resultArray = $results->toArray();
+
+            // Notify the owner of the class
+            Notification::make()
+                ->title('O aluno ' . $states['name']. ' respondeu à pesquisa da turma ' . $this->testClass->name)
+                ->success()
+                ->body('Clique para ver o resultado individual do aluno')
+                ->actions([
+                    Action::make('Acessar')
+                        ->link()
+                        ->url('/admin/turmas/test' . $answer->id . '/result')
+                ])
+                ->sendToDatabase($this->testClass->user);
         });
 
-        // Notify the owner of the class
-        Notification::make()
-            ->title('O aluno ' . $states['name']. ' respondeu à pesquisa da turma ' . $this->testClass->name)
-            ->success()
-            ->body('Clique para ver o resultado individual do aluno')
-            ->actions([
-                Action::make('Acessar')
-                ->link()
-                ->url('/')
-            ])
-            ->sendToDatabase($this->testClass->user);
+
 
         $this->reset();
 
