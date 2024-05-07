@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->integer('age')->nullable();
+            $table->enum('gender', ['M', 'F']);
+            $table->text('state');
             $table->timestamps();
         });
     }

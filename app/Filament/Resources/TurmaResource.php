@@ -42,11 +42,14 @@ class TurmaResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $isAdmin = auth()->user()->isAdmin();
+        $query = $isAdmin ? TestClass::query() : TestClass::where('user_id', auth()->user()->id);
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label('Nome da turma')->searchable(),
                 Tables\Columns\TextColumn::make('institution')->label('Instituição'),
                 Tables\Columns\TextColumn::make('method.name')->label('Método utilizado'),
+                Tables\Columns\TextColumn::make('user.name')->label('Professor')->visible($isAdmin),
                 Tables\Columns\TextColumn::make('expire_date')->dateTime()->label('Data de expiração')
             ])
             ->filters([
@@ -67,7 +70,7 @@ class TurmaResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])->query($query);
     }
 
     public static function getRelations(): array
