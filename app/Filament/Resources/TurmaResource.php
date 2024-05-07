@@ -17,6 +17,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class TurmaResource extends Resource
 {
@@ -36,7 +37,8 @@ class TurmaResource extends Resource
                     ->relationship('method', 'name')
                     ->required()
                     ->label('Método'),
-                Forms\Components\Hidden::make('user_id')->default(auth()->user()->id)
+                Forms\Components\Hidden::make('user_id')->default(auth()->user()->id),
+                Forms\Components\Hidden::make('url')->default(Str::uuid()->toString())
             ]);
     }
 
@@ -57,8 +59,8 @@ class TurmaResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\Action::make('link')->label('Copiar link')
-                        ->url(fn (TestClass $class): string => $class->url)
+                    Tables\Actions\Action::make('link')->label('Abrir teste')
+                        ->url(fn (TestClass $class): string => '/admin/turmas/' . $class->url . '/test')
                         ->openUrlInNewTab()
                         ->color('success')
                         ->icon('heroicon-m-clipboard-document'),
@@ -70,7 +72,9 @@ class TurmaResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])->query($query);
+            ])
+            ->recordUrl(fn (TestClass $testClass) => ('/admin/turmas/' . $testClass->url . '/results'))
+            ->query($query);
     }
 
     public static function getRelations(): array

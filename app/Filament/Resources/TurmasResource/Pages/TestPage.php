@@ -8,9 +8,11 @@ use App\Models\AnswerClass;
 use App\Models\BartleResult;
 use App\Models\Group;
 use App\Models\Question;
+use App\Models\State;
 use App\Models\TestClass;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\TextEntry;
@@ -48,10 +50,12 @@ class TestPage extends Page
         DB::transaction(function () use ($states) {
             $answer = Answer::create([
                 'name' => $states['name'],
-                'age' => $states['age']
+                'age' => $states['age'],
+                'gender' => $states['gender'],
+                'state' => $states['state']
             ]);
 
-            $answers = array_filter($states, fn ($key) => $key !== 'name' && $key !== 'age', ARRAY_FILTER_USE_KEY);
+            $answers = array_filter($states, fn ($key) => $key !== 'name' && $key !== 'age' && $key !== 'gender' && $key !== 'state', ARRAY_FILTER_USE_KEY);
 
             foreach ($answers as $response) {
                 AnswerClass::create([
@@ -109,6 +113,8 @@ class TestPage extends Page
                 ->required();
         })->toArray();
 
+        $states = State::all()->pluck('name', 'id')->toArray();
+
         return $form
             ->schema([
                 Section::make('Dados Pessoais')
@@ -116,6 +122,20 @@ class TestPage extends Page
                     ->schema([
                         TextInput::make('name')->label('Nome Completo')->required(),
                         TextInput::make('age')->label('Idade')->numeric()->required(),
+                        Select::make('gender')
+                            ->options([
+                                'M' => 'Masculino',
+                                'F' => 'Feminino'
+                            ])
+                            ->native(false)
+                            ->required()
+                            ->label('Gênero'),
+                        Select::make('state')
+                            ->options($states)
+                            ->searchable()
+                            ->required()
+                            ->native(false)
+                            ->label('Estado')
                     ])->columns(2),
                 Section::make('Questionário')
                     ->description('Responda o questionário e em seguida mostraremos o resultado')
