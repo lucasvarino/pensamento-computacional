@@ -37,6 +37,8 @@ class TurmaResource extends Resource
                     ->relationship('method', 'name')
                     ->required()
                     ->label('Método'),
+                Forms\Components\Checkbox::make('term')->label('Aceita o termo de consentimento de dados')
+                    ->required(),
                 Forms\Components\Hidden::make('user_id')->default(auth()->user()->id),
                 Forms\Components\Hidden::make('url')->default(Str::uuid()->toString())
             ]);
