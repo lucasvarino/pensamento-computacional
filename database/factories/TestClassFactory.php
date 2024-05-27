@@ -24,6 +24,7 @@ class TestClassFactory extends Factory
             'expire_date' => $this->faker->dateTime(),
             'institution' => $this->faker->name(),
             'url' => $this->faker->url(),
+            'term' => true,
             'user_id' => User::first(),
             'method_id' => Method::first()
         ];
