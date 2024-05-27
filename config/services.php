@@ -36,5 +36,4 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' =>  env('APP_ENV') === 'local' ? 'http://localhost:8000/auth/google/callback' : 'https://perfiljogador.repesq.ufjf.br/auth/google/callback'
     ]
-
 ];
