@@ -16,6 +16,7 @@ return new class extends Migration
             $table->text('name');
             $table->text('institution');
             $table->text('url');
+            $table->boolean('term');
             $table->dateTime('expire_date')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('method_id')->constrained()->cascadeOnDelete();
