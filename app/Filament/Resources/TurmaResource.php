@@ -54,7 +54,7 @@ class TurmaResource extends Resource
                 Tables\Columns\TextColumn::make('institution')->label('Instituição'),
                 Tables\Columns\TextColumn::make('method.name')->label('Método utilizado'),
                 Tables\Columns\TextColumn::make('user.name')->label('Professor')->visible($isAdmin),
-                Tables\Columns\TextColumn::make('expire_date')->dateTime()->label('Data de expiração')
+                Tables\Columns\TextColumn::make('expire_date')->date("d-m-Y")->label('Data de expiração')
             ])
             ->filters([
                 //
