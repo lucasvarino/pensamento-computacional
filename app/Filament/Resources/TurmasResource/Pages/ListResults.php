@@ -74,6 +74,11 @@ class ListResults extends Page implements HasTable
     {
        $answers = Answer::latest()->get();
        $percentage = $this->getAverageResults($answers);
+
+       if (count($percentage) < 4) {
+           $percentage = [0,0,0,0];
+       }
+
         return [
             TestResultChart::make([
                 'result' => $percentage,
