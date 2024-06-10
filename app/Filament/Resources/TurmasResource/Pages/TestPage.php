@@ -89,17 +89,11 @@ class TestPage extends Page
                         ->url('/admin/turmas/test' . $answer->id . '/result')
                 ])
                 ->sendToDatabase($this->testClass->user);
+
+            // Redirect the user
+            $this->redirect('/admin/turmas/test/' . $answer->id . '/result');
         });
-
-
-
         $this->reset();
-
-        // Notify the current user
-        Notification::make()
-            ->title('Formulário respondido')
-            ->success()
-            ->send();
     }
 
     public function form(Form $form): Form
