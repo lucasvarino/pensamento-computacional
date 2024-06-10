@@ -14,6 +14,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\DB;
 use LaraZeus\InlineChart\Tables\Columns\InlineChart;
 use Ramsey\Collection\Collection;
 
@@ -25,9 +26,17 @@ class ListResults extends Page implements HasTable
 
     protected static string $view = 'filament.resources.turmas-resource.pages.list-results';
 
+    public $url;
+
     public function table(Table $table): Table
     {
         $col = $this->getAllColumns();
+        $query = Answer::select('answers.*')
+            ->distinct()
+            ->join('answers_classes', 'answers.id', '=', 'answers_classes.answer_id')
+            ->join('classes', 'answers_classes.class_id', '=', 'classes.id')
+            ->where('classes.url', $this->url);
+
         return $table
             ->columns([
             TextColumn::make('name')->label('Nome')->searchable(),
@@ -35,7 +44,7 @@ class ListResults extends Page implements HasTable
             ...$col
         ])
             ->recordUrl(fn (Answer $answer): string => TestResult::getUrl(['id' => $answer->id]))
-            ->query(Answer::latest()->with('bartleResults'))
+            ->query($query)
             ->bulkActions([
                 ExportBulkAction::make('Exportar em formato csv')
                     ->exporter(BartleResultsExporter::class)
@@ -72,8 +81,14 @@ class ListResults extends Page implements HasTable
 
     protected function getHeaderWidgets(): array
     {
-       $answers = Answer::latest()->get();
-       $percentage = $this->getAverageResults($answers);
+        $answers = Answer::select('answers.*')
+            ->distinct()
+            ->join('answers_classes', 'answers.id', '=', 'answers_classes.answer_id')
+            ->join('classes', 'answers_classes.class_id', '=', 'classes.id')
+            ->where('classes.url', $this->url)
+            ->get();
+
+        $percentage = $this->getAverageResults($answers);
 
        if (count($percentage) < 4) {
            $percentage = [0,0,0,0];
