@@ -10,6 +10,7 @@ use App\Models\Group;
 use App\Models\Question;
 use App\Models\State;
 use App\Models\TestClass;
+use Carbon\Carbon;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -20,6 +21,7 @@ use Filament\Infolists\Infolist;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TestPage extends Page
@@ -34,11 +36,16 @@ class TestPage extends Page
 
     public ?array $data = [];
 
-    public bool $answered = false;
+    public bool $expirated = false;
 
     public function mount(string $url): void
     {
         $this->testClass = TestClass::where('url', $url)->firstOrFail();
+
+        if (Carbon::now() > $this->testClass->expire_date) {
+            $this->expirated = true;
+        }
+
         self::$title = $this->testClass->name;
         $this->form->fill();
     }
