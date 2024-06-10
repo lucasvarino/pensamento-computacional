@@ -93,7 +93,7 @@ class TestPage extends Page
                 ->actions([
                     Action::make('Acessar')
                         ->link()
-                        ->url('/admin/turmas/test' . $answer->id . '/result')
+                        ->url('/admin/turmas/test/' . $answer->id . '/result')
                 ])
                 ->sendToDatabase($this->testClass->user);
 

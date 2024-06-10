@@ -28,26 +28,26 @@ class TurmaResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')->required()->label('Nome'),
-                Forms\Components\TextInput::make('institution')->required()->label('Instituição'),
-                Forms\Components\DatePicker::make('expire_date')->label('Data de Expiração'),
-                Forms\Components\Select::make('method_id')
-                    ->relationship('method', 'name')
-                    ->required()
-                    ->label('Método'),
-                Forms\Components\Checkbox::make('term')->label('Aceita o termo de consentimento de dados')
-                    ->required(),
-                Forms\Components\Hidden::make('user_id')->default(auth()->user()->id),
-                Forms\Components\Hidden::make('url')->default(Str::uuid()->toString())
-            ]);
+            return $form
+                ->schema([
+                    Forms\Components\TextInput::make('name')->required()->label('Nome'),
+                    Forms\Components\TextInput::make('institution')->required()->label('Instituição'),
+                    Forms\Components\DatePicker::make('expire_date')->label('Data de Expiração'),
+                    Forms\Components\Select::make('method_id')
+                        ->relationship('method', 'name')
+                        ->required()
+                        ->label('Método'),
+                    Forms\Components\Checkbox::make('term')->label('Aceita o termo de consentimento de dados')
+                        ->required(),
+                    Forms\Components\Hidden::make('user_id')->default(1),
+                    Forms\Components\Hidden::make('url')->default(Str::uuid()->toString())
+                ]);
     }
 
     public static function table(Table $table): Table
     {
-        $isAdmin = auth()->user()->isAdmin();
-        $query = $isAdmin ? TestClass::query() : TestClass::where('user_id', auth()->user()->id);
+        $isAdmin = auth()->user()?->isAdmin() ?? false;
+        $query = $isAdmin ? TestClass::query() : TestClass::where('user_id', auth()->user()?->id);
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label('Nome da turma')->searchable(),

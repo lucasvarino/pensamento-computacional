@@ -10,6 +10,13 @@ class ListTurma extends ListRecords
 {
     protected static string $resource = TurmaResource::class;
 
+    public function mount(): void
+    {
+        if (!auth()->user()) {
+            $this->redirect('/login');
+        }
+    }
+
     protected function getHeaderActions(): array
     {
         return [
