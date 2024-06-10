@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
             GroupSeeder::class,
             AnswerOptionSeeder::class,
             AnswerSeeder::class,
-            BartleResultSeeder::class
+            BartleResultSeeder::class,
+            StateSeeder::class
         ]);
     }
 }
