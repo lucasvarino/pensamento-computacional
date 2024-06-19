@@ -51,15 +51,9 @@ class TestResult extends Page
     {
     }
 
-    public function getResultTest()
+    public function getResultTest(): Collection
     {
-        return $this->result->map(function (BartleResult $result) {
-           return [
-               'group' => $result->group->name,
-               'value' => $result->value,
-               'description' => $result->group->description
-           ];
-        });
+        return BartleResult::formatTestResult($this->result);
     }
 
     public function getTestValuesChart()

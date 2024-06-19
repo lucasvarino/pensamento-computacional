@@ -2,23 +2,31 @@
 
 namespace App\Mail;
 
+use App\Models\BartleResult;
+use App\Models\Group;
+use App\Models\Method;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 
 class TestResult extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public Collection $results;
+    public string $className;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(Collection $results, string $className)
     {
-        //
+        $this->results = BartleResult::formatTestResult($results);
+        $this->className = $className;
     }
 
     /**
@@ -27,7 +35,7 @@ class TestResult extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Test Result',
+            subject: 'Perfil de Jogador - Resultado do Teste',
         );
     }
 

@@ -86,9 +86,10 @@ class TestPage extends Page
                     return ['group_id' => $groupId, 'value' => $value, 'answer_id' => $answer->id];
                 })->map(fn (array $arr) => BartleResult::create($arr));
 
+
             if ($states['sendEmail'] && $states['email']) {
                 Mail::to($states['email'])
-                    ->send(new \App\Mail\TestResult());
+                    ->send(new \App\Mail\TestResult($results, $this->testClass->name));
             }
 
             // Notify the owner of the class
