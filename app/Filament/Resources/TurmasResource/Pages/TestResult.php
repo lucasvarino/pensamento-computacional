@@ -5,9 +5,13 @@ namespace App\Filament\Resources\TurmasResource\Pages;
 use App\Filament\Resources\TurmaResource;
 use App\Filament\Resources\TurmasResource;
 use App\Models\BartleResult;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Actions\Action;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\Page;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Blade;
+use Ramsey\Uuid\Uuid;
 
 class TestResult extends Page
 {
@@ -19,6 +23,7 @@ class TestResult extends Page
     /** @var BartleResult[] */
     public Collection $result;
     public $formatResult;
+    public string $className;
 
 
     public function mount($id): void
@@ -27,6 +32,7 @@ class TestResult extends Page
             ->with(['group', 'answer'])
             ->orderBy('group_id', 'ASC')
             ->get();
+
 
         self::$title = 'Resultado do Teste: ' . $this->result->first()->answer->name;
 
@@ -45,6 +51,23 @@ class TestResult extends Page
     public function getHeaderWidgetsColumns(): int|string|array
     {
         return 1;
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+          Action::make('pdf')
+            ->label('Baixar PDF')
+            ->color('success')
+            ->icon('heroicon-s-arrow-down-tray')
+              ->action(function () {
+                  return response()->streamDownload(function () {
+                        echo Pdf::loadHtml(
+                          Blade::render('mail.test.result', ['results' => $this->formatResult])
+                      )->stream();
+                  }, 'Resultados do Teste' . '.pdf');
+              }),
+        ];
     }
 
     public function resultInfo(Infolist $infolist)
