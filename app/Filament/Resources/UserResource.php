@@ -37,7 +37,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')->label('E-mail'),
                 Tables\Columns\IconColumn::make('verified')
                     ->boolean()
-                    ->label('Aprovado'),
+                    ->label('Professor'),
                 Tables\Columns\IconColumn::make('is_admin')
                     ->boolean()
                     ->label('Administrador')
