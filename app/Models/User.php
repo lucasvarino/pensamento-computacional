@@ -51,6 +51,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->is_admin;
     }
 
+    public function isVerified(): bool
+    {
+        return $this->verified;
+    }
+
     public function classes()
     {
         return $this->hasMany(TestClass::class);
