@@ -17,6 +17,10 @@ class EditTurma extends EditRecord
         if (!auth()->user()) {
             $this->redirect('/login');
         }
+
+        if (!auth()->user()->isVerified()) {
+            $this->redirect('/admin');
+        }
     }
 
     protected function getHeaderActions(): array
