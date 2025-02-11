@@ -41,7 +41,6 @@
                             <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
                         @endif
                     @endauth
-                </div>
             @endif
         </div>
         <h1 class="cover-heading">Cover your page.</h1>
@@ -49,6 +48,7 @@
         <p class="lead">
             <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
         </p>
+        
     </main>
 
         <footer class="mastfoot mt-auto">
@@ -56,6 +56,7 @@
                 <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
             </div>
         </footer>
+        </div>
 
     <!-- Bootstrap core JavaScript 
     ================================================== -->
