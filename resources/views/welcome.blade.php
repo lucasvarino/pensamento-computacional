@@ -28,7 +28,6 @@
         </style>
     </head>
     <body class="antialiased">
-    <main role="main" class="inner cover">
         <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
             @if (Route::has('login'))
                 <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
@@ -42,14 +41,8 @@
                         @endif
                     @endauth
             @endif
+            <h1 class="text-4xl font-bold text-gray-800 dark:text-white">Olá, Mundo!</h1>
         </div>
-        <h1 class="cover-heading">Cover your page.</h1>
-        <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-        <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-        </p>
-        
-    </main>
 
         <footer class="mastfoot mt-auto">
             <div class="inner">
