@@ -8,6 +8,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
+use Filament\Enums\ThemeMode;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Navigation\MenuItem;
@@ -28,18 +29,18 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-//          ->login()
+//            ->login
             ->colors([
-                'primary' => Color::Amber,
-            ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->pages([
-                Pages\Dashboard::class,
-            ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-//                  Widgets\AccountWidget::class,
+    'primary' => Color::Amber,
+    ])
+    ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+    ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+    ->pages([
+        Pages\Dashboard::class,
+        ])
+        ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+        ->widgets([
+            //                  Widgets\AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -51,14 +52,17 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-            ])
-            ->userMenuItems([
-                'logout' => MenuItem::make()->label('Sair'),
-                // ...
-            ])
-            ->authMiddleware([
-//                Authenticate::class,
-            ])
-            ->databaseNotifications();
-    }
-}
+                ])
+                ->userMenuItems([
+                    'logout' => MenuItem::make()
+                    ->label('Sair')
+                    // ...
+                    ])
+                    ->authMiddleware([
+                        //                Authenticate::class,
+                        ])
+                        ->databaseNotifications()
+                        ->defaultThemeMode(ThemeMode::Dark);
+                    }
+                }
+                
