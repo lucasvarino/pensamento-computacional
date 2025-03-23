@@ -31,7 +31,7 @@ class HexadGroupSeeder extends Seeder
             ],
             [
                 'name'        => 'Conquistador',
-                'description' => 'Motivados pela maestria/proficiência/prática/habilidade/expertise. Eles estão procurando aprender coisas novas e se aprimorar. Eles querem desafios a serem superados.',
+                'description' => 'Motivados pela maestria. Eles estão procurando aprender coisas novas e se aprimorar. Eles querem desafios a serem superados.',
                 'method_id'   => 2,
             ],
             [
