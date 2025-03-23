@@ -19,7 +19,8 @@ class AnswerFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'age' => $this->faker->randomNumber(),
-            'state' => 'Minas Gerais'
+            'state' => 'Minas Gerais',
+            'method_id' => 1
         ];
     }
 }
