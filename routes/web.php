@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\BartleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
@@ -37,5 +38,7 @@ Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallbac
 Route::get('groupResult', [BartleController::class, 'group']);
 Route::get('groupExtended', [BartleController::class, 'extended']);
 Route::get('bartleTest', TestForm::class);
+
+Route::post('filament/logout', [LogoutController::class, 'destroy'])->name('filament.auth.logout');
 
 require __DIR__.'/auth.php';

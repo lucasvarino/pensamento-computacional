@@ -36,7 +36,7 @@ class LoginController extends Controller
             Auth::login($newUser);
             return redirect('/admin');
         } catch (\Exception $e) {
-            return redirect('/')->with('error', 'falha na autenticação');
+            return redirect('/login')->with('error', 'falha na autenticação');
         }
     }
 }

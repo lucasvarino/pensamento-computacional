@@ -54,10 +54,10 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
                 ])
                 ->userMenuItems([
-                    'logout' => MenuItem::make()
-                    ->label('Sair')
-                    // ...
-                    ])
+                    'logout' => \Filament\Navigation\MenuItem::make()
+                        ->label('Sair')
+                        ->url(fn () => route('filament.auth.logout')),
+                ])
                     ->authMiddleware([
                         //                Authenticate::class,
                         ])
