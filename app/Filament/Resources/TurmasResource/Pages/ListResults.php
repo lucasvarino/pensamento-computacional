@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use LaraZeus\InlineChart\Tables\Columns\InlineChart;
 use Ramsey\Collection\Collection;
 
+
 class ListResults extends Page implements HasTable
 {
     use InteractsWithTable;
@@ -56,60 +57,80 @@ class ListResults extends Page implements HasTable
     }
 
     public function getAllColumns(): array
-    {
+{
+    $columns = [];
+    $method = $this->url;
+
+    if ($method === 'Bartle') {
         $columns = ['Empreendedor', 'Explorador', 'Assassino', 'Socializador'];
-        $textColumns = [];
-
-        foreach ($columns as $key => $column) {
-            $textColumns[] = TextColumn::make($column)->state(fn(Answer $answer) => $answer->bartleResults->isNotEmpty() ? $answer->bartleResults[$key]->value . "%" : '');
-        }
-
-        return $textColumns;
+        return array_map(fn ($column, $key) => 
+            TextColumn::make($column)
+                ->state(fn (Answer $answer) => $answer->bartleResults->isNotEmpty() ? $answer->bartleResults[$key]->value . "%" : ''),
+            $columns,
+            array_keys($columns)
+        );
+    } elseif ($method === 'Hexad') {
+        $columns = ['Filantropo', 'Jogador', 'Disruptor', 'Socializadores', 'Livre Espírito', 'Conquistador'];
+        return array_map(fn ($column, $key) => 
+            TextColumn::make($column)
+                ->state(fn (Answer $answer) => $answer->hexadResults->isNotEmpty() ? $answer->hexadResults[$key]->value . "%" : ''),
+            $columns,
+            array_keys($columns)
+        );
     }
 
-    public function getAverageResults($answers)
-    {
-        $groupAverages = collect();
+    return [];
+}
 
-        $answers->flatMap(function ($answer) {
-            return collect($answer->bartleResults);
-        })->groupBy('group_id')->each(function ($results, $groupId) use ($groupAverages) {
-            $average = round($results->avg('value'), 2);
+public function getAverageResults($answers)
+{
+    $groupAverages = collect();
 
-            $groupAverages->put($groupId, $average);
-        });
+    $answers->flatMap(function ($answer) {
+        return collect($answer->bartleResults);
+    })->groupBy('group_id')->each(function ($results, $groupId) use ($groupAverages) {
+        $average = round($results->avg('value'), 2);
+        $groupAverages->put('bartle_' . $groupId, $average); // Usando prefixo para diferenciar
+    });
 
-        return $groupAverages->values()->all();
+    $answers->flatMap(function ($answer) {
+        return collect($answer->hexadResults);
+    })->groupBy('group_id')->each(function ($results, $groupId) use ($groupAverages) {
+        $average = round($results->avg('value'), 2);
+        $groupAverages->put('hexad_' . $groupId, $average); // Usando prefixo para diferenciar
+    });
+
+    return $groupAverages->values()->all();
+}
+
+protected function getHeaderWidgets(): array
+{
+    $answers = Answer::select('answers.*')
+        ->distinct()
+        ->join('answers_classes', 'answers.id', '=', 'answers_classes.answer_id')
+        ->join('classes', 'answers_classes.class_id', '=', 'classes.id')
+        ->where('classes.url', $this->url)
+        ->get();
+
+    $percentage = $this->getAverageResults($answers);
+
+    if (count($percentage) < 4) {
+        $percentage = [0,0,0,0];
     }
 
-    protected function getHeaderWidgets(): array
-    {
-        $answers = Answer::select('answers.*')
-            ->distinct()
-            ->join('answers_classes', 'answers.id', '=', 'answers_classes.answer_id')
-            ->join('classes', 'answers_classes.class_id', '=', 'classes.id')
-            ->where('classes.url', $this->url)
-            ->get();
-
-        $percentage = $this->getAverageResults($answers);
-
-       if (count($percentage) < 4) {
-           $percentage = [0,0,0,0];
-       }
-
-        return [
-            TestResultChart::make([
-                'result' => $percentage,
-            ]),
-            TestStats::make([
-                'items' => $answers->count(),
-                'explorador' => $percentage[0] . '%',
-                'empreendedor' => $percentage[1] . '%',
-                'assassino' => $percentage[2] . '%',
-                'socializador' => $percentage[3] . '%'
-            ])
-        ];
-    }
+    return [
+        TestResultChart::make([
+            'result' => $percentage,
+        ]),
+        TestStats::make([
+            'items' => $answers->count(),
+            'explorador' => $percentage[0] . '%',
+            'empreendedor' => $percentage[1] . '%',
+            'assassino' => $percentage[2] . '%',
+            'socializador' => $percentage[3] . '%'
+        ])
+    ];
+}
 
     public function getHeaderWidgetsColumns(): int|string|array
     {

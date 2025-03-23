@@ -5,6 +5,8 @@ namespace App\Filament\Resources\TurmasResource\Pages;
 use App\Filament\Resources\TurmaResource;
 use App\Filament\Resources\TurmasResource;
 use App\Models\BartleResult;
+use App\Models\HexadResult;
+use App\Models\HexadAnswer;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 use Filament\Infolists\Infolist;
@@ -12,6 +14,9 @@ use Filament\Resources\Pages\Page;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Ramsey\Uuid\Uuid;
+use App\Models\Answer;
+
+use Illuminate\Support\Facades\Log;
 
 class TestResult extends Page
 {
@@ -28,13 +33,26 @@ class TestResult extends Page
 
     public function mount($id): void
     {
-        $this->result = BartleResult::where('answer_id', $id)
-            ->with(['group', 'answer'])
-            ->orderBy('group_id', 'ASC')
-            ->get();
+        $answer = Answer::with('method')->findOrFail($id);
+        if ($answer->method->name === 'Hexad') {
+            $this->result = HexadResult::where('answer_id', $id)
+                ->with(['group', 'answer'])
+                ->orderBy('group_id', 'ASC')
+                ->get();
 
+        } elseif ($answer->method->name === 'Bartle') {
+            $this->result = BartleResult::where('answer_id', $id)
+                ->with(['group', 'answer'])
+                ->orderBy('group_id', 'ASC')
+                ->get();
 
-        self::$title = 'Resultado do Teste: ' . $this->result->first()->answer->name;
+        }
+
+        if ($this->result->isEmpty()) {
+            abort(404, 'Resultados não encontrados.');
+        }
+
+        self::$title = 'Resultado do Teste: ' . $answer->name;
 
         $this->formatResult = $this->getResultTest();
     }
@@ -76,11 +94,26 @@ class TestResult extends Page
 
     public function getResultTest(): Collection
     {
-        return BartleResult::formatTestResult($this->result);
+        if ($this->result->first()->answer->method->name === 'Hexad') {
+
+            return HexadResult::formatTestResult($this->result);
+
+        } else {
+
+            return BartleResult::formatTestResult($this->result);
+        }
     }
 
     public function getTestValuesChart()
     {
-        return $this->result->map(fn (BartleResult $result) => $result->value)->toArray();
+        if ($this->result->first()->answer->method->name === 'Hexad') {
+
+            return $this->result->map(fn (HexadResult $result) => $result->value)->toArray();
+
+        } else {
+
+            return $this->result->map(fn (BartleResult $result) => $result->value)->toArray();
+            
+        }
     }
 }
