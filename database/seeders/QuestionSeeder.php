@@ -46,7 +46,7 @@ class QuestionSeeder extends Seeder
         ]);
 
         Question::factory()->create([
-            'title' => 'Você deseja lutar um dragão muito poderoso. Como você aborda este problema?'
+            'title' => 'Você deseja lutar com um dragão muito poderoso. Como você aborda este problema?'
         ]);
 
         Question::factory()->create([
@@ -74,7 +74,7 @@ class QuestionSeeder extends Seeder
         ]);
 
         Question::factory()->create([
-            'title' => 'No mundo do jogo, uma nova área se abre. Qual das aopções você esta mais ancisoso para fazer:'
+            'title' => 'No mundo do jogo, uma nova área se abre. Qual das opções você esta mais ancisoso para fazer:'
         ]);
 
         Question::factory()->create([
@@ -102,7 +102,7 @@ class QuestionSeeder extends Seeder
         ]);
 
         Question::factory()->create([
-            'title' => 'No mundo de um jogo, você preferiria se conhecido por:'
+            'title' => 'No mundo de um jogo, você preferiria ser conhecido por:'
         ]);
 
         Question::factory()->create([
