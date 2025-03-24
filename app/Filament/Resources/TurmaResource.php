@@ -18,6 +18,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class TurmaResource extends Resource
 {
@@ -39,7 +40,9 @@ class TurmaResource extends Resource
                         ->label('Método'),
                     Forms\Components\Checkbox::make('term')->label('Aceita o termo de consentimento de dados')
                         ->required(),
-                    Forms\Components\Hidden::make('user_id')->default(1),
+                        Forms\Components\Hidden::make('user_id')
+                        ->default(fn() => Auth::id())
+                        ->required(),
                     Forms\Components\Hidden::make('url')->default(Str::uuid()->toString())
                 ]);
     }
