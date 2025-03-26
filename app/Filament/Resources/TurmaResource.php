@@ -31,19 +31,26 @@ class TurmaResource extends Resource
     {
             return $form
                 ->schema([
-                    Forms\Components\TextInput::make('name')->required()->label('Nome'),
-                    Forms\Components\TextInput::make('institution')->required()->label('Instituição'),
-                    Forms\Components\DatePicker::make('expire_date')->label('Data de Expiração'),
+                    Forms\Components\TextInput::make('name')
+                        ->required()
+                        ->label('Nome'),
+                    Forms\Components\TextInput::make('institution')
+                        ->required()
+                        ->label('Instituição'),
+                    Forms\Components\DatePicker::make('expire_date')
+                        ->label('Data de Expiração'),
                     Forms\Components\Select::make('method_id')
                         ->relationship('method', 'name')
                         ->required()
                         ->label('Método'),
-                    Forms\Components\Checkbox::make('term')->label('Aceita o termo de consentimento de dados')
+                    Forms\Components\Checkbox::make('term')
+                        ->label('Aceita o termo de consentimento de dados')
                         ->required(),
                         Forms\Components\Hidden::make('user_id')
                         ->default(fn() => Auth::id())
                         ->required(),
-                    Forms\Components\Hidden::make('url')->default(Str::uuid()->toString())
+                    Forms\Components\Hidden::make('url')
+                        ->default(Str::uuid()->toString())
                 ]);
     }
 

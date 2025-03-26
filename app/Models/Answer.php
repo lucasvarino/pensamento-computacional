@@ -19,6 +19,11 @@ class Answer extends Model
         return $this->hasMany(BartleResult::class);
     }
 
+    public function hexadResults()
+    {
+        return $this->hasMany(HexadResult::class);
+    }
+
     public function method()
     {
         return $this->belongsTo(Method::class);

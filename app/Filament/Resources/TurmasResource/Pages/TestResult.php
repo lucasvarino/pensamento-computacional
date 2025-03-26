@@ -56,14 +56,22 @@ class TestResult extends Page
 
         $this->formatResult = $this->getResultTest();
     }
-
+    
     protected function getHeaderWidgets(): array
-    {
-        return [
-          TurmasResource\Widgets\TestResultChart::make([
-              'result' => $this->getTestValuesChart()
-          ])
-        ];
+    {       
+        if ($this->result->first()->answer->method->name ==='Bartle') {
+            return [
+                TurmasResource\Widgets\TestResultChart::make([
+                    'result' => $this->getTestValuesChart()
+                ])
+            ];
+        } elseif ($this->result->first()->answer->method->name === 'Hexad') {            
+            return [
+                TurmasResource\Widgets\HexadTestResultChart::make([
+                    'result' => $this->getTestValuesChart()
+                ])
+            ];
+        }
     }
 
     public function getHeaderWidgetsColumns(): int|string|array

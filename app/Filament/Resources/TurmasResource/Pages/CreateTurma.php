@@ -27,4 +27,9 @@ class CreateTurma extends CreateRecord
     {
         return static::getResource()::getUrl('index');
     }
+
+    public function getTitle(): string
+    {
+        return 'Criar Turma';
+    }
 }
