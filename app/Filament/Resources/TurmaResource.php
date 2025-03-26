@@ -86,7 +86,7 @@ class TurmaResource extends Resource
                 ]),
             ])
             ->recordUrl(fn (TestClass $testClass) => ('/admin/turmas/' . $testClass->url . '/results'))
-            ->query($query);
+            ->query($query->orderByDesc('created_at'));
     }
 
     public static function getRelations(): array

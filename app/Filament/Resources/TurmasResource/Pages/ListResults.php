@@ -192,10 +192,12 @@ protected function getHeaderWidgets(): array
                 ->action(fn () => null)
                 ->extraAttributes([
                     'x-data' => '{}',
-                    'x-on:click' => "navigator.clipboard.writeText('" . url('/admin/turmas/' . request()->route('url') . '/test') . "').then(() => alert('Link copiado!'))",
+                    'x-on:click' => "navigator.clipboard.writeText('" . url('/admin/turmas/' . $this->url . '/test') . "').then(() => alert('Link copiado!')).catch(() => alert('Falha ao copiar link!'))",
                 ]),
         ];
     }
+    
+    
 
     public function getTitle(): string
     {
