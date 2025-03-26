@@ -149,8 +149,8 @@ protected function getHeaderWidgets(): array
             ]),
             TestStats::make([
                 'items' => $answers->count(),
-                'explorador' => $percentage[0] . '%',
-                'empreendedor' => $percentage[1] . '%',
+                'empreendedor' => $percentage[0] . '%',
+                'explorador' => $percentage[1] . '%',
                 'assassino' => $percentage[2] . '%',
                 'socializador' => $percentage[3] . '%'
             ])
