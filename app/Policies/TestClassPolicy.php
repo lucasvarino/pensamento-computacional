@@ -13,7 +13,7 @@ class TestClassPolicy
      */
     public function viewAny(?User $user): bool
 {
-    return $user && $user->verified;
+    return true;
 }
 
     /**
@@ -21,7 +21,7 @@ class TestClassPolicy
      */
     public function view(User $user, TestClass $testClass): bool
     {
-        return $user->verified;  // Verifica se o usuário está verificado
+       return true;
     }
 
     /**
