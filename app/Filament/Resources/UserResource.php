@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
@@ -32,6 +33,7 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc') 
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label('Nome'),
                 Tables\Columns\TextColumn::make('email')->label('E-mail'),
@@ -82,8 +84,8 @@ class UserResource extends Resource
     {
         return [
             'index' => Pages\ListUsers::route('/'),
-//            'create' => Pages\CreateUser::route('/create'),
-//            'edit' => Pages\EditUser::route('/{record}/edit'),
+//          'create' => Pages\CreateUser::route('/create'),
+//          'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

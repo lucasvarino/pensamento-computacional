@@ -11,6 +11,7 @@
         "php": "^8.1",
         "barryvdh/laravel-dompdf": "^2.2",
         "calebporzio/sushi": "^2.4",
+        "eightynine/filament-advanced-widgets": "^3.0",
         "filament/filament": "^3.2.123",
         "filament/tables": "^3.2.115",
         "guzzlehttp/guzzle": "^7.2",

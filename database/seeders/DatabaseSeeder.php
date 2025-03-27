@@ -32,8 +32,8 @@ class DatabaseSeeder extends Seeder
             QuestionSeeder::class,
             GroupSeeder::class,
             AnswerOptionSeeder::class,
-            AnswerSeeder::class,
-            BartleResultSeeder::class,
+            //AnswerSeeder::class,
+            //BartleResultSeeder::class,
             
             HexadQuestionSeeder::class,
             HexadGroupSeeder::class,

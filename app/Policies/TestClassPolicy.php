@@ -12,16 +12,16 @@ class TestClassPolicy
      * Determine whether the user can view any models.
      */
     public function viewAny(?User $user): bool
-    {
-        return true;
-    }
+{
+    return $user && $user->verified;
+}
 
     /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, TestClass $testClass): bool
     {
-        return true;
+        return $user->verified;  // Verifica se o usuário está verificado
     }
 
     /**

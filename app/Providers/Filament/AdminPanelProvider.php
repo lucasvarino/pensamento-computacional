@@ -25,23 +25,49 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        /*$user = Auth::user();
+
+        $widgets = [
+            \App\Filament\Widgets\AccountOverview::class,
+        ];
+
+        if ($user) {
+            if($verified && $admin){
+                $widgets = [
+                    \App\Filament\Widgets\AccountOverview::class,
+                    \App\Filament\Widgets\UserChartWidget::class,
+                    \App\Filament\Widgets\LastestVerifyEmployers::class,
+                ];
+            } elseif ($verified) {
+                $widgets = [
+                    \App\Filament\Widgets\AccountOverview::class,
+                ];
+            } else {
+                $widgets = [
+                    \App\Filament\Widgets\LastestVerifyEmployers::class,
+                ];
+            }
+        }*/
         return $panel
             ->default()
             ->id('admin')
             ->path('admin')
 //            ->login
             ->colors([
-    'primary' => Color::Amber,
-    ])
-    ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-    ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-    ->pages([
-        Pages\Dashboard::class,
-        ])
-        ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-        ->widgets([
-            //                  Widgets\AccountWidget::class,
+                'primary' => Color::Amber,
+                'purple' => Color::hex('#9333ea'),
             ])
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->pages([
+                Pages\Dashboard::class,
+            ])
+            ->widgets([
+                \App\Filament\Widgets\AccountOverview::class,
+                \App\Filament\Widgets\UserChartWidget::class,
+                \App\Filament\Widgets\LastestVerifyEmployers::class,
+            ])
+            //->widgets($widgets)
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -52,17 +78,17 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                ])
-                ->userMenuItems([
-                    'logout' => \Filament\Navigation\MenuItem::make()
-                        ->label('Sair')
-                        ->url(fn () => route('filament.auth.logout')),
-                ])
-                    ->authMiddleware([
-                        //                Authenticate::class,
-                        ])
-                        ->databaseNotifications()
-                        ->defaultThemeMode(ThemeMode::Dark);
-                    }
-                }
-                
+                //AddUserWidgets::class,
+            ])
+            ->userMenuItems([
+                'logout' => \Filament\Navigation\MenuItem::make()
+                    ->label('Sair')
+                    ->url(fn () => route('filament.auth.logout')),
+            ])
+            ->authMiddleware([
+            //Authenticate::class,
+            ])
+            ->databaseNotifications()
+            ->defaultThemeMode(ThemeMode::Dark);
+    }
+}
