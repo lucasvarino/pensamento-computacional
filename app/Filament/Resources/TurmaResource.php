@@ -19,6 +19,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
+use Webbingbrasil\FilamentCopyActions\Tables\Actions\CopyAction;
+
+
 
 class TurmaResource extends Resource
 {
@@ -71,6 +75,11 @@ class TurmaResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
+                    CopyAction::make('copyTestLink')
+                        ->label('Copiar link do teste')
+                        ->icon('heroicon-o-clipboard')
+                        ->copyable(fn (\App\Models\TestClass $record) => url('/admin/turmas/' . $record->url . '/test'))
+                        ->successNotificationMessage('Link copiado com sucesso!'),
                     Tables\Actions\Action::make('link')->label('Abrir teste')
                         ->url(fn (TestClass $class): string => '/admin/turmas/' . $class->url . '/test')
                         ->openUrlInNewTab()

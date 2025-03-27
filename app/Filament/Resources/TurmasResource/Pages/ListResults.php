@@ -3,16 +3,21 @@
 namespace App\Filament\Resources\TurmasResource\Pages;
 
 use App\Models\Answer;
-use Barryvdh\DomPDF\Facade\Pdf;
+
 use Filament\Resources\Pages\Page;
+
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ExportBulkAction;
+
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
+
 use Ramsey\Collection\Collection;
 use App\Models\TestClass;
 
@@ -27,6 +32,8 @@ use App\Filament\Resources\TurmasResource\Widgets\TestStats;
 
 use App\Filament\Resources\TurmasResource\Widgets\HexadTestResultChart;
 use App\Filament\Resources\TurmasResource\Widgets\HexadTestStats;
+
+use Webbingbrasil\FilamentCopyActions\Pages\Actions\CopyAction;
 
 use Filament\Actions\Action as FilamentAction;
 
@@ -182,22 +189,21 @@ protected function getHeaderWidgets(): array
         return 1;
     }
 
+    public function copyLink(): void
+    {
+        $link = url('/admin/turmas/' . $this->url . '/test');
+        $this->emit('copyTestLink', $link);
+    }
+    
     public function getHeaderActions(): array
     {
         return [
-            FilamentAction::make('copyLink')
+            CopyAction::make('copyTestLink')
                 ->label('Copiar link do teste')
-                ->icon('heroicon-o-clipboard')
-                ->color('primary')
-                ->action(fn () => null)
-                ->extraAttributes([
-                    'x-data' => '{}',
-                    'x-on:click' => "navigator.clipboard.writeText('" . url('/admin/turmas/' . $this->url . '/test') . "').then(() => alert('Link copiado!')).catch(() => alert('Falha ao copiar link!'))",
-                ]),
+                ->copyable(fn () => url('/admin/turmas/' . $this->url . '/test'))
+                ->successNotificationTitle('Link copiado com sucesso!'),
         ];
     }
-    
-    
 
     public function getTitle(): string
     {
