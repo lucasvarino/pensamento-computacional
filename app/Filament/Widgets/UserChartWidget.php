@@ -9,6 +9,13 @@ use EightyNine\FilamentAdvancedWidget\AdvancedChartWidget as BaseWidget;
 
 class UserChartWidget extends BaseWidget
 {
+
+    public static function canView(): bool
+    {
+        $user = auth()->user();
+        return $user && $user->isVerified() && $user->isAdmin(); // adapte as condições conforme necessário
+    }
+
     protected static ?string $heading = '187.2k';
     protected static string $color = 'info';
     protected static ?string $icon = 'heroicon-o-chart-bar';

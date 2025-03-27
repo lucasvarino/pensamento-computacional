@@ -13,14 +13,15 @@ use EightyNine\FilamentAdvancedWidget\AdvancedStatsOverviewWidget\Stat;
 
 class AccountOverview extends BaseWidget
 {
+
     protected function getStats(): array
     {
-        //$user = auth()->user();
+        $user = auth()->user();
 
-        //$verified = $user && $user->isVerified() ? true : false;
-        //$admin = $user && $user->isAdmin() ? true : false;
+        $verified = $user && $user->isVerified() ? true : false;
+        $admin = $user && $user->isAdmin() ? true : false;
 
-        //if($verified && $admin){
+        if($verified && $admin){
 
             $totalUsers = User::count();
 
@@ -61,7 +62,7 @@ class AccountOverview extends BaseWidget
 
             ];
 
-        /*} elseif ($verified) {
+        } elseif ($verified) {
 
             return[
                 Stat::make('Testes Bartle', 123)
@@ -95,6 +96,5 @@ class AccountOverview extends BaseWidget
             ];
             
         }
-*/
     }
 }

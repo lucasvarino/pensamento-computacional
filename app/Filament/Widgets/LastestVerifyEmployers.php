@@ -9,6 +9,12 @@ use EightyNine\FilamentAdvancedWidget\AdvancedTableWidget as BaseWidget;
 $user = 10;
 class LastestVerifyEmployers extends BaseWidget
 {
+    public static function canView(): bool
+    {
+        $user = auth()->user();
+        return $user && $user->isVerified() && $user->isAdmin(); // adapte as condições conforme necessário
+    }
+
     protected static ?string $heading  = "Ultimos usuários verificados";
 
     public function getHeading(): string
