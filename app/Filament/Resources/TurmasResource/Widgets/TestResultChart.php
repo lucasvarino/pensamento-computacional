@@ -43,7 +43,7 @@ class TestResultChart extends ChartWidget
         {
             scales: {
                 r: {
-                    suggestedMin: 20,
+                    suggestedMin: 10,
                     suggestedMax: 80
                 },
             },

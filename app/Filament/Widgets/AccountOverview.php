@@ -4,6 +4,10 @@ namespace App\Filament\Widgets;
 
 use App\Models\User;
 use App\Models\Answer;
+use App\Models\AnswerClass;
+use App\Models\HexadAnswer;
+use App\Models\TestClass;
+
 
 // use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 // use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -64,22 +68,43 @@ class AccountOverview extends BaseWidget
 
         } elseif ($verified) {
 
+            $classIds = $user->classes()->pluck('id');
+            $totalTestsBartle = AnswerClass::whereIn('class_id', $classIds)
+                ->distinct('answer_id')
+                ->count('answer_id');
+            $totalTestsHexad = HexadAnswer::whereIn('class_id', $classIds)
+                ->distinct('answer_id')
+                ->count('answer_id');
+            $totalTestsApplied = $totalTestsBartle + $totalTestsHexad;
+            $totalTurmas = TestClass::where('user_id', $user->id)
+                ->distinct('url')
+                ->count('url');
+
             return[
-                Stat::make('Testes Bartle', 123)
-                        ->chart([12, 2, 7, 3, 10, 4, 5])
-                        ->chartColor('warning')
-                        ->icon('heroicon-o-user-group')
-                        ->description('Total de testes Bartle feitos')
-                        ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
-                        ->iconColor('warning'),
+                Stat::make('Minhas Turmas', $totalTurmas)
+                    ->chart([5, 2, 10, 3, 8, 4, 12])
+                    ->chartColor('success')
+                    ->icon('heroicon-o-user-group')
+                    ->iconPosition('start')
+                    ->description('Total de turmas')
+                    //->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
+                    ->iconColor('success'),
                     
-                    Stat::make('Testes Hexad', 456)
-                        ->chart([5, 2, 10, 3, 8, 4, 12])
-                        ->chartColor('warning')
-                        ->icon('heroicon-o-trophy')
-                        ->description('Total de testes Hexad feitos')
-                        ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
-                        ->iconColor('warning'),
+                Stat::make('Testes Aplicados', $totalTestsApplied)
+                    ->chart([12, 2, 7, 3, 10, 4, 5])
+                    ->chartColor('warning')
+                    ->icon('heroicon-o-trophy')
+                    ->description('Total de testes Aplicados')
+                    ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
+                    ->iconColor('warning'),
+                    
+                Stat::make('Outra métrica', 456)
+                    ->chart([5, 2, 10, 3, 8, 4, 12])
+                    ->chartColor('warning')
+                    ->icon('heroicon-o-trophy')
+                    ->description('Descrição')
+                    ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
+                    ->iconColor('warning'),
             ];
 
         } else {
