@@ -25,34 +25,16 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        /*$user = Auth::user();
-
-        $widgets = [
-            \App\Filament\Widgets\AccountOverview::class,
-        ];
-
-        if ($user) {
-            if($verified && $admin){
-                $widgets = [
-                    \App\Filament\Widgets\AccountOverview::class,
-                    \App\Filament\Widgets\UserChartWidget::class,
-                    \App\Filament\Widgets\LastestVerifyEmployers::class,
-                ];
-            } elseif ($verified) {
-                $widgets = [
-                    \App\Filament\Widgets\AccountOverview::class,
-                ];
-            } else {
-                $widgets = [
-                    \App\Filament\Widgets\LastestVerifyEmployers::class,
-                ];
-            }
-        }*/
         return $panel
+            ->brandLogo(fn () => view('vendor.filament.components.brand'))
+            //->favicon(asset('Imagem_Guia_Redonda02.png'))
+            //->brandName('Game Persona')
+            //->darkModeBrandLogo(asset('GamePersonaLight.png'))
+            //->brandLogoHeight('40px')
             ->default()
             ->id('admin')
             ->path('admin')
-//            ->login
+//          ->login
             ->colors([
                 'primary' => Color::Amber,
                 'purple' => Color::hex('#9333ea'),
@@ -66,8 +48,8 @@ class AdminPanelProvider extends PanelProvider
                 \App\Filament\Widgets\AccountOverview::class,
                 \App\Filament\Widgets\UserChartWidget::class,
                 \App\Filament\Widgets\LastestVerifyEmployers::class,
+                \App\Filament\Widgets\AdvancedChartTurmas::class,
             ])
-            //->widgets($widgets)
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -78,7 +60,6 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                //AddUserWidgets::class,
             ])
             ->userMenuItems([
                 'logout' => \Filament\Navigation\MenuItem::make()
