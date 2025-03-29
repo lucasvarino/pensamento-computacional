@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->brandLogo(fn () => view('vendor.filament.components.brand'))
+            ->darkModeBrandLogo(fn () => view('vendor.filament.components.brand-dark'))
             //->favicon(asset('Imagem_Guia_Redonda02.png'))
             //->brandName('Game Persona')
             //->darkModeBrandLogo(asset('GamePersonaLight.png'))
