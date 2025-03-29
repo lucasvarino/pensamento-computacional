@@ -6,17 +6,18 @@ use EightyNine\FilamentAdvancedWidget\AdvancedChartWidget;
 
 class AdvancedChartTurmas extends AdvancedChartWidget
 {
+
+    public static function canView(): bool
+    {
+        $user = auth()->user();
+        return $user && $user->isVerified() && !($user->isAdmin()); // adapte as condições conforme necessário
+    }
+
     protected static ?string $heading  = "Teste por turmas";
     protected static string $color = 'info';
     protected static ?string $icon = 'heroicon-o-chart-bar';
     protected static ?string $iconColor = 'info';
     protected static ?string $iconBackgroundColor = 'info';
-
-    //protected static ?string $label = 'Teste por Turmas';
-    /*public function getHeading(): string
-    {
-        return '';
-    }*/
 
     protected function getData(): array
     {
