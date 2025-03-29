@@ -52,7 +52,7 @@ class TestResult extends Page
             abort(404, 'Resultados não encontrados.');
         }
 
-        self::$title = 'Resultado do Teste: ' . $answer->name;
+        self::$title = 'Resultado do Teste de ' . $answer->name;
 
         $this->formatResult = $this->getResultTest();
     }

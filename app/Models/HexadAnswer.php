@@ -9,11 +9,16 @@ class HexadAnswer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['answer_id', 'question_id', 'group_id', 'value'];
+    protected $fillable = ['answer_id', 'class_id', 'question_id', 'group_id', 'value'];
 
     public function answer()
     {
         return $this->belongsTo(Answer::class);
+    }
+
+    public function classe()
+    {
+        return $this->belongsTo(TestClass::class);
     }
 
     public function question()

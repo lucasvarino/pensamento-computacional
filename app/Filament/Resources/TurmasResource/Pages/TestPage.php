@@ -88,6 +88,7 @@ class TestPage extends Page
             
                 HexadAnswer::create([
                     'answer_id' => $answer->id,
+                    'class_id' => $this->testClass->id,
                     'question_id' => $question_id,
                     'group_id' => $group_id,
                     'value' => $value,

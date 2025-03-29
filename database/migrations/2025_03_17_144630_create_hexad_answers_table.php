@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('hexad_answers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('answer_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('class_id')->constrained()->cascadeOnDelete();
             $table->foreignId('question_id')->constrained()->cascadeOnDelete();
             $table->foreignId('group_id')->constrained()->cascadeOnDelete();
             $table->integer('value');
