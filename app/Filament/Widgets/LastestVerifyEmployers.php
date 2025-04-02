@@ -6,7 +6,6 @@ use App\Models\User;
 use Filament\Tables;
 use Filament\Tables\Table;
 use EightyNine\FilamentAdvancedWidget\AdvancedTableWidget as BaseWidget;
-$user = 10;
 class LastestVerifyEmployers extends BaseWidget
 {
     public static function canView(): bool

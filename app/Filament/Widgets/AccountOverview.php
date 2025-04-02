@@ -17,7 +17,6 @@ use EightyNine\FilamentAdvancedWidget\AdvancedStatsOverviewWidget\Stat;
 
 class AccountOverview extends BaseWidget
 {
-
     protected function getStats(): array
     {
         $user = auth()->user();
@@ -69,13 +68,9 @@ class AccountOverview extends BaseWidget
         } elseif ($verified) {
 
             $classIds = $user->classes()->pluck('id');
-            $totalTestsBartle = AnswerClass::whereIn('class_id', $classIds)
+            $totalTestsApplied = AnswerClass::whereIn('class_id', $classIds)
                 ->distinct('answer_id')
                 ->count('answer_id');
-            $totalTestsHexad = HexadAnswer::whereIn('class_id', $classIds)
-                ->distinct('answer_id')
-                ->count('answer_id');
-            $totalTestsApplied = $totalTestsBartle + $totalTestsHexad;
             $totalTurmas = TestClass::where('user_id', $user->id)
                 ->distinct('url')
                 ->count('url');
@@ -95,14 +90,6 @@ class AccountOverview extends BaseWidget
                     ->chartColor('warning')
                     ->icon('heroicon-o-trophy')
                     ->description('Total de testes Aplicados')
-                    ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
-                    ->iconColor('warning'),
-                    
-                Stat::make('Outra métrica', 456)
-                    ->chart([5, 2, 10, 3, 8, 4, 12])
-                    ->chartColor('warning')
-                    ->icon('heroicon-o-trophy')
-                    ->description('Descrição')
                     ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
                     ->iconColor('warning'),
             ];

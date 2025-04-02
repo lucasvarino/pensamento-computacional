@@ -26,30 +26,33 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->default()
             ->brandLogo(fn () => view('vendor.filament.components.brand'))
             ->darkModeBrandLogo(fn () => view('vendor.filament.components.brand-dark'))
-            //->favicon(asset('Imagem_Guia_Redonda02.png'))
+            //->favicon(asset('Game_Persona.svg'))
             //->brandName('Game Persona')
             //->darkModeBrandLogo(asset('GamePersonaLight.png'))
             //->brandLogoHeight('40px')
-            ->default()
             ->id('admin')
             ->path('admin')
 //          ->login
             ->colors([
                 'primary' => Color::Amber,
-                'purple' => Color::hex('#9333ea'),
+                //'primary' => Color::hex('#9333ea'),
+                
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+            //    Pages\Dashboard::class,
             ])
             ->widgets([
+                \App\Filament\Widgets\TeacherGuideAlert::class,
                 \App\Filament\Widgets\AccountOverview::class,
                 \App\Filament\Widgets\UserChartWidget::class,
                 \App\Filament\Widgets\LastestVerifyEmployers::class,
                 \App\Filament\Widgets\AdvancedChartTurmas::class,
+                \App\Filament\Widgets\LastestTestSubmit::class,
             ])
             ->middleware([
                 EncryptCookies::class,
