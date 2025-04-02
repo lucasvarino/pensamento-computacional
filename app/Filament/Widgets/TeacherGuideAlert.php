@@ -10,7 +10,6 @@ class TeacherGuideAlert extends Widget
     protected static string $view = 'filament.widgets.teacher-guide-alert';
     protected $listeners = ['refreshComponent' => '$refresh'];
 
-
     public static function canView(): bool
     {
         $user = auth()->user();
@@ -23,7 +22,7 @@ class TeacherGuideAlert extends Widget
         if ($user) {
             $user->update(['saw_guide' => true]);
 
-            $this->refresh();
+            return redirect('/admin');
         }
     }
 }
