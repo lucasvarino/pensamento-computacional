@@ -17,7 +17,7 @@ class AnswerClass extends Model
 
     public function classe()
     {
-        return $this->belongsTo(TestClass::class);
+        return $this->belongsTo(\App\Models\TestClass::class, 'class_id', 'id');
     }
 
     public function answerOption()
