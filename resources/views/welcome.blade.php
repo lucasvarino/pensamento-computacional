@@ -39,12 +39,14 @@
             @if (Route::has('login'))
                 <nav class="flex text-right items-center px-1">
                     @auth
-                        <a href="{{ url('/admin') }}" class="font-mono font-semibold text-xl hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
+                        <a href="{{ url('/admin') }}" class="font-mono font-semibold text-xl hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Painel</a>
                     @else
-                        <a href="{{ route('login') }}" class="font-mono font-semibold text-xl hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Login</a>
+                        <a href="{{ route('login') }}" class="font-mono font-semibold text-xl hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Entrar</a>
+                        <!--
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="font-mono ml-4 font-semibold text-xl hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Cadastre-se</a>
-                        @endif
+                        @endif 
+                        -->
                     @endauth
                 </nav>
             @endif
@@ -56,9 +58,9 @@
         <div class="flex p-12 gap-5 w-full justify-items-center justify-center items-center">
             <div class="max-w-3xl p-16 text-center items-start justify-items-start">
                 <h1 class=" font-mono font-semibold text-7xl text-left text-black dark:text-white">GAMIFICANDO <br> O 
-                <span class=" font-mono font-semibold text-7xl text-left text-fuchsia-600 dark:text-fuchsia-400 drop-shadow-[0_0_10px_#eb34eb] brightness-125">APRENDIZADO </span> </h1>
-                <p class="  font-mono mt-4 text-lg font-semibold text-left text-black dark:text-white">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium fugit, illum sint consequatur a facilis assumenda labore ea inventore quaerat sed ex sunt sapiente alias praesentium vero, aliquid culpa commodi animi temporibus? Sunt cumque fugiat quo laboriosam quae perferendis a amet quibusdam veritatis ipsum quasi, obcaecati eos, recusandae voluptatum consequatur?
+                <span class=" font-mono font-semibold text-7xl text-left text-violet-600 dark:text-violet-500 drop-shadow-[0_0_10px_#b74ae1] brightness-125">APRENDIZADO</span>.</h1>
+                <p class="  font-mono mt-4 text-2xl font-semibold text-left text-black dark:text-white">
+                Utilizando o Game Persona, é possível identificar os perfis dos estudantes para personalizar estratégias de ensino que atendam às necessidades individuais de cada um!
                 </p>
 
             </div>
@@ -67,29 +69,26 @@
             </div>
         </div>
         <div class="p-5 justify-items-center">
-            <h1 class=" font-mono font-semibold text-5xl text-left text-black dark:text-white">O QUE É <span class="text-fuchsia-600 dark:text-fuchsia-400 hover:drop-shadow-[0_0_10px_#eb34eb] drop-shadow-[0_0_10px_#eb34eb] brightness-125 " >GAMIFICAR?</span></h1>        
-        <div class="flex justify-around gap-4"> 
-                <div class="flex-col justify-center justify-items-center">
-                    <img class="" src="img/GamePersonaLogo.png" alt="">
-                    <p class=" font-mono mt-4 text-lg font-semibold text-center text-black dark:text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa iste aut error excepturi pariatur quas corrupti nisi tempore quae vel praesentium perferendis repudiandae ipsam, voluptatibus deserunt hic, cupiditate eveniet fuga!</p>
-                </div>
-                <div class="flex-col justify-center align-center justify-items-center">
-                    <img class="" src="img/GamePersonaLogo.png" alt="">
-                    <p class=" font-mono mt-4 text-lg font-semibold text-center text-black dark:text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa iste aut error excepturi pariatur quas corrupti nisi tempore quae vel praesentium perferendis repudiandae ipsam, voluptatibus deserunt hic, cupiditate eveniet fuga!</p>
-                </div>
-                <div class="flex-col justify-center align-center justify-items-center">
-                    <img class="" src="img/GamePersonaLogo.png" alt="">
-                    <p class=" font-mono mt-4 text-lg font-semibold text-center text-black dark:text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa iste aut error excepturi pariatur quas corrupti nisi tempore quae vel praesentium perferendis repudiandae ipsam, voluptatibus deserunt hic, cupiditate eveniet fuga!</p>
-                </div>
-                <div class="flex-col justify-center align-center justify-items-center">
-                    <img class="" src="img/GamePersonaLogo.png" alt="">
-                    <p class=" font-mono mt-4 text-lg font-semibold text-center text-black dark:text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa iste aut error excepturi pariatur quas corrupti nisi tempore quae vel praesentium perferendis repudiandae ipsam, voluptatibus deserunt hic, cupiditate eveniet fuga!</p>
-                </div>
+            <h1 class=" font-mono font-semibold text-5xl text-left text-black dark:text-white">O QUE É <span class="text-violet-600 dark:text-violet-500 drop-shadow-[0_0_10px_#b74ae1] brightness-125 " >GAMIFICAR?</span></h1>        
+            <div class="flex text-2xl justify-around gap-4"> 
+                    <div class="flex-col justify-center justify-items-center">
+                        <img class="" src="img/GamePersonaLogo.png" alt="">
+                        <p class=" font-mono mt-4 font-semibold text-center text-black dark:text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa iste aut error excepturi pariatur quas corrupti!</p>
+                    </div>
+                    <div class="flex-col justify-center align-center justify-items-center">
+                        <img class="" src="img/GamePersonaLogo.png" alt="">
+                        <p class=" font-mono mt-4 font-semibold text-center text-black dark:text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa iste aut error excepturi pariatur quas corrupti!</p>
+                    </div>
+                    <div class="flex-col justify-center align-center justify-items-center">
+                        <img class="" src="img/GamePersonaLogo.png" alt="">
+                        <p class=" font-mono mt-4 font-semibold text-center text-black dark:text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa iste aut error excepturi pariatur quas corrupti!</p>
+                    </div>
+                    <div class="flex-col justify-center align-center justify-items-center">
+                        <img class="" src="img/GamePersonaLogo.png" alt="">
+                        <p class=" font-mono mt-4 font-semibold text-center text-black dark:text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa iste aut error excepturi pariatur quas corrupti!</p>
+                    </div>
             </div>
         </div>
-
-
-
 
     </main>
 
