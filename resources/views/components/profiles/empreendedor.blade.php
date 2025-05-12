@@ -14,8 +14,8 @@
         <circle cx="128" cy="128" r="72" fill="#e8b107" />
         <circle cx="128" cy="128" r="36" fill="#d4a30b" />
       </svg>
-      <div class="absolute inset-0 flex items-center justify-end z-10 transform -translate-y-5 translate-x-6">
-      <x-icon name="bandeira" class="hidden sm:block h-32 w-32 bg-transparent"/>
+      <div class="absolute inset-0 flex items-center justify-end z-10 transform -translate-y-5">
+      <x-icon name="bandeira" class="hidden sm:block h-20 w-20 bg-transparent"/>
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@
 
   <div class="relative flex flex-col items-center text-center h-full
       justify-center px-4 py-0">
-      <img src="{{ asset('img/bandeira.png') }}" alt="Bandeira" class="block sm:hidden w-28 h-28" />
+      <img src="{{ asset('img/bandeira.png') }}" alt="Bandeira" class="block sm:hidden w-20 h-20" />
       <h3 class="m-2 text-xl sm:text-3xl font-bold text-conquistador-txt uppercase w-full">
         {{ $result['role'] ?? 'EMPREENDEDOR' }}:
         {{ number_format($result['value'], 2, ',', '.') }}%
