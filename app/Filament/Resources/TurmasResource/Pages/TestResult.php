@@ -84,7 +84,7 @@ class TestResult extends Page
         return [
           Action::make('pdf')
             ->label('Baixar PDF')
-            ->color('success')
+            ->color('primary')
             ->icon('heroicon-s-arrow-down-tray')
               ->action(function () {
                   return response()->streamDownload(function () {

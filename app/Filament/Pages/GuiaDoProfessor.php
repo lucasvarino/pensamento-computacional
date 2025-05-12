@@ -7,6 +7,10 @@ use Illuminate\View\Component;
 
 class GuiaDoProfessor extends Page
 {
+    protected static string $view = 'filament.pages.guia-do-professor';
+    protected static ?string $title = 'Guia do Colaborador';
+
+    protected static ?string $navigationGroup = 'Ajuda e Suporte';
     
     public static function canAccess(): bool
     {
@@ -14,10 +18,11 @@ class GuiaDoProfessor extends Page
         return $user && $user->isVerified();
     }
 
-    protected static ?string $navigationIcon = 'heroicon-o-book-open';
-    protected static string $view = 'filament.pages.guia-do-professor';
-    protected static ?string $title = 'Guia do Professor';
-
-    protected static ?string $navigationGroup = 'Ajuda e Suporte';
+    public static function getNavigationIcon(): ?string
+    {
+        return request()->routeIs('filament.admin.pages.guia-do-professor')
+            ? 'icon-guia'
+            : 'icon-guia-b&w';
+    }
 
 }

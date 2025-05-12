@@ -25,7 +25,14 @@ class TestResult extends Mailable
      */
     public function __construct(Collection $results, string $className)
     {
-        $this->results = BartleResult::formatTestResult($results);
+        $method = $results->first()->answer->method->name;
+
+        if ($method === 'Hexad') {
+            $this->results = HexadResult::formatTestResult($results);
+        } if ($method === 'Bartle') {
+            $this->results = BartleResult::formatTestResult($results);
+        }
+    
         $this->className = $className;
     }
 

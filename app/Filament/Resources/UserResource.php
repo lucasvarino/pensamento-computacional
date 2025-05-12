@@ -20,7 +20,12 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
     protected static ?string $label = 'Usuários';
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    public static function getNavigationIcon(): ?string
+    {
+        return request()->routeIs('filament.admin.resources.users.*')
+            ? 'icon-user'
+            : 'icon-user-b&w';
+    }
 
     protected static ?string $navigationGroup = 'Admin';
 
@@ -41,7 +46,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')->label('E-mail'),
                 Tables\Columns\IconColumn::make('verified')
                     ->boolean()
-                    ->label('Professor'),
+                    ->label('Colaborador'),
                 Tables\Columns\IconColumn::make('is_admin')
                     ->boolean()
                     ->label('Administrador')

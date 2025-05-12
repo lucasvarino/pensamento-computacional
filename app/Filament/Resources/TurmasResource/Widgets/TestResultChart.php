@@ -19,7 +19,11 @@ class TestResultChart extends ChartWidget
             'datasets' => [
                 [
                     'label' => 'Pontuação',
-                    'data' => $this->result
+                    'data' => $this->result,
+
+                    'borderColor'         => 'rgba(196, 120, 255, 1)',
+                    'backgroundColor'     => 'rgba(196, 120, 255, 0.2)',
+                    'pointBackgroundColor'=> 'rgba(196, 120, 255, 1)',
                 ]
             ],
             'labels' => ['Empreendedor', 'Explorador', 'Assassino', 'Socializador']
@@ -39,17 +43,39 @@ class TestResultChart extends ChartWidget
 
     protected function getOptions(): RawJs
     {
+        $maxValue = max($this->result);
+        $suggestedMax = ceil($maxValue * 1.2);
         return RawJs::make(<<<JS
         {
             scales: {
+                x: {
+                    display: false,
+                },
+                y: {
+                    display: false,
+                },
+
                 r: {
-                    suggestedMin: 10,
-                    suggestedMax: 80
+                    suggestedMin: 0,
+                    suggestedMax: $suggestedMax,
+                    
+                    ticks: {
+                        z: 10,
+                    },
+                    grid: {
+                        z: 0,
+                        color: 'rgba(196, 120, 255, 1)',
+                    },
+                    angleLines: {
+                        z: 0,
+                        color: 'rgba(196, 120, 255, 1)',
+                    },
                 },
             },
             options: {
+                responsive: true,
                 maintainAspectRatio: false,
-            }
+            },
         }
     JS);
     }

@@ -1,7 +1,7 @@
 <x-filament::page>
     <div class="space-y-4">        
         <p class="text-gray-500">
-            Bem-vindo ao guia para professores. Aqui você encontrará informações detalhadas sobre como utilizar a plataforma
+            Bem-vindo ao guia para colaboradores. Aqui você encontrará informações detalhadas sobre como utilizar a plataforma
             e tirar o máximo proveito dos recursos disponíveis aqui!
         </p>
 
@@ -20,7 +20,7 @@
                         <h2 class="ml-2 text-xl font-semibold text-gray-900">Barra Lateral</h2>
                     </div>
                     <p class="text-gray-600">
-                        Com a Barra Lateral, você poderá acessar todos os recursos disponíveis, como o Painel, suas Turmas, os Métodos Disponíveis e o Guia do Professor!
+                        Com a Barra Lateral, você poderá acessar todos os recursos disponíveis, como o Painel, suas Turmas, os Métodos Disponíveis e o Guia do Colaborador!
                     </p>
                     <div class="flex items-center space-x-3">
                         <x-heroicon-o-archive-box class="w-6 h-6 text-gray-500" />

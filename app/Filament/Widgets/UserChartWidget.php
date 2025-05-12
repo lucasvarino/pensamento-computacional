@@ -17,14 +17,14 @@ class UserChartWidget extends BaseWidget
     }
 
     protected static ?string $heading = '187.2k';
-    protected static string $color = 'info';
-    protected static ?string $icon = 'heroicon-o-chart-bar';
-    protected static ?string $iconColor = 'info';
-    protected static ?string $iconBackgroundColor = 'info';
+    protected static string $color = 'primary';
+    protected static ?string $icon = 'icon-chart-bar';
+    protected static ?string $iconColor = 'primary';
+    protected static ?string $iconBackgroundColor = 'primary';
     protected static ?string $label = 'Numero de usuários?';
  
     protected static ?string $badge = 'new';
-    protected static ?string $badgeColor = 'success';
+    protected static ?string $badgeColor = 'primary';
     protected static ?string $badgeIcon = 'heroicon-o-check-circle';
     protected static ?string $badgeIconPosition = 'after';
     protected static ?string $badgeSize = 'xs';

@@ -29,7 +29,12 @@ class TurmaResource extends Resource
     protected static ?string $model = TestClass::class;
     protected static ?string $label = "Turmas";
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getNavigationIcon(): ?string
+    {
+        return request()->routeIs('filament.admin.resources.turmas.*')
+            ? 'icon-turma'
+            : 'icon-turma-b&w';
+    }
 
     public static function form(Form $form): Form
     {
@@ -67,7 +72,7 @@ class TurmaResource extends Resource
                 Tables\Columns\TextColumn::make('name')->label('Nome da turma')->searchable(),
                 Tables\Columns\TextColumn::make('institution')->label('Instituição'),
                 Tables\Columns\TextColumn::make('method.name')->label('Método utilizado'),
-                Tables\Columns\TextColumn::make('user.name')->label('Professor')->visible($isAdmin),
+                Tables\Columns\TextColumn::make('user.name')->label('Organizador')->visible($isAdmin),
                 Tables\Columns\TextColumn::make('expire_date')->date("d-m-Y")->label('Data de expiração')
             ])
             ->filters([

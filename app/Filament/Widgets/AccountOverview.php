@@ -33,13 +33,12 @@ class AccountOverview extends BaseWidget
 
             return [
                 Stat::make('Total de usuários', $totalUsers)
-                    ->icon('heroicon-o-users')
+                    ->icon('icon-user')
                     ->chart([7, 2, 10, 3, 15, 4, 12])
-                    ->chartColor('success')
                     ->iconPosition('start')
                     ->description('Usuários Cadastrados')
-                    ->iconColor('success')
-                    ->chartColor('success'),
+                    ->iconColor('primary')
+                    ->chartColor('primary'),
                     //->backgroundColor('info')
                     //->progress(69)
                     //->progressBarColor('success')
@@ -49,19 +48,19 @@ class AccountOverview extends BaseWidget
 
                     Stat::make('Testes Bartle', $totalBartleAnswers)
                         ->chart([12, 2, 7, 3, 10, 4, 5])
-                        ->chartColor('warning')
-                        ->icon('heroicon-o-user-group')
+                        ->chartColor('primary')
+                        ->icon('icon-user-group')
                         ->description('Total de testes Bartle feitos')
                         ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
-                        ->iconColor('warning'),
+                        ->iconColor('primary'),
                     
                     Stat::make('Testes Hexad', $totalHexadAnswers)
                         ->chart([5, 2, 10, 3, 8, 4, 12])
-                        ->chartColor('warning')
-                        ->icon('heroicon-o-trophy')
+                        ->chartColor('primary')
+                        ->icon('icon-trofeu')
                         ->description('Total de testes Hexad feitos')
                         ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
-                        ->iconColor('warning'),
+                        ->iconColor('primary'),
 
             ];
 
@@ -78,20 +77,20 @@ class AccountOverview extends BaseWidget
             return[
                 Stat::make('Minhas Turmas', $totalTurmas)
                     ->chart([5, 2, 10, 3, 8, 4, 12])
-                    ->chartColor('success')
-                    ->icon('heroicon-o-user-group')
+                    ->chartColor('primary')
+                    ->icon('icon-user-group')
                     ->iconPosition('start')
                     ->description('Total de turmas')
                     //->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
-                    ->iconColor('success'),
+                    ->iconColor('primary'),
                     
                 Stat::make('Testes Aplicados', $totalTestsApplied)
                     ->chart([12, 2, 7, 3, 10, 4, 5])
-                    ->chartColor('warning')
+                    ->chartColor('primary')
                     ->icon('heroicon-o-trophy')
                     ->description('Total de testes Aplicados')
                     ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
-                    ->iconColor('warning'),
+                    ->iconColor('primary'),
             ];
 
         } else {
