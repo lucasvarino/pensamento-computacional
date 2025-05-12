@@ -6,6 +6,17 @@ use Filament\Pages\Page;
 
 class GuiaDoAdmin extends Page
 {
+    protected static string $view = 'filament.pages.guia-do-admin';
+    protected static ?string $title = 'Guia do Administrador';
+
+    protected static ?string $navigationGroup = 'Ajuda e Suporte';
+    
+        public static function getNavigationIcon(): ?string
+        {
+            return request()->routeIs('filament.admin.pages.guia-do-admin')
+                ? 'icon-guia'
+                : 'icon-guia-b&w';
+        }
     
     public static function canAccess(): bool
     {
@@ -13,9 +24,4 @@ class GuiaDoAdmin extends Page
         return $user && $user->isVerified() && $user->isAdmin();
     }
 
-    protected static ?string $navigationIcon = 'heroicon-o-book-open';
-    protected static string $view = 'filament.pages.guia-do-admin';
-    protected static ?string $title = 'Guia do Administrador';
-
-    protected static ?string $navigationGroup = 'Ajuda e Suporte';
 }

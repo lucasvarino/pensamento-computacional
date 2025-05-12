@@ -10,8 +10,10 @@
    "require": {
         "php": "^8.1",
         "barryvdh/laravel-dompdf": "^2.2",
+        "blade-ui-kit/blade-icons": "^1.8",
         "calebporzio/sushi": "^2.4",
         "eightynine/filament-advanced-widgets": "^3.0",
+        "league/commonmark": "^2.7",
         "filament/filament": "^3.2.123",
         "filament/tables": "^3.2.115",
         "guzzlehttp/guzzle": "^7.2",
