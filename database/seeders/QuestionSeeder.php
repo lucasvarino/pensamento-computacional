@@ -2,17 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Question;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Question;
+use Illuminate\Support\Facades\DB;
 
 class QuestionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Question::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         Question::factory()->create([
             'title' => 'Em um jogo de múltiplos jogadores, você fica mais confortável quando...'
         ]);
@@ -74,7 +75,7 @@ class QuestionSeeder extends Seeder
         ]);
 
         Question::factory()->create([
-            'title' => 'No mundo do jogo, uma nova área se abre. Qual das opções você esta mais ancisoso para fazer:'
+            'title' => 'No mundo do jogo, uma nova área se abre. Qual das opções você esta mais ansioso para fazer:'
         ]);
 
         Question::factory()->create([
@@ -98,7 +99,7 @@ class QuestionSeeder extends Seeder
         ]);
 
         Question::factory()->create([
-            'title' => 'Em um mundo de múltiplos jogadores você se encontrar sozinho em uma área. Você acha que...'
+            'title' => 'Em um mundo de múltiplos jogadores você se encontra sozinho em uma área. Você acha que...'
         ]);
 
         Question::factory()->create([
