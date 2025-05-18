@@ -1,23 +1,13 @@
-    <div class="w-full">
-        <div class="flex flex-col gap-4">
-        <h2 class="text-2xl dark:text-white font-semibold text-center mt-8">Resultados do Teste {{ $className ?? '' }}</h2>
-            @foreach($results as $result)
-                @php
-                    $viewName = Str::kebab($result['group']);
-                @endphp
-
-                @includeFirst([
-                    "components.profiles.{$viewName}",
-                    'components.profiles.default',
-                ], ['result' => $result])
-            @endforeach
-        </div>
-    </div>
-
-<!-- 
-
 <div>
         <div class="w-full max-w-3xl mx-auto px-4">
+            <p>
+                Olá, Parabéns por concluir o Teste de Perfil de Jogador - Game Persona! 
+                Abaixo você encontra o relatório com suas respostas e a análise do seu perfil de jogador, 
+                desenvolvido pelo projeto de Perfil de Jogador da UFJF. Este documento apresenta uma visão 
+                personalizada de como você interage com jogos, destacando suas motivações, 
+                estilos de jogo predominantes e recomendações para potencializar sua experiência lúdica.
+                Obrigado pela sua participação!
+            </p>
             <h2 class="text-2xl dark:text-white font-semibold text-center mt-8">Resultados do Teste {{ $className ?? '' }}</h2>
             <div class="grid md:flex md:flex-col-reverse md:gap-4">
                 <div class="bg-gray-100 shdc-shadow-2 rounded-lg overflow-hidden flex flex-wrap items-center justify-center">
@@ -36,5 +26,3 @@
             </div>
         </div>
 </div>
-
-     -->
