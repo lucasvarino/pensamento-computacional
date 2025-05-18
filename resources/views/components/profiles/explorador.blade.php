@@ -14,7 +14,8 @@
   <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-40 h-40 flex items-center justify-center">
   <x-icon name="lanterna" class="class= hidden sm:block w-20 h-20"/>
   </div>
-  <img src="{{ asset('img/tocha.png') }}" alt="Tocha" class="hidden sm:block absolute w-20 h-20 top-0 right-0" />
+  <x-icon name="tocha" class="hidden sm:block absolute w-20 h-20 top-0 right-0"/>
+
 
 
 

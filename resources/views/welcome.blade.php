@@ -30,10 +30,10 @@
 </head>
 
     <body class="relative flex flex-col min-h-screen bg-center bg-gray-300 bg-dots-darker dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-        <header id="navbar" class="sm:fixed sm:top-0 w-full z-50">
+        <header id="navbar" class="sm:fixed sm:top-0 w-full mt-4 z-50">
         <div class="flex items-center text-black gap-5 mx-auto w-4/5 justify-between">
             <a href="/" class="flex text-left items-center">
-                <img class="h-28 w-auto" src="img/GamePersonaLogo.png" alt="Game Persona">
+                <x-icon name="game-persona-logo" class="h-24 w-24 bg-transparent"/>
                 <h1 class="font-mono text-2xl font-semibold hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Game Persona</h1>
             </a>
             @if (Route::has('login'))

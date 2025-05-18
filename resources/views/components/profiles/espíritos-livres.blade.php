@@ -16,7 +16,7 @@
       <circle cx="128" cy="150" r="30" fill="#98ffdc" />
     </svg>
       <div class="hidden sm:block absolute bottom-0">
-        <img src="{{ asset('img/lamparina.png') }}" alt="Lamparina" class="w-16 h-16" />
+        <x-icon name="lamparina" class="w-16 h-16"/>
       </div>
     </div>
 
@@ -36,7 +36,7 @@
     </div>
     
   <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-40 h-40 flex items-center justify-center">
-    <img src="{{ asset('img/borboleta.png') }}" alt="Borboleta" class="hidden sm:block w-24 h-24" />
+    <x-icon name="borboleta" class="hidden sm:block w-24 h-24"/>
   </div>
   
   <div class="relative flex flex-col items-center text-center h-full

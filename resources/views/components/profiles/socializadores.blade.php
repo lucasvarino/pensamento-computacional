@@ -14,11 +14,11 @@
   </svg>
   
   <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-40 h-40 flex items-center justify-center">
-    <img src="{{ asset('img/maos.png') }}" alt="Mãos dadas" class="hidden sm:block w-28 h-28" />
+    <x-icon name="maos" class="hidden sm:block w-24 h-24"/>
   </div>
   
   <div class="absolute inset-0 flex items-center justify-end z-10">
-    <img src="{{ asset('img/megafone.png') }}" alt="Megafone" class="hidden sm:block w-16 h-16 transform translate-x-1" />
+    <x-icon name="megafone" class="hidden sm:block w-16 h-16 transform translate-x-1"/>
   </div>
 
   <div class="relative flex flex-col items-center text-center h-full

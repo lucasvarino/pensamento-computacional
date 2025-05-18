@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->brandLogo(fn () => view('vendor.filament.components.brand'))
             ->darkModeBrandLogo(fn () => view('vendor.filament.components.brand-dark'))
-            //->favicon(asset('Game_Persona.svg'))
+            ->favicon(asset('img/game-persona-logo.svg'))
             //->brandName('Game Persona')
             //->darkModeBrandLogo(asset('GamePersonaLight.png'))
             //->brandLogoHeight('40px')

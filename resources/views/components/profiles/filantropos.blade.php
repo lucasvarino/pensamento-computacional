@@ -29,7 +29,7 @@
     <circle cx="128" cy="128" r="64" fill="#4ad277" />
     <circle cx="128" cy="128" r="32" fill="#9af097" />
   </svg>
-  <img src="{{ asset('img/filantropo.png') }}" alt="Filantropo" class="hidden sm:block w-24 h-24" />
+    <x-icon name="filantropo" class="hidden sm:block w-24 h-24"/>
   </div>
 
 

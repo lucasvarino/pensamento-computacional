@@ -27,9 +27,8 @@
     <circle cx="128" cy="128" r="64" fill="#a23967" />
     <circle cx="128" cy="128" r="32" fill="#973459" />
   </svg>
-  <img src="{{ asset('img/bomba.png') }}" alt="Mãos dadas" class="hidden sm:block w-20 h-20 sm:left-0" />
+    <x-icon name="bomba" class="hidden sm:block w-20 h-20 sm:left-0"/>
   </div>
-  {{-- Conteúdo central --}}
   <div class="relative flex flex-col items-center text-center h-full
             justify-center px-4 py-0">
             <img src="{{ asset('img/bomba.png') }}" alt="Mãos dadas" class="block sm:hidden w-20 h-20" />
