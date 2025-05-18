@@ -3,7 +3,7 @@
 namespace App\Filament\Widgets;
 
 use Filament\Widgets\Widget;
-use App\Models\User;
+use Illuminate\Support\Facades\Route;
 
 class TeacherGuideAlert extends Widget
 {
@@ -21,8 +21,18 @@ class TeacherGuideAlert extends Widget
         $user = auth()->user();
         if ($user) {
             $user->update(['saw_guide' => true]);
-
-            return redirect('/admin');
         }
+
+        return redirect('/admin');
+    }
+
+    public function goToGuide()
+    {
+        $user = auth()->user();
+        if ($user) {
+            $user->update(['saw_guide' => true]);
+        }
+
+        return redirect()->route('filament.admin.pages.guia-do-professor');
     }
 }
