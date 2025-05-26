@@ -14,12 +14,14 @@ use Filament\Support\Colors\Color;
 use Filament\Navigation\MenuItem;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -49,9 +51,13 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->pages([
-            //    Pages\Dashboard::class,
-            ])
+            // ->pages([
+            //     \App\Filament\Pages\Bartle::class,
+            //     \App\Filament\Pages\Dashboard::class,
+            //     \App\Filament\Pages\GuiaDoAdmin::class,
+            //     \App\Filament\Pages\GuiadoProfessor::class,
+            //     \App\Filament\Pages\hexad::class,
+            // ])
             ->widgets([
                 \App\Filament\Widgets\TeacherGuideAlert::class,
                 \App\Filament\Widgets\AccountOverview::class,
@@ -80,6 +86,25 @@ class AdminPanelProvider extends PanelProvider
             //Authenticate::class,
             ])
             ->databaseNotifications()
-            ->defaultThemeMode(ThemeMode::Dark);
+            ->defaultThemeMode(ThemeMode::Dark)
+            ->plugins([
+                EasyFooterPlugin::make()
+                    ->withFooterPosition('footer')
+                    ->withBorder()
+                    //->withGithub(showLogo: false, showUrl: true)
+                    ->withLogo(
+                        asset('img/game-persona-logo.svg'), // 'https://laravel.com/img/laravel-logo.png',
+                        '/',
+                        null, // 'Powered by Laravel',                                // Text to display (optional)
+                        28 // tamanho do logo
+                    )
+                    ->withLoadTime()
+                    ->withLinks([
+                        //['title' => 'Termo de Consentimento de Dados', 'url' => 'https://example.com/privacy-policy'],
+                        ['title' => 'Suporte | ', 'url' => '/admin/suporte'],
+                        ['title' => 'Políticas de Privacidade | ', 'url' => '/admin/suporte'],
+                        ['title' => 'Sobre nós', 'url' => '/admin/sobre-nos'],
+                    ]),
+            ]);
     }
 }
