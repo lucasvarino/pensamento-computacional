@@ -27,7 +27,7 @@
             <p>
                 Atenciosamente, <br>
                 Equipe Game Persona <br>
-                Projeto orientado por Prof. Eduardo Barrére<br>
+                Projeto orientado pelo Prof. Eduardo Barrére<br>
                 DCC / ICE / UFJF<br>
                 Contato:<br>
                 projeto.perfiljogador@ufjf.br<br>
