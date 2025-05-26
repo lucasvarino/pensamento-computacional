@@ -96,7 +96,7 @@ class AccountOverview extends BaseWidget
         } else {
 
             $status = $verified ? 'Verificada' : 'Não Verificada';
-            $description = $verified ? '' : 'Aguarde sua conta ser verificada ou entre em contato com os administradores';
+            $description = $verified ? '' : 'Aguarde sua conta ser verificada ou entre em contato com projeto.perfiljogador@ufjf.br';
 
             return [
                 Stat::make('Situação da conta', $status)
