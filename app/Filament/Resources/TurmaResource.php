@@ -42,18 +42,21 @@ class TurmaResource extends Resource
                 ->schema([
                     Forms\Components\TextInput::make('name')
                         ->required()
-                        ->label('Nome'),
+                        ->label('Nome')
+                        ->placeholder('Digite o nome da turma'),
                     Forms\Components\TextInput::make('institution')
                         ->required()
-                        ->label('Instituição'),
+                        ->label('Instituição')
+                        ->placeholder('Digite o nome da Instituição'),
                     Forms\Components\DatePicker::make('expire_date')
                         ->label('Data de Expiração'),
                     Forms\Components\Select::make('method_id')
                         ->relationship('method', 'name')
                         ->required()
-                        ->label('Método'),
+                        ->label('Método')
+                        ->disabled(fn (?TestClass $record) => filled($record)),
                     Forms\Components\Checkbox::make('term')
-                        ->label('Aceita o termo de consentimento de dados')
+                        ->label('Aceita o Termo de Consentimento de Dados')
                         ->required(),
                         Forms\Components\Hidden::make('user_id')
                         ->default(fn() => Auth::id())
