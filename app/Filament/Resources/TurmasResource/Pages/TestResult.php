@@ -16,14 +16,17 @@ use Illuminate\Support\Facades\Blade;
 use Ramsey\Uuid\Uuid;
 use App\Models\Answer;
 
-use Illuminate\Support\Facades\Log;
-
 class TestResult extends Page
 {
     protected static string $resource = TurmaResource::class;
 
     protected static string $view = 'filament.resources.turmas-resource.pages.test-result';
     protected static ?string $title = '';
+
+    public function getBreadcrumb(): string
+    {
+        return 'Resultado Individual';
+    }
 
     /** @var BartleResult[] */
     public Collection $result;

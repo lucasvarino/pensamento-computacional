@@ -9,6 +9,16 @@ use Filament\Resources\Pages\EditRecord;
 class EditTurma extends EditRecord
 {
     protected static string $resource = TurmaResource::class;
+    
+        public function getTitle(): string
+        {
+            return 'Editar Turma';
+        }
+    
+        public function getBreadcrumb(): string
+        {
+            return 'Editar';
+        }
 
     public function mount(int|string $record): void
     {
@@ -23,10 +33,22 @@ class EditTurma extends EditRecord
         }
     }
 
+    protected function getFormActions(): array
+    {
+        return [
+            $this->getSaveFormAction()
+                ->label('Salvar Alterações'),
+    
+            $this->getCancelFormAction()
+                ->label('Cancelar'),
+        ];
+    }
+
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()
+                ->label('Deletar'),
         ];
     }
 }

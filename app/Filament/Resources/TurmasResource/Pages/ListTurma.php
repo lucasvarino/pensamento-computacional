@@ -12,28 +12,33 @@ class ListTurma extends ListRecords
     protected static string $resource = TurmaResource::class;
     public $previousUrl;
 
+    public function getBreadcrumb(): string
+    {
+        return 'Listar Turmas';
+    }
+
     public function mount(): void
     {
         $user = auth()->user();
         $verified = $user && $user->isVerified() ? true : false;
-
+        
         if (!$user) {
+            $this->previousUrl = url()->previous();
             Notification::make()
             ->title('Acesso negado')
-            ->body('Você precisa estar autenticado e verificado para acessar esta página.')
+            ->body('Você precisa estar autenticado para acessar esta página.')
             ->danger()
             ->send();
 
-            redirect()->back();
+            redirect($this->previousUrl);
         }
 
-        if (!$verified) {
+        if ($user && !$verified) {
 
             $this->previousUrl = url()->previous();
-
             Notification::make()
             ->title('Acesso negado')
-            ->body('Você precisa estar autenticado e verificado para acessar esta página.')
+            ->body('Você precisa estar verificado para acessar esta página.')
             ->danger()
             ->send();
 
