@@ -3,7 +3,7 @@
 namespace App\Mail;
 
 use App\Models\BartleResult;
-use App\Models\HexadResult;     // <— import faltante
+use App\Models\HexadResult;
 use App\Models\Group;
 use App\Models\Method;
 use Illuminate\Bus\Queueable;
