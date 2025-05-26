@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\AnswerOption;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class AnswerOptionSeeder extends Seeder
 {
@@ -12,6 +13,9 @@ class AnswerOptionSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Question::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         AnswerOption::factory()->create([
             'title' => 'Está sozinho caçando monstros para obter pontos de experiência.',
             'group_id' => 1,
