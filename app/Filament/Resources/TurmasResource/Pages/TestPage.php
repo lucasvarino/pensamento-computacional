@@ -146,6 +146,12 @@ class TestPage extends Page
 
             Mail::to($states['email'])
                 ->send(new \App\Mail\TestResult($results, $this->testClass->name, $testType));
+
+            Notification::make()
+                ->title('E-mail enviado com sucesso!')
+                ->body('Não esqueça de verificar sua caixa de spam.')
+                ->warning()
+                ->send();
         }
 
             Notification::make()
@@ -159,7 +165,6 @@ class TestPage extends Page
                 ])
                 ->sendToDatabase($this->testClass->user);
 
-            // Redirect the user
             $this->redirect('/admin/turmas/test/' . $answer->id . '/result');
         });
         $this->reset();
@@ -221,7 +226,8 @@ class TestPage extends Page
                             ->label('E-mail')
                             ->email()
                             ->required(fn (Get $get): bool => $get('sendEmail'))
-                            ->visible(fn (Get $get): bool => (bool) $get('sendEmail')),
+                            ->visible(fn (Get $get): bool => (bool) $get('sendEmail'))
+                            ->helperText('Não esqueça de verificar a caixa de spam (lixo eletrônico) caso não receba o e-mail na sua caixa de entrada.'),
                     ])->columns(2),
                 Section::make('Questionário')
                     ->description('Responda o questionário e em seguida mostraremos o resultado')
