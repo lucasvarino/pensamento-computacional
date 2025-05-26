@@ -61,13 +61,13 @@ class AnswerOptionSeeder extends Seeder
         ]);
 
         AnswerOption::factory()->create([
-            'title' => 'Um canal privado onde você e amigos podem se comunicar?',
+            'title' => 'Um canal privado onde você e amigos podem se comunicar',
             'group_id' => 4,
             'question_id' => 5
         ]);
 
         AnswerOption::factory()->create([
-            'title' => 'Sua própria casa valendo milhões de moedas de ouro?',
+            'title' => 'Sua própria casa valendo milhões de moedas de ouro',
             'group_id' => 1,
             'question_id' => 5
         ]);

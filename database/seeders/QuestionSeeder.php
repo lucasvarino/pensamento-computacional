@@ -59,7 +59,7 @@ class QuestionSeeder extends Seeder
         ]);
 
         Question::factory()->create([
-            'title' => 'Qual é mais exitante:'
+            'title' => 'Qual é mais excitante:'
         ]);
 
         Question::factory()->create([
@@ -91,7 +91,7 @@ class QuestionSeeder extends Seeder
         ]);
 
         Question::factory()->create([
-            'title' => 'Você tende:'
+            'title' => 'Você tende a:'
         ]);
 
         Question::factory()->create([
