@@ -15,9 +15,8 @@ class AdvancedChartTurmas extends AdvancedChartWidget
 
     protected static ?string $heading  = "Teste por turmas";
     protected static string $color = 'info';
-    protected static ?string $icon = 'heroicon-o-chart-bar';
-    protected static ?string $iconColor = 'info';
-    protected static ?string $iconBackgroundColor = 'info';
+    protected static ?string $icon = 'icon-chart-bar';
+    protected static ?string $iconBackgroundColor = 'primary';
 
     protected function getData(): array
     {
