@@ -5,9 +5,11 @@ namespace App\Filament\Resources\TurmasResource\Pages;
 use App\Models\Answer;
 
 use Filament\Resources\Pages\Page;
+use Filament\Notifications\Notification;
 
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ExportBulkAction;
+use Filament\Tables\Actions\DeleteBulkAction;
 
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -46,6 +48,13 @@ class ListResults extends Page implements HasTable
 
     protected static string $view = 'filament.resources.turmas-resource.pages.list-results';
 
+    protected $listeners = ['refreshPageComponents' => '$refresh'];
+
+    public function getBreadcrumb(): string
+    {
+        return 'Visão Geral';
+    }
+
     public $url;
 
     public function table(Table $table): Table
@@ -67,9 +76,28 @@ class ListResults extends Page implements HasTable
             ->query($query)
             ->bulkActions([
                 ExportBulkAction::make('Exportar em formato csv')
-                    ->exporter(BartleResultsExporter::class)
+                    ->exporter($this->url === 'Bartle' 
+                        ? \App\Filament\Exports\BartleResultsExporter::class 
+                        : \App\Filament\Exports\HexadResultsExporter::class)
                     ->label('Exportar resultados')
-            ]);
+                    ->modalHeading('Selecione as colunas para exportar')
+                    ->modalSubheading(''),
+                DeleteBulkAction::make()
+                    ->label('Deletar respostas')
+                    ->requiresConfirmation()
+                    ->modalHeading('Tem certeza que deseja excluir as respostas selecionadas?')
+                    ->modalButton('Sim, excluir')
+                    ->modalSubheading('Esta ação não poderá ser desfeita.')  
+                    ->action(function ($records) {
+                        $records->each->delete();
+                        
+                        Notification::make()
+                            ->title('Registros deletados com sucesso')
+                            ->body('Atualize a página para ver as alterações.')
+                            ->success()
+                            ->send();
+                        })
+                ]);
     }
 
     public function getAllColumns(): array

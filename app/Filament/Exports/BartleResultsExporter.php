@@ -18,10 +18,25 @@ class BartleResultsExporter extends Exporter
         return [
             ExportColumn::make('name')->label('Nome'),
             ExportColumn::make('age')->label('Idade'),
-            ExportColumn::make('Empreendedor'),
-            ExportColumn::make('Explorador'),
-            ExportColumn::make('Assassino'),
+            ExportColumn::make('Empreendedor')
+                ->getStateUsing(fn(Answer $record) =>
+                    $record->bartleResults?->firstWhere('group_id', 1)?->value ?? null
+                ),
+
+            ExportColumn::make('Explorador')
+                ->getStateUsing(fn(Answer $record) =>
+                    $record->bartleResults?->firstWhere('group_id', 2)?->value ?? null
+                ),
+
+            ExportColumn::make('Assassino')
+                ->getStateUsing(fn(Answer $record) =>
+                    $record->bartleResults?->firstWhere('group_id', 3)?->value ?? null
+                ),
+
             ExportColumn::make('Socializador')
+                ->getStateUsing(fn(Answer $record) =>
+                    $record->bartleResults?->firstWhere('group_id', 4)?->value ?? null
+                ),
         ];
     }
 
