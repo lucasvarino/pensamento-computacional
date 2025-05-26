@@ -7,7 +7,7 @@
         
         @else
 
-        <form wire:submit="create">
+        <form wire:submit="create" autocomplete="off">
             {{ $this->form }}
             <div class="mt-6">
                 <x-filament::button type="submit">
