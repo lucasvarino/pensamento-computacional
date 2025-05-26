@@ -46,4 +46,17 @@ class Answer extends Model
         
         return null;
     }
+
+        /**
+     * Deleta em cascata os dados relacionados ao deletar uma Answer
+     */
+    protected static function booted()
+    {
+        static::deleting(function ($answer) {
+            $answer->bartleResults()->delete();
+            $answer->hexadResults()->delete();
+            $answer->hexadAnswers()->delete();
+            $answer->answersClasses()->delete();
+        });
+    }
 }
