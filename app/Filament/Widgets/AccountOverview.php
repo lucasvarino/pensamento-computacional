@@ -50,7 +50,7 @@ class AccountOverview extends BaseWidget
                         ->chart([12, 2, 7, 3, 10, 4, 5])
                         ->chartColor('primary')
                         ->icon('icon-user-group')
-                        ->description('Total de testes Bartle feitos')
+                        ->description('Total de testes Bartle realizados')
                         ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
                         ->iconColor('primary'),
                     
@@ -58,7 +58,7 @@ class AccountOverview extends BaseWidget
                         ->chart([5, 2, 10, 3, 8, 4, 12])
                         ->chartColor('primary')
                         ->icon('icon-trofeu')
-                        ->description('Total de testes Hexad feitos')
+                        ->description('Total de testes Hexad realizados')
                         ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
                         ->iconColor('primary'),
 
@@ -87,7 +87,7 @@ class AccountOverview extends BaseWidget
                 Stat::make('Testes Aplicados', $totalTestsApplied)
                     ->chart([12, 2, 7, 3, 10, 4, 5])
                     ->chartColor('primary')
-                    ->icon('heroicon-o-trophy')
+                    ->icon('icon-trofeu')
                     ->description('Total de testes Aplicados')
                     ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
                     ->iconColor('primary'),
