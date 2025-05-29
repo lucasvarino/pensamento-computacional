@@ -66,6 +66,12 @@ class ListResults extends Page implements HasTable
             ->join('classes', 'answers_classes.class_id', '=', 'classes.id')
             ->where('classes.url', $this->url);
 
+        $methodId = \App\Models\TestClass::where('url', $this->url)->value('method_id');
+
+        $exporterClass = $methodId === 1
+            ? \App\Filament\Exports\BartleResultsExporter::class
+            : \App\Filament\Exports\HexadResultsExporter::class;
+
         return $table
             ->columns([
             TextColumn::make('name')->label('Nome')->searchable(),
@@ -76,9 +82,7 @@ class ListResults extends Page implements HasTable
             ->query($query)
             ->bulkActions([
                 ExportBulkAction::make('Exportar em formato csv')
-                    ->exporter($this->url === 'Bartle' 
-                        ? \App\Filament\Exports\BartleResultsExporter::class 
-                        : \App\Filament\Exports\HexadResultsExporter::class)
+                    ->exporter($exporterClass)
                     ->label('Exportar resultados')
                     ->modalHeading('Selecione as colunas para exportar')
                     ->modalSubheading(''),
