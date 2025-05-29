@@ -25,6 +25,8 @@ export default {
 
                 'dark-bg-grad-l': '#09090b',
                 'dark-bg-grad-r': '#3f0054',
+                'bg-grad-l'     : '#bea6cc',
+                'bg-grad-r'     : '#9663ba',
                 'container-200' : '#b58cd9',
                 'container-400' : '#9711c9',
                 'container-600' : '#760099',

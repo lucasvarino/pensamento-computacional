@@ -28,9 +28,11 @@
 
     <body class="
     relative flex flex-col min-h-screen
-    dark:bg-gradient-to-r
+    bg-gradient-to-r
     dark:from-dark-bg-grad-l
     dark:to-dark-bg-grad-r
+    from-bg-grad-l
+    to-bg-grad-r
     selection:bg-red-500 selection:text-white
     dark:text-white
     ">
@@ -43,9 +45,11 @@
     });
     </script>
 
-        <header id="navbar" class="sm:fixed sm:top-0 w-full z-50 dark:bg-gradient-to-r
+        <header id="navbar" class="sm:fixed sm:top-0 w-full z-50 bg-gradient-to-r
     dark:from-dark-bg-grad-l
-    dark:to-dark-bg-grad-r">
+    dark:to-dark-bg-grad-r
+    from-bg-grad-l
+    to-bg-grad-r">
         <div class="flex relative text-black dark:text-white mx-auto w-full items-center px-10">
             <a href="/" class="flex left-0 m-3">
                 <x-icon name="game-persona-logo" class="h-16 w-16 bg-transparent"/>
@@ -251,7 +255,7 @@
       <div class="absolute inset-0 rounded-[5em] bg-socializador-400 translate-y-2"></div>
       <div class="absolute inset-0 rounded-[5em] bg-socializador-200"></div>
       <div class="relative flex items-center justify-center h-full">
-        <span class="font-mono text-xl font-semibold text-white">Socializador</span>
+        <span class="font-mono text-xl font-semibold dark:text-white text-socializador-txt">Socializador</span>
       </div>
     </div>
 
@@ -260,7 +264,7 @@
     <div class="absolute inset-0 rounded-[5em] bg-explorador-400 translate-y-2"></div>
     <div class="absolute inset-0 rounded-[5em] bg-explorador-200"></div>
     <div class="relative flex items-center justify-center h-full">
-      <span class="font-mono text-xl font-semibold text-white">Explorador</span>
+      <span class="font-mono text-xl font-semibold dark:text-white text-explorador-txt-txt">Explorador</span>
     </div>
   </div>
 
@@ -269,7 +273,7 @@
     <div class="absolute inset-0 rounded-[5em] bg-conquistador-600 translate-y-2"></div>
     <div class="absolute inset-0 rounded-[5em] bg-conquistador-400"></div>
     <div class="relative flex items-center justify-center h-full">
-      <span class="font-mono text-xl font-semibold text-white">Empreendedor</span>
+      <span class="font-mono text-xl font-semibold dark:text-white text-conquistador-txt-txt">Empreendedor</span>
     </div>
   </div>
 
@@ -278,7 +282,7 @@
     <div class="absolute inset-0 rounded-[5em] bg-assassino-400 translate-y-2"></div>
     <div class="absolute inset-0 rounded-[5em] bg-assassino-200"></div>
     <div class="relative flex items-center justify-center h-full">
-      <span class="font-mono text-xl font-semibold text-white">Assassino</span>
+      <span class="font-mono text-xl font-semibold dark:text-white text-assassino-txt">Assassino</span>
     </div>
   </div>
 
@@ -315,7 +319,7 @@
       <div class="absolute inset-0 rounded-[5em] bg-jogador-400 translate-y-2"></div>
       <div class="absolute inset-0 rounded-[5em] bg-jogador-200"></div>
       <div class="relative flex items-center justify-center h-full">
-        <span class="font-mono text-xl font-semibold text-white">Jogador</span>
+        <span class="font-mono text-xl font-semibold dark:text-white text-jogador-txt">Jogador</span>
       </div>
     </div>
 
@@ -324,7 +328,7 @@
     <div class="absolute inset-0 rounded-[5em] bg-espirito-livre-600 translate-y-2"></div>
     <div class="absolute inset-0 rounded-[5em] bg-espirito-livre-400"></div>
     <div class="relative flex items-center justify-center h-full">
-      <span class="font-mono text-xl font-semibold text-white">Espírito Lívre</span>
+      <span class="font-mono text-xl font-semibold dark:text-white text-espirito-livre-txt">Espírito Lívre</span>
     </div>
   </div>
 
@@ -333,7 +337,7 @@
     <div class="absolute inset-0 rounded-[5em] bg-filantropo-600 translate-y-2"></div>
     <div class="absolute inset-0 rounded-[5em] bg-filantropo-400"></div>
     <div class="relative flex items-center justify-center h-full">
-      <span class="font-mono text-xl font-semibold text-white">Filantropo</span>
+      <span class="font-mono text-xl font-semibold dark:text-white text-filantropo-txt">Filantropo</span>
     </div>
   </div>
 
@@ -342,7 +346,7 @@
     <div class="absolute inset-0 rounded-[5em] bg-conquistador-600 translate-y-2"></div>
     <div class="absolute inset-0 rounded-[5em] bg-conquistador-400"></div>
     <div class="relative flex items-center justify-center h-full">
-      <span class="font-mono text-xl font-semibold text-white">Conquistador</span>
+      <span class="font-mono text-xl font-semibold dark:text-white text-conquistador-txt">Conquistador</span>
     </div>
   </div>
 
@@ -351,7 +355,7 @@
     <div class="absolute inset-0 rounded-[5em] bg-socializador-400 translate-y-2"></div>
     <div class="absolute inset-0 rounded-[5em] bg-socializador-200"></div>
     <div class="relative flex items-center justify-center h-full">
-      <span class="font-mono text-xl font-semibold text-white">Socializador</span>
+      <span class="font-mono text-xl font-semibold dark:text-white text-socializador-txt">Socializador</span>
     </div>
   </div>
 
@@ -360,7 +364,7 @@
     <div class="absolute inset-0 rounded-[5em] bg-disruptor-400 translate-y-2"></div>
     <div class="absolute inset-0 rounded-[5em] bg-disruptor-200"></div>
     <div class="relative flex items-center justify-center h-full">
-      <span class="font-mono text-xl font-semibold text-white">Disruptor</span>
+      <span class="font-mono text-xl font-semibold dark:text-white text-disruptor-txt">Disruptor</span>
     </div>
   </div>
 
