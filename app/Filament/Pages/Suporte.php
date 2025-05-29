@@ -17,7 +17,6 @@ class Suporte extends Page implements HasForms
     protected static ?string $title = 'Suporte';
     protected static ?string $navigationGroup = 'Ajuda e Suporte';
     protected static string $view = 'filament.pages.suporte';
-    protected static bool $shouldRegisterNavigation = false;
 
     public static function canView(): bool
     {
