@@ -101,9 +101,7 @@ class AdminPanelProvider extends PanelProvider
                     ->withLoadTime()
                     ->withLinks([
                         //['title' => 'Termo de Consentimento de Dados', 'url' => 'https://example.com/privacy-policy'],
-                        ['title' => 'Suporte | ', 'url' => '/admin/suporte'],
-                        ['title' => 'Políticas de Privacidade | ', 'url' => '/admin/suporte'],
-                        ['title' => 'Sobre nós', 'url' => '/admin/sobre-nos'],
+                        ['title' => 'Políticas de Privacidade', 'url' => '/admin/suporte'],
                     ]),
             ]);
     }
