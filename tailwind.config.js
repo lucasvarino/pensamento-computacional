@@ -4,6 +4,7 @@ import preset from './vendor/filament/support/tailwind.config.preset'
 
 /** @type {import('tailwindcss').Config} */
 export default {
+    darkMode: 'media',
     presets: [preset],
     content: [
         './app/Filament/**/*.php',
@@ -21,8 +22,15 @@ export default {
             },
             colors: {
                 'bg': '#18181b',
+
+                'dark-bg-grad-l': '#09090b',
+                'dark-bg-grad-r': '#3f0054',
+                'container-200' : '#b58cd9',
+                'container-400' : '#9711c9',
+                'container-600' : '#760099',
+                'container-800' : '#590074',
                 
-                'filantropo' : '#25bb48',
+                'filantropo'     : '#25bb48',
                 'filantropo-200' : '#9af097',
                 'filantropo-400' : '#4ad277',
                 'filantropo-600' : '#0fa156',
@@ -66,16 +74,16 @@ export default {
                 'jogador-txt' : '#1b0036',
                 
                 'explorador' : '#ce733c',
-                // 'explorador-200' : '#',
-                // 'explorador-400' : '#',
-                // 'explorador-600' : '#',
+                'explorador-200' : '#fea163',
+                'explorador-400' : '#f0731f',
+                'explorador-600' : '#c15c5c',
                 // 'explorador-800' : '#',
                 'explorador-txt' : '#481112',
                 
                 'assassino' : '#c73d3d',
-                // 'assassino-200' : '#6242b4',
-                // 'assassino-400' : '#5335a4',
-                // 'assassino-600' : '#472997',
+                'assassino-200' : '#c73d3d',
+                'assassino-400' : '#b73838',
+                'assassino-600' : '#982f3e',
                 // 'assassino-800' : '#3e2188',
                 'assassino-txt' : '#36050d',
             },

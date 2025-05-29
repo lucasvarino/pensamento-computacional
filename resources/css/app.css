@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* Chrome, Safari e Opera */
+  /* ::-webkit-scrollbar {
+    display: none;
+  } */
+
+  /* Firefox */
+  html {
+    /* scrollbar-width: none; */
+    scroll-behavior: smooth;
+    scroll-padding-top: 4rem;
+  }
+}
