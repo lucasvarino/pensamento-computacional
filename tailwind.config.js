@@ -4,7 +4,7 @@ import preset from './vendor/filament/support/tailwind.config.preset'
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    darkMode: 'media',
+    // darkMode: 'media',
     presets: [preset],
     content: [
         './app/Filament/**/*.php',
