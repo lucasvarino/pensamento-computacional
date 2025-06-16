@@ -22,12 +22,18 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
-use Filament\Notifications\Actions\Action;
+use Filament\Notifications\Actions\Action as NotificationAction; 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
+use Filament\Pages\Actions\CreateAction;
+use Filament\Pages\Actions\ButtonAction;
+use Filament\Actions;
+use Filament\Resources\Pages\CreateRecord;
+use Filament\Actions\Action;
 
 class TestPage extends Page
 {
@@ -35,13 +41,16 @@ class TestPage extends Page
 
     protected static string $view = 'filament.resources.turmas-resource.pages.test-page';
 
-    protected static ?string $title = '';
-
     public TestClass $testClass;
 
     public ?array $data = [];
 
     public bool $expirated = false;
+
+    public function getTitle(): string
+    {
+        return $this->testClass->name;
+    }
 
     public function mount(string $url): void
     {
@@ -51,8 +60,6 @@ class TestPage extends Page
             $this->expirated = true;
         }
         
-
-        self::$title = $this->testClass->name;
         $this->form->fill();
     }
 
@@ -159,7 +166,7 @@ class TestPage extends Page
                 ->success()
                 ->body('Clique para ver o resultado individual do aluno')
                 ->actions([
-                    Action::make('Acessar')
+                    NotificationAction::make('Acessar')
                         ->link()
                         ->url('/admin/turmas/test/' . $answer->id . '/result')
                 ])
@@ -219,6 +226,9 @@ class TestPage extends Page
                             ->required()
                             ->native(false)
                             ->label('Estado'),
+                        Checkbox::make('term')
+                            ->label('Aceita o Termo de Consentimento Livre e Esclarecido')
+                            ->required(),
                         Checkbox::make('sendEmail')
                             ->label('Enviar resultado do teste por e-mail?')
                             ->live(),
@@ -233,5 +243,17 @@ class TestPage extends Page
                     ->description('Responda o questionário e em seguida mostraremos o resultado')
                     ->schema($questions),
             ])->statePath('data');
+    }
+
+    public function getActions(): array{
+        return [
+            Action::make('viewTermo')
+                ->label('Ver Termo de Consentimento Livre e Esclarecido')
+                ->button()
+                ->modalHeading('Termo de Consentimento Livre e Esclarecido')
+                ->modalContent(fn (): View => view('components.termo-content-participant'))
+                ->modalSubmitAction(false)
+                ->modalCancelActionLabel('Fechar'),
+        ];
     }
 }

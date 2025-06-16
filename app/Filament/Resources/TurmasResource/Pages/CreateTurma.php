@@ -66,15 +66,12 @@ class CreateTurma extends CreateRecord
     {
         return [
             Action::make('viewTermo')
-                ->label('Ver Termo de Consentimento de Dados')
+                ->label('Ver Termo de Consentimento Livre e Esclarecido')
                 ->button()
-                ->modalHeading('Termo de Consentimento de Dados')
+                ->modalHeading('Termo de Consentimento Livre e Esclarecido')
                 ->modalContent(fn (): View => view('components.termo-content'))
-                ->modalActions([
-                    ActionButton::make('close')
-                        ->label('Fechar')
-                        ->close(),
-                ]),
+                ->modalSubmitAction(false)
+                ->modalCancelActionLabel('Fechar'),
         ];
     }
 }

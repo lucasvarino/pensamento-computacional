@@ -56,7 +56,7 @@ class TurmaResource extends Resource
                         ->label('Método')
                         ->disabled(fn (?TestClass $record) => filled($record)),
                     Forms\Components\Checkbox::make('term')
-                        ->label('Aceita o Termo de Consentimento de Dados')
+                        ->label('Aceita o Termo de Consentimento Livre e Esclarecido')
                         ->required(),
                         Forms\Components\Hidden::make('user_id')
                         ->default(fn() => Auth::id())
