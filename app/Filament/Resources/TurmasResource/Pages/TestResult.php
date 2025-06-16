@@ -15,6 +15,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Ramsey\Uuid\Uuid;
 use App\Models\Answer;
+use Illuminate\Contracts\Support\Htmlable;
 
 class TestResult extends Page
 {
@@ -28,34 +29,77 @@ class TestResult extends Page
         return 'Resultado Individual';
     }
 
+    public function getTitle(): string | Htmlable
+    {
+        if (auth()->user()?->isVerified()) {
+            return 'Resultado do Teste de ' . $this->answer->name;
+        }
+
+        if ($this->answer->method->name === 'Hexad') {
+            return 'Resultado do Teste Hexad';
+        }
+        
+        if ($this->answer->method->name === 'Bartle') {
+            return 'Resultado do Teste de Bartle';
+        }
+
+        return 'Resultado do Teste';
+    }
+
     /** @var BartleResult[] */
     public Collection $result;
     public $formatResult;
     public string $className;
+    public Answer $answer;
 
 
     public function mount($id): void
     {
-        $answer = Answer::with('method')->findOrFail($id);
-        if ($answer->method->name === 'Hexad') {
+        $this->answer = Answer::with('method')->findOrFail($id);
+        // $answer = Answer::with('method')->findOrFail($id);
+        // if ($answer->method->name === 'Hexad') {
+        //     $this->result = HexadResult::where('answer_id', $id)
+        //         ->with(['group', 'answer'])
+        //         ->orderBy('group_id', 'ASC')
+        //         ->get();
+
+        // } elseif ($answer->method->name === 'Bartle') {
+        //     $this->result = BartleResult::where('answer_id', $id)
+        //         ->with(['group', 'answer'])
+        //         ->orderBy('group_id', 'ASC')
+        //         ->get();
+
+        // }
+
+        if ($this->answer->method->name === 'Hexad') {
             $this->result = HexadResult::where('answer_id', $id)
                 ->with(['group', 'answer'])
                 ->orderBy('group_id', 'ASC')
                 ->get();
-
-        } elseif ($answer->method->name === 'Bartle') {
-            $this->result = BartleResult::where('answer_id', $id)
-                ->with(['group', 'answer'])
-                ->orderBy('group_id', 'ASC')
-                ->get();
-
+        } elseif ($this->answer->method->name === 'Bartle') {
+                $this->result = BartleResult::where('answer_id', $id)
+                    ->with(['group', 'answer'])
+                    ->orderBy('group_id', 'ASC')
+                    ->get();
         }
 
         if ($this->result->isEmpty()) {
             abort(404, 'Resultados não encontrados.');
         }
 
-        self::$title = 'Resultado do Teste de ' . $answer->name;
+        // if($this->user->isVerified() === false){
+        //     if ($answer->method->name === 'Hexad') {
+        //         self::$title = 'Resultado do Teste Hexad';
+        //     } elseif ($answer->method->name === 'Bartle') {
+        //         self::$title = 'Resultado do Teste Bartle';
+        //     } else {
+        //         self::$title = 'Resultado do Teste';
+        //     }
+        // }
+
+        // if($this->user->isVerified() === true){
+        //     self::$title = 'Resultado do Teste de ' . $answer->name;
+        // }
 
         $this->formatResult = $this->getResultTest();
     }
