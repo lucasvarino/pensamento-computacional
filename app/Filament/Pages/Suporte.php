@@ -18,10 +18,10 @@ class Suporte extends Page implements HasForms
     protected static ?string $navigationGroup = 'Ajuda e Suporte';
     protected static string $view = 'filament.pages.suporte';
 
-    public static function canView(): bool
+    public static function canAccess(): bool
     {
         $user = auth()->user();
-        return $user;
+        return $user && $user->isVerified();
     }
 
     public $name, $email, $subject, $message;
