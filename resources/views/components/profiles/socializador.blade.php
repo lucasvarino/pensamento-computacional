@@ -22,7 +22,7 @@
   </div>
 
   <div class="relative flex flex-col items-center text-center h-full
-            justify-center px-4 py-0">
+            justify-center px-4 py-0 z-20">
     <img src="{{ asset('img/megafone.png') }}" alt="Espada Sangue Assassino" class="block sm:hidden w-20 h-20" />
     <h3 class="m-2 text-xl sm:text-3xl font-bold text-socializador-txt uppercase w-full">
       {{ $result['role'] ?? 'SOCIALIZADOR' }}:
