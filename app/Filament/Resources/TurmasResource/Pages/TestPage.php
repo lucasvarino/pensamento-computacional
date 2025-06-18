@@ -34,6 +34,9 @@ use Filament\Pages\Actions\ButtonAction;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Actions\Action;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Actions as submitActions;
+use Filament\Forms\Components\Actions\Action as submitAction;
 
 class TestPage extends Page
 {
@@ -226,9 +229,9 @@ class TestPage extends Page
                             ->required()
                             ->native(false)
                             ->label('Estado'),
-                        Checkbox::make('term')
-                            ->label('Aceita o Termo de Consentimento Livre e Esclarecido')
-                            ->required(),
+                        // Checkbox::make('term')
+                        //     ->label('Aceita o Termo de Consentimento Livre e Esclarecido')
+                        //     ->required(),
                         Checkbox::make('sendEmail')
                             ->label('Enviar resultado do teste por e-mail?')
                             ->live(),
@@ -242,7 +245,16 @@ class TestPage extends Page
                 Section::make('Questionário')
                     ->description('Responda o questionário e em seguida mostraremos o resultado')
                     ->schema($questions),
-            ])->statePath('data');
+                Placeholder::make('consent')
+                ->label('')
+                ->content('Ao enviar suas respostas, você estará concordando com o Termo de Consentimento Livre e Esclarecido.'),
+            //         submitActions::make([
+            //     submitAction::make('submit')
+            //         ->label('Concordar com Termo e Enviar Respostas')
+            //         ->action('create'),
+            // ]),
+            ])
+            ->statePath('data');
     }
 
     public function getActions(): array{
