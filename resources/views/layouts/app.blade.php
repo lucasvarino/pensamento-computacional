@@ -11,7 +11,6 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         @filamentStyles
-        @vite(['resources/css/app.css'])
 
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -37,6 +36,6 @@
         </div>
 
         @filamentScripts
-        @vite(['resources/js/app.js'])
+
     </body>
 </html>
