@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    <link rel="icon" href="{{ asset('img/game-persona.svg') }}" type="image/svg">
 
     <title>Game Persona</title>
 
@@ -35,7 +35,7 @@
     dark:text-white
 ">
 
-<!-- AOS init (já existia) -->
+<!-- AOS init -->
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
     AOS.init({
@@ -199,146 +199,6 @@
     });
 </script>
 
-<!-- <script>
-    window.addEventListener("scroll", function () {
-        const navbar = document.getElementById("navbar");
-        if (window.scrollY > 50) {
-            navbar.classList.add("shadow-md");
-        } else {
-            navbar.classList.remove("shadow-md");
-        }
-    });
-</script>
-
-</head>
-
-
-    <body class="
-    relative flex flex-col min-h-screen
-    bg-gradient-to-r
-    dark:from-dark-bg-grad-l
-    dark:to-dark-bg-grad-r
-    from-bg-grad-l
-    to-bg-grad-r
-    selection:bg-red-500 selection:text-white
-    dark:text-white
-    ">
-
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <script>
-    AOS.init({
-        easing: 'ease-out-quart',
-        once: true,      // roda só na primeira vez que aparece
-    });
-    </script>
-
-        <header id="navbar" class="sm:fixed sm:top-0 w-full z-50 bg-gradient-to-r
-    dark:from-dark-bg-grad-l
-    dark:to-dark-bg-grad-r
-    from-bg-grad-l
-    to-bg-grad-r
-    ">
-
-
-    <div class="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 lg:px-8 py-3">
-        <a href="/" class="flex items-center gap-2">
-            <x-icon name="game-persona-logo" class="h-12 w-12 bg-transparent"/>
-            <h1 class="font-mono text-2xl font-semibold hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb]
-                dark:text-white dark:hover:text-fuchsia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                GAME<br>PERSONA
-            </h1>
-        </a>
-
-
-        <div class="flex relative text-black dark:text-white mx-auto w-full items-center px-10">
-            <a href="/" class="flex left-0 m-3">
-                <x-icon name="game-persona-logo" class="h-16 w-16 bg-transparent"/>
-                <h1 class="font-mono text-2xl font-semibold hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-white dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">GAME <br> PERSONA</h1>
-            </a>
-            <div class="flex w-5/6 items-center justify-center gap-7 px-5 ">
-                <a href="#inicio" data-aos="fade-up" data-aos-duration="200" class="font-mono font-semibold text-x1
-                hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"> 
-                    Início
-                </a>
-                <a href="#sobre" data-aos="fade-up" data-aos-duration="250" class="font-mono font-semibold text-x1
-                hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"> 
-                    Sobre nós
-                </a>
-                <a href="#metodos" data-aos="fade-up" data-aos-duration="300" class="font-mono font-semibold text-x1
-                hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"> 
-                    Métodos
-                </a>
-                <a href="#equipe" data-aos="fade-up" data-aos-duration="350" class="font-mono font-semibold text-x1
-                hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"> 
-                    Nossa equipe
-                </a>
-                <a href="#contato" data-aos="fade-up" data-aos-duration="400" class="font-mono font-semibold text-x1
-                hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"> 
-                    Contato
-                </a>
-            </div>
-            @if (Route::has('login'))
-                <nav class="flex text-right right-0 px-3" data-aos="fade-up" data-aos-duration="450">
-                    @auth
-                        <a href="{{ url('/admin') }}" class="font-mono font-semibold text-xl hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Painel</a>
-                    @else
-                        <a href="{{ route('login') }}" class="font-mono font-semibold text-xl hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Entrar</a>
-                        <!--
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="font-mono ml-4 font-semibold text-xl hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb] dark:text-gray-400 dark:hover:text-fuschia-300 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Cadastre-se</a>
-                        @endif 
-                        
-              <nav class="hidden sm:flex sm:items-center sm:space-x-8"
-             data-aos="fade-down" data-aos-duration="300"
-        >
-            <a href="#inicio" class="font-mono font-semibold text-xl
-                hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb]
-                dark:text-gray-400 dark:hover:text-fuchsia-300
-                focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-            >Início</a>
-            <a href="#sobre" class="font-mono font-semibold text-xl
-                hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb]
-                dark:text-gray-400 dark:hover:text-fuchsia-300
-                focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-            >Sobre nós</a>
-            <a href="#metodos" class="font-mono font-semibold text-xl
-                hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb]
-                dark:text-gray-400 dark:hover:text-fuchsia-300
-                focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-            >Métodos</a>
-            <a href="#equipe" class="font-mono font-semibold text-xl
-                hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb]
-                dark:text-gray-400 dark:hover:text-fuchsia-300
-                focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-            >Nossa equipe</a>
-            <a href="#contato" class="font-mono font-semibold text-xl
-                hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb]
-                dark:text-gray-400 dark:hover:text-fuchsia-300
-                focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-            >Contato</a>
-
-            @if (Route::has('login'))
-                @auth
-                    <a href="{{ url('/admin') }}" class="font-mono font-semibold text-xl
-                        hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb]
-                        dark:text-gray-400 dark:hover:text-fuchsia-300
-                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                    >Painel</a>
-                @else
-                    <a href="{{ route('login') }}" class="font-mono font-semibold text-xl
-                        hover:text-fuchsia-600 hover:drop-shadow-[0_0_10px_#eb34eb]
-                        dark:text-gray-400 dark:hover:text-fuchsia-300
-                        focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                    >Entrar</a>
-                @endauth
-            @endif
-        </nav>
-                    @endauth
-                </nav>
-            @endif
-        </div>
-    </header> -->
-
 <main class="flex flex-col items-center pt-9 overflow-hidden">
 
   <section id="inicio" class="relative flex sm:pt-28 sm:pl-12 sm:gap-5 w-full justify-center items-center">
@@ -435,110 +295,6 @@
 
     </div>
 </section>
-
-
-  <!-- <section id="sobre" class="relative flex py-12 w-full">
-  <div class="flex pt-16">
-    <div class="relative w-full py-7">
-
-      <div class="absolute inset-y-0 w-4/5 rounded-[5em] bg-container-800 translate-x-24"></div>
-      <div class="absolute inset-y-0 w-4/5 rounded-[5em] bg-container-600 translate-x-16"></div>
-      <div class="absolute inset-y-0 w-4/5 rounded-[5em] bg-container-400 translate-x-7"></div>
-      <div class="absolute inset-y-0 w-4/5 rounded-[5em] bg-container-200"></div>
-      <div class="relative flex flex-col items-center w-full h-full">
-        
-      <div class="flex w-full justify-center">
-
-        <h1 class="font-mono font-semibold text-5xl text-black dark:text-white" data-aos="fade-up" data-aos-duration="600">
-            O QUE 
-            <span class="text-violet-600 dark:text-violet-600 drop-shadow-[0_0_10px_#b74ae1] brightness-125">
-          FAZEMOS</span>?
-        </h1>
-
-      </div>
-        <div class="px-[20%] grid grid-cols-1 text-center">
-
-            <div class="flex flex-row items-center"> 
-                <x-icon name="icon-user" class="h-40 w-40"/> 
-                <div class="px-7">
-                    <h1 class="font-mono my-4 text-2xl font-semibold text-black dark:text-white" data-aos="fade-up" data-aos-duration="550">
-                        Crie uma Turma!</h1>
-                  <p class="font-mono my-4 text-xl font-semibold text-black dark:text-white" data-aos="fade-up" data-aos-duration="550">
-                      Descreve o tópico. Lorem, neque provident voluptatibus vitae debitis earum officia adipisci cum illum accusantium quia libero ad consequuntur explicabo, quis accusamus ut soluta harum. Architecto.</p>
-                </div>
-            </div>
-            <div class="flex flex-row items-center"> 
-                <x-icon name="icon-user" class="h-40 w-40"/> 
-                <div class="px-7">
-                    <h1 class="font-mono my-4 text-2xl font-semibold text-black dark:text-white" data-aos="fade-up" data-aos-duration="550">
-                        Aplique os testes!</h1>
-                <p class="font-mono my-4 text-xl font-semibold text-black dark:text-white" data-aos="fade-up" data-aos-duration="550">
-                    Descreve o tópico. Lorem, neque provident voluptatibus vitae debitis earum officia adipisci cum illum accusantium quia libero ad consequuntur explicabo, quis accusamus ut soluta harum. Architecto.</p>
-                </div>
-            </div>
-            <div class="flex flex-row items-center"> 
-                <x-icon name="icon-user" class="h-40 w-40"/> 
-                <div class="px-7">
-                    <h1 class="font-mono my-4 text-2xl font-semibold text-black dark:text-white" data-aos="fade-up" data-aos-duration="550">
-                        Analise os resultados!</h1>
-                <p class="font-mono my-4 text-xl font-semibold text-black dark:text-white" data-aos="fade-up" data-aos-duration="550">
-                    Descreve o tópico. Lorem, neque provident voluptatibus vitae debitis earum officia adipisci cum illum accusantium quia libero ad consequuntur explicabo, quis accusamus ut soluta harum. Architecto.</p>
-                </div>
-            </div>
-    
-        </div>
-      </div>
-    </div>
-    </section> -->
-
-    <!-- <section id="sobre" class="relative flex py-12 w-full">
-<div class="flex pt-16">
-<div class="relative w-4/5 py-7">
-    <div class="absolute inset-y-0 left-0 w-4/5 rounded-[5em] bg-container-800 translate-x-24"></div>
-    <div class="absolute inset-y-0 left-0 w-4/5 rounded-[5em] bg-container-600 translate-x-16"></div>
-    <div class="absolute inset-y-0 left-0 w-4/5 rounded-[5em] bg-container-400 translate-x-7"></div>
-    <div class="absolute inset-y-0 left-0 w-4/5 rounded-e-[5em] bg-container-200 -translate-x-3"></div>
-    <div class="relative flex flex-col items-center w-4/5 h-full">
-    <div class="flex p-3 w-full justify-around">
-        <x-icon name="icon-ufjf" class="h-20 w-20" data-aos="fade-up" data-aos-duration="450"/>
-        <x-icon name="icon-lapic" class="h-20 w-20" data-aos="fade-up" data-aos-duration="500"/>
-        <x-icon name="icon-fadepe" class="h-20 w-20" data-aos="fade-up" data-aos-duration="550"/>
-    </div>
-    <p class="font-mono my-4 text-3xl font-semibold text-black dark:text-white px-5" data-aos="fade-up" data-aos-duration="600">
-        A plataforma desenvolvida no Laboratório de Aplicações e Inovação em Computação (LApIC) <br> da UFJF,
-        como parte das atividades relacionadas ao Programa de Pós-graduação em Educação Matemática.
-        O projeto contou com o financiamento da Secretaria de Educação do Estado de Minas Gerais.
-        O sistema foi desenvolvido com o intuito de Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum distinctio quas deserunt nihil est in sapiente pariatur, nam deleniti perspiciatis?
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit reprehenderit inventore nam corrupti esse eum a explicabo maiores vitae corporis!
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel aliquam fugit minus reprehenderit enim eligendi veritatis, voluptate numquam vitae ipsa?
-    </p>
-    </div>
-</div>
-</section> -->
-
-<!-- <section class="relative flex pt-12 gap-5 w-full justify-end items-center -translate-y-48">
-  <div class="relative w-2/5 py-7" data-aos="fade-left" data-aos-duration="450">
-    <div class="absolute inset-y-0 right-0 w-full rounded-s-[5em] bg-container-800 translate-x-1"></div>
-    <div class="absolute inset-y-0 right-0 w-full rounded-s-[5em] bg-container-600 translate-x-6"></div>
-    <div class="absolute inset-y-0 right-0 w-full rounded-s-[5em] bg-container-400 translate-x-11"></div>
-    <div class="absolute inset-y-0 right-0 w-full rounded-s-[5em] bg-container-200 translate-x-16"></div>
-
-    <div class="relative flex flex-col items-center h-full px-5">
-      <div class="flex w-full justify-center pl-16">
-        <h1 class="font-mono font-semibold text-5xl text-black dark:text-white" data-aos="fade-up" data-aos-duration="600">
-            O QUE 
-            <span class="text-violet-600 dark:text-violet-600 drop-shadow-[0_0_10px_#b74ae1] brightness-125">
-          FAZEMOS</span>?
-        </h1>
-      </div>
-      <p class="font-mono my-4 text-2xl text-right pl-16 font-semibold text-black dark:text-white" data-aos="fade-up" data-aos-duration="650">
-        O sistema foi desenvolvido com o intuito de Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum distinctio quas deserunt nihil est in sapiente pariatur, nam deleniti perspiciatis?
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit reprehenderit inventore nam corrupti esse eum a explicabo maiores vitae corporis!
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel aliquam fugit minus reprehenderit enim eligendi veritatis, voluptate numquam vitae ipsa?
-      </p>
-    </div>
-  </div>
-</section> -->
 
 <section id="metodos" class="relative flex-col flex w-full justify-center justify-items-center sm:p-12 p-5">
 
@@ -718,7 +474,12 @@
           CONOSCO</span>!
       </h1>
 
-      <form class="w-full sm:space-y-6 space-y-2">
+      <form 
+        action="{{ route('contato.send') }}" 
+        method="POST"
+        class="w-full sm:space-y-6 space-y-2"
+        >
+        @csrf
         <div class="flex flex-col text-left">
           <label for="nome" class="font-mono sm:text-lg text-sm font-semibold text-black dark:text-white mb-2">
             Nome
@@ -726,6 +487,8 @@
           <input
             id="nome"
             type="text"
+            name="name"
+            required
             placeholder="Seu nome"
             class="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-violet-500"
           />
@@ -737,6 +500,8 @@
           <input
             id="email"
             type="email"
+            name="email"
+            required
             placeholder="seu@email.com"
             class="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-violet-500"
           />
@@ -746,8 +511,10 @@
             Assunto
           </label>
           <input
-            id="assunto"
-            type="assunto"
+            id="subject"
+            type="text"
+            name="subject"
+            required
             placeholder="O assunto do Email"
             class="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-violet-500"
           />
@@ -757,8 +524,10 @@
             Mensagem
           </label>
           <textarea
-            id="mensagem"
+            id="message"
+            name="message"
             rows="4"
+            required
             placeholder="Escreva sua mensagem..."
             class="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none"
           ></textarea>
@@ -794,28 +563,11 @@
         <span class="hidden lg:block justify-items-center">
           <x-icon name="icon-design-game-persona-1" 
               class="sm:w-[70%] w-full h-auto hidden lg:block" />
-
-          <!-- <div class="absolute top-[77%] left-[14%] -translate-x-[14%] -translate-y-[90%] w-1/4 h-1/4">
-              <x-icon name="icon-design-gabriel" class="w-full h-full" />
-              <div class="h-[80%] w-[80%] bg-black text-center items-center">Gabriel</div>
-          </div>
-
-          <div class="absolute top-[39%] left-[33%] -translate-x-[40%] -translate-y-[40%] w-[27%] h-[27%]">
-              <x-icon name="icon-design-gabriel" 
-                  class="w-full h-full" />
-              <div class="h-[80%] w-[80%] bg-black text-center items-center">Letícia</div>
-          </div>
-          
-          <div class="absolute top-[80%] left-[42%] -translate-x-[40%] -translate-y-[60%] w-[27%] h-[27%]">
-              <x-icon name="icon-design-gabriel" 
-              class="w-full h-full" />
-              <div class="h-[80%] w-[80%] bg-black text-center items-center">Kami</div>
-          </div> -->
         </span>
 
         <div class="text-center">
             <h1 class="font-mono font-semibold sm:text-5xl text-2xl text-black dark:text-white" data-aos="fade-down" data-aos-duration="500">
-                Equipe de Desgin
+                Equipe de Design
             </h1>
             <p class="font-mono my-4 sm:text-2xl text-ms font-semibold text-black dark:text-white" data-aos="fade-down" data-aos-duration="500">
                 Nossa equipe de design! Descrever integrantes
@@ -837,18 +589,6 @@
         <span class="hidden lg:block justify-items-center">
           <x-icon name="icon-design-game-persona-2" 
               class="sm:w-[70%] w-9/12 h-auto right-0 -scale-x-100"/>
-
-          <!-- <div class="absolute top-[45%] left-[64%] -translate-x-[40%] -translate-y-[40%] w-[30%] h-[30%]">
-              <x-icon name="icon-design-gabriel" 
-              class="w-full h-full" />
-              <div class="h-[80%] w-[80%] bg-black text-center items-center">Barrere</div>
-          </div> -->
-
-          <!-- <div class="absolute top-[87%] left-[88%] -translate-x-[80%] -translate-y-[80%] w-[27%] h-[27%]">
-              <x-icon name="icon-design-gabriel" 
-              class="w-full h-full" />
-              <div class="h-[80%] w-[80%] bg-black text-center items-center">Vitor</div>
-          </div> -->
         </span>
     </div>
     

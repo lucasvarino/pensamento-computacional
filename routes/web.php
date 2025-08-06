@@ -4,6 +4,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\BartleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ContactController;
 use App\Livewire\TestForm;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::post('/', [ContactController::class, 'send'])->name('contato.send');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -40,5 +42,6 @@ Route::get('groupExtended', [BartleController::class, 'extended']);
 Route::get('bartleTest', TestForm::class);
 
 Route::post('filament/logout', [LogoutController::class, 'destroy'])->name('filament.auth.logout');
+
 
 require __DIR__.'/auth.php';

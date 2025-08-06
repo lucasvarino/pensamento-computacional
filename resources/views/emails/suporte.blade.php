@@ -1,4 +1,4 @@
-<h2>Nova mensagem de suporte</h2>
+<h2>Nova mensagem!</h2>
 
 <p><strong>Nome:</strong> {{ $name }}</p>
 <p><strong>Email:</strong> {{ $email }}</p>

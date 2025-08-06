@@ -60,7 +60,7 @@ class Suporte extends Page implements HasForms
         Mail::to('projeto.perfiljogador@ufjf.br')->send(new \App\Mail\SuporteMail(
             name: $this->name,
             email: $this->email,
-            mailSubject: $this->subject,
+            mailSubject: 'Suporte: ' . $this->subject,
             messageBody: $this->message
         ));
 
