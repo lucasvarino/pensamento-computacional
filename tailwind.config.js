@@ -7,6 +7,7 @@ export default {
     // darkMode: 'media',
     presets: [preset],
     content: [
+        './App/Filament/**/*.php',
         './app/Filament/**/*.php',
         './resources/views/filament/**/*.blade.php',
         './vendor/filament/**/*.blade.php',
