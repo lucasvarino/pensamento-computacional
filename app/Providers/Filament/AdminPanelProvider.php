@@ -60,11 +60,11 @@ class AdminPanelProvider extends PanelProvider
             // ])
             ->widgets([
                 \App\Filament\Widgets\TeacherGuideAlert::class,
-                \App\Filament\Widgets\AccountOverview::class,
+                AccountOverview::class,
                 \App\Filament\Widgets\UserChartWidget::class,
                 \App\Filament\Widgets\LastestVerifyEmployers::class,
                 \App\Filament\Widgets\AdvancedChartTurmas::class,
-                \App\Filament\Widgets\LastestTestSubmit::class,
+                \App\Filament\Widgets\LatestTestSubmit::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -78,7 +78,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->userMenuItems([
-                'logout' => \Filament\Navigation\MenuItem::make()
+                'logout' => MenuItem::make()
                     ->label('Sair')
                     ->url(fn () => route('filament.auth.logout')),
             ])
@@ -93,10 +93,10 @@ class AdminPanelProvider extends PanelProvider
                     ->withBorder()
                     //->withGithub(showLogo: false, showUrl: true)
                     ->withLogo(
-                        asset('img/game-persona-logo.svg'), // 'https://laravel.com/img/laravel-logo.png',
+                        asset('img/game-persona-logo.svg'),
                         '/',
-                        null, // 'Powered by Laravel',                                // Text to display (optional)
-                        28 // tamanho do logo
+                        null, // Text to display (optional)
+                        28 
                     )
                     ->withLoadTime()
                     ->withLinks([

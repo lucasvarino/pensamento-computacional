@@ -9,7 +9,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use EightyNine\FilamentAdvancedWidget\AdvancedTableWidget as BaseWidget;
 
-class LastestTestSubmit extends BaseWidget
+class LatestTestSubmit extends BaseWidget
 {
     protected static ?string $heading = "Últimos alunos que responderam os testes";
 
@@ -21,7 +21,7 @@ class LastestTestSubmit extends BaseWidget
     public static function canView(): bool
     {
         $user = auth()->user();
-        return $user && $user->isVerified() && !$user->isAdmin();
+        return $user && $user->isVerified();
     }
 
     public function table(Table $table): Table
