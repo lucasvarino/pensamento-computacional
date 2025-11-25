@@ -44,7 +44,8 @@ class TestResultChart extends ChartWidget
     protected function getOptions(): RawJs
     {
         $maxValue = max($this->result);
-        $suggestedMax = ceil($maxValue * 1.2);
+        $suggestedMax = ceil($maxValue * 1.1);
+        $suggestedMax = ($suggestedMax > 100)? 100 : $suggestedMax;
         return RawJs::make(<<<JS
         {
             scales: {
