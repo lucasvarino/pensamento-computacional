@@ -42,6 +42,7 @@ class HexadTestResultChart extends ChartWidget
     {
         $maxValue = max($this->result);
         $suggestedMax = ceil($maxValue * 1.1);
+        $suggestedMax = ($suggestedMax > 100)? 100 : $suggestedMax;
         return RawJs::make(<<<JS
         {
             scales: {
