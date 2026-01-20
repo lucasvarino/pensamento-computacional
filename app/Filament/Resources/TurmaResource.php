@@ -2,25 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Pages\Test;
 use App\Filament\Resources\TurmasResource\Pages;
-use App\Filament\Resources\TurmasResource\RelationManagers;
-use App\Models\AnswerOption;
 use App\Models\TestClass;
-use App\Models\Turmas;
-use Filament\Actions\Action;
-use Filament\Actions\DeleteAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\HtmlString;
+use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Support\Enums\Alignment;
+use Filament\Tables\Actions\HeaderActionsPosition;
+use Filament\Forms\Components\Toggle;
 use Webbingbrasil\FilamentCopyActions\Tables\Actions\CopyAction;
+use Illuminate\Support\Arr;
+
 
 
 
@@ -35,6 +34,8 @@ class TurmaResource extends Resource
             ? 'icon-turma'
             : 'icon-turma-b&w';
     }
+
+    protected $listeners = ['turmasUpdated' => 'onTurmasUpdated'];
 
     public static function form(Form $form): Form
     {
@@ -55,7 +56,7 @@ class TurmaResource extends Resource
                         ->required()
                         ->label('Método')
                         ->disabled(fn (?TestClass $record) => filled($record)),
-                    Forms\Components\Checkbox::make('term')
+                    Forms\Components\Toggle::make('term')
                         ->label('Aceita o Termo de Consentimento Livre e Esclarecido')
                         ->required(),
                         Forms\Components\Hidden::make('user_id')
@@ -69,43 +70,225 @@ class TurmaResource extends Resource
     public static function table(Table $table): Table
     {
         $isAdmin = auth()->user()?->isAdmin() ?? false;
-        $query = $isAdmin ? TestClass::query() : TestClass::where('user_id', auth()->user()?->id);
+
+        $query = TestClass::with('user');
+        if (! $isAdmin) {
+            $query = $query->where('user_id', auth()->id());
+        }
+
+        $view = request()->get('view', 'cards');
+
+        $toggleAction = \Filament\Tables\Actions\Action::make('toggleView')
+            ->label(fn () => $view === 'cards' ? 'Ver Lista' : 'Ver Cartões')
+            ->icon(fn () => $view === 'cards' ? 'heroicon-o-queue-list' : 'heroicon-o-squares-2x2')
+            ->url(fn () => url()->current() . '?view=' . ($view === 'cards' ? 'list' : 'cards'))
+            ->modalAlignment('center');
+
+        $cardsColumns = [
+            Stack::make([
+                Split::make([
+                    Tables\Columns\TextColumn::make('method.name')
+                        ->label('Método')
+                        ->formatStateUsing(
+                            fn($state) => "
+                                <div class=\" flex-col text-center\"> 
+                                    <div class=\"text-sm text-gray-500\"> Método: </div> 
+                                    <div class=\"font-bold\">{$state}</div> 
+                                </div>
+                            ")
+                        ->html()
+                        // ->sortable()
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('archived')
+                        ->label('Arquivo')
+                        ->formatStateUsing(fn ($state) => $state ? '<div class="text-xs text-gray-500">Arquivada</div>' : '<div class="text-xs text-gray-500">Desarquivada</div>')
+                        ->html()
+                        // ->sortable()
+                        ->alignment(Alignment::End)
+                        ->size('sm'),
+                ]),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nome da Turma')
+                    ->formatStateUsing(fn($state) => "<div class=\"text-base font-bold\">{$state}</div>")
+                    ->html()
+                    ->searchable()
+                    // ->sortable()
+                    ->alignment(Alignment::Center),
+                Tables\Columns\TextColumn::make('institution')
+                    ->label('Instituição')
+                    ->formatStateUsing(fn($state) => "<div class=\"text-sm text-gray-600\">{$state}</div>")
+                    ->html()
+                    ->searchable()
+                    // ->sortable()
+                    ->alignment(Alignment::Center),
+                Tables\Columns\TextColumn::make('expire_date')
+                        ->label('Expiração')
+                        ->formatStateUsing(function($state) {
+                            if (date('Y-m-d') > $state && !is_null($state)) {
+                                return "<div class=\"text-xs\">Não aceita mais respostas</div>";
+                            }
+                            return '';
+                        })
+                        ->html()
+                        // ->sortable()
+                        ->color('danger')
+                        ->alignment(Alignment::Center),
+                Split::make([
+                    Tables\Columns\TextColumn::make('user.name')
+                        ->label('Organizador')
+                        ->formatStateUsing(fn($state) => "<div class=\"text-xs text-gray-500\">Organizador: <br> {$state} </div>")
+                        ->html()
+                        ->visible($isAdmin)
+                        // ->sortable()
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('created_at')
+                        ->label('Data de Criação')
+                        ->formatStateUsing(fn($state) => "<div class=\"text-xs text-gray-500\">Criado em: <br></div> <div class=\"text-xs text-white\">" . \Carbon\Carbon::parse($state)->format('d/m/Y') . "</div>")
+                        ->html()
+                        // ->sortable()
+                        ->alignment(Alignment::End),
+                ]),
+            ]),
+        ];
+
+        // colunas em modo "lista"
+        $listColumns = [
+            Tables\Columns\TextColumn::make('name')->label('Nome da turma')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('institution')->label('Instituição')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('method.name')->label('Método utilizado')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('user.name')->label('Organizador')->visible($isAdmin)->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('archived')->label('Arquivo')->formatStateUsing(fn ($state) => $state ? 'Arquivada' : 'Desarquivada')->sortable(),
+            Tables\Columns\TextColumn::make('expire_date')->date("d-m-Y")->label('Data de Expiração')->sortable(),
+            Tables\Columns\TextColumn::make('created_at')->label('Data de Criação')->date("d-m-Y")->sortable(),
+        ];
+
+        if ($view === 'cards') {
+            return $table
+                ->headerActions([$toggleAction])
+                ->headerActionsPosition(HeaderActionsPosition::Bottom)
+                ->columns($cardsColumns)
+                ->contentGrid([
+                    'md' => 2,
+                    'xl' => 3,
+                    'gap' => 2,
+                ])
+                ->filters([
+                    Tables\Filters\Filter::make('not_archived')
+                        ->label('Turmas Não Arquivadas')
+                        ->query(fn (Builder $query) => $query->where('archived', false))
+                        ->default(),
+                    Tables\Filters\Filter::make('archived')
+                        ->label('Turmas Arquivadas')
+                        ->query(fn (Builder $query) => $query->where('archived', true)),
+                    Tables\Filters\Filter::make('e_game_flow')
+                        ->label('Turmas EGameFlow')
+                        ->query(fn (Builder $query) => $query->where('method_id', 3)),
+                    Tables\Filters\Filter::make('bartle')
+                        ->label('Turmas Bartle')
+                        ->query(fn (Builder $query) => $query->where('method_id', 1)),
+                    Tables\Filters\Filter::make('hexad')
+                        ->label('Turmas Hexad')
+                        ->query(fn (Builder $query) => $query->where('method_id', 2)),
+                ])
+                ->actions([
+                    Tables\Actions\ActionGroup::make([
+                        CopyAction::make('copyTestLink')
+                        ->label('Link do Teste')
+                        ->icon('heroicon-o-clipboard')
+                        ->copyable(fn (TestClass $record) => url('/admin/turmas/' . $record->url . '/test'))
+                        ->successNotificationMessage('Link copiado com sucesso!')->color('primary'),
+                        Tables\Actions\Action::make('arquivar')->label('Arquivar/Desarquivar')->action(function (TestClass $record, $action) {
+                            $record->update(['archived' => !$record->archived]);
+                        })->color('warning')->icon('heroicon-o-archive-box'),
+                    ]),
+                    Tables\Actions\EditAction::make()->label(' ')->color('warning'),
+                    Tables\Actions\DeleteAction::make()->label(' '),
+                    Tables\Actions\Action::make('view')->label('Visualizar')->url(fn (TestClass $class): string => '/admin/turmas/' . $class->url . '/results')->icon('heroicon-o-eye')->color('gray'),
+                        ])
+                ->bulkActions([
+                    Tables\Actions\BulkAction::make('bulkArchive')
+                        ->label('Arquivar Selecionados')
+                        ->action(function (Tables\Actions\BulkAction $action, \Illuminate\Support\Collection $records) {
+                            foreach ($records as $record) {
+                                $record->archived = true;
+                                $record->save();
+                            }
+                            $action->success();
+                        })
+                        ->icon('heroicon-o-archive-box-arrow-down')
+                        ->color('success')
+                        ->deselectRecordsAfterCompletion(),
+                    Tables\Actions\BulkAction::make('bulkUnarchive')
+                        ->label('Desarquivar Selecionados')
+                        ->action(function (Tables\Actions\BulkAction $action, \Illuminate\Support\Collection $records) {
+                            foreach ($records as $record) {
+                                $record->archived = false;
+                                $record->save();
+                            }
+                            $action->success();
+                        })
+                        ->icon('heroicon-o-archive-box')
+                        ->color('warning')->deselectRecordsAfterCompletion(),
+                    Tables\Actions\DeleteBulkAction::make()->label('Apagar Selecionados'),
+                ])
+                ->recordUrl(fn (TestClass $testClass) => ('/admin/turmas/' . $testClass->url . '/results'))
+                ->query($query);
+        }
+
+        // modo lista
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('name')->label('Nome da turma')->searchable(),
-                Tables\Columns\TextColumn::make('institution')->label('Instituição'),
-                Tables\Columns\TextColumn::make('method.name')->label('Método utilizado'),
-                Tables\Columns\TextColumn::make('user.name')->label('Organizador')->visible($isAdmin),
-                Tables\Columns\TextColumn::make('expire_date')->date("d-m-Y")->label('Data de expiração')
-            ])
+            ->headerActions([$toggleAction])
+            ->headerActionsPosition(HeaderActionsPosition::Bottom)
+            ->columns($listColumns)
             ->filters([
-                //
+                Tables\Filters\Filter::make('not_archived')
+                    ->label('Turmas Não Arquivadas')
+                    ->query(fn (Builder $query) => $query->where('archived', false))
+                    ->default()
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('arquivar')->label('Arquivar/Desarquivar')->action(function (TestClass $record, $action) {
+                        $record->update(['archived' => !$record->archived]);
+                    })->color('warning')->icon('heroicon-o-archive-box'),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
                     CopyAction::make('copyTestLink')
-                        ->label('Copiar link do teste')
+                        ->label('Link do Teste')
                         ->icon('heroicon-o-clipboard')
-                        ->copyable(fn (\App\Models\TestClass $record) => url('/admin/turmas/' . $record->url . '/test'))
-                        ->successNotificationMessage('Link copiado com sucesso!'),
-                    Tables\Actions\Action::make('link')->label('Abrir teste')
-                        ->url(fn (TestClass $class): string => '/admin/turmas/' . $class->url . '/test')
-                        ->openUrlInNewTab()
-                        ->color('success')
-                        ->icon('heroicon-m-clipboard-document'),
-                    Tables\Actions\EditAction::make()->label('Editar'),
-                    Tables\Actions\DeleteAction::make()->label('Apagar')
+                        ->copyable(fn (TestClass $record) => url('/admin/turmas/' . $record->url . '/test'))
+                        ->successNotificationMessage('Link copiado com sucesso!')->color('success'),
+                    ])
                 ])
-            ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\BulkAction::make('bulkArchive')
+                    ->label('Arquivar Selecionados')
+                    ->action(function (Tables\Actions\BulkAction $action, \Illuminate\Support\Collection $records) {
+                        foreach ($records as $record) {
+                            $record->archived = true;
+                            $record->save();
+                        }
+                        $action->success();
+                    })
+                    ->icon('heroicon-o-archive-box-arrow-down')
+                    ->color('success')
+                    ->deselectRecordsAfterCompletion(),
+                Tables\Actions\BulkAction::make('bulkUnarchive')
+                    ->label('Desarquivar Selecionados')
+                    ->action(function (Tables\Actions\BulkAction $action, \Illuminate\Support\Collection $records) {
+                        foreach ($records as $record) {
+                            $record->archived = false;
+                            $record->save();
+                        }
+                        $action->success();
+                    })
+                    ->icon('heroicon-o-archive-box')
+                    ->color('warning')->deselectRecordsAfterCompletion(),
+                Tables\Actions\DeleteBulkAction::make()->label('Apagar Selecionados'),
             ])
             ->recordUrl(fn (TestClass $testClass) => ('/admin/turmas/' . $testClass->url . '/results'))
-            ->query($query->orderByDesc('created_at'));
+            ->query($query);
     }
-
     public static function getRelations(): array
     {
         return [
