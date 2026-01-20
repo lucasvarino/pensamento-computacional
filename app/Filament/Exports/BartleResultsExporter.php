@@ -42,10 +42,10 @@ class BartleResultsExporter extends Exporter
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'Os resultados do seu teste foram processados e ' . number_format($export->successful_rows) . ' ' . str('linha')->plural($export->successful_rows) . ' exportadas.';
+        $body = 'Os resultados do seu teste Bartle foram processados e ' . number_format($export->successful_rows) . ' ' . str('linha(s)')->plural($export->successful_rows) . ' exportadas.';
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' ' . number_format($failedRowsCount) . ' ' . str('row')->plural($failedRowsCount) . ' failed to export.';
+            $body .= ' ' . number_format($failedRowsCount) . ' ' . str('linha(s)')->plural($failedRowsCount) . ' falharam ao exportar.';
         }
 
         return $body;
