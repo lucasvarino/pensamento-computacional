@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->brandLogo(fn () => view('vendor.filament.components.brand'))
             ->darkModeBrandLogo(fn () => view('vendor.filament.components.brand-dark'))
             ->favicon(asset('img/game-persona-logo.svg'))
