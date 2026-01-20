@@ -28,11 +28,17 @@ class Answer extends Model
     {
         return $this->hasMany(HexadResult::class);
     }
+   
+    public function eGameFlowResults()
+    {
+        return $this->hasMany(EGameFlowResult::class); 
+    }
 
     public function method()
     {
         return $this->belongsTo(Method::class);
     }
+
 
     public function getTestClassNameAttribute()
     {

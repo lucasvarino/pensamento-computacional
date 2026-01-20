@@ -29,6 +29,7 @@ use App\Filament\Exports\HexadResultsExporter;
 
 use App\Filament\Resources\TurmasResource\Widgets\EGameFlowTestResultChart;
 use App\Filament\Resources\TurmasResource\Widgets\EGameFlowTestStats;
+use App\Filament\Exports\EGameFlowExporter;
 
 use Webbingbrasil\FilamentCopyActions\Pages\Actions\CopyAction;
 
