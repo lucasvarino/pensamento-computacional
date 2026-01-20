@@ -1,0 +1,9 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+@source '../../../views/**/*.blade.php';
+@source '../../../views/components/**/*.blade.php';
+@source '../../../views/filament/**/*.blade.php';
+@source '../../../app/Filament/**/*.php';
+@source '../../../../vendor/filament/**/*.blade.php';
