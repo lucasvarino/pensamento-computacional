@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -23,8 +24,26 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        $this->renderable(function (TokenMismatchException $e, $request) {
+    // Invalida sessão e gera novo token (opcional, mas recomendado)
+    if ($request->hasSession()) {
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+    }
+
+    $redirectUrl = url('/');
+
+    // AJAX / JSON -> retorna instrução para redirecionamento
+    if ($request->expectsJson() || $request->ajax()) {
+        return response()->json([
+            'message'  => 'Sua sessão expirou. Redirecionando...',
+            'redirect' => $redirectUrl,
+        ], 419);
+    }
+
+    // Requisição web normal -> redireciona para "/"
+    return redirect($redirectUrl)
+        ->with('message', 'Sua sessão expirou. Faça login novamente.');
+    });
     }
 }
