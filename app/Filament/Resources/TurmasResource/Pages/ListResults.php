@@ -7,7 +7,6 @@ use App\Models\Answer;
 use Filament\Resources\Pages\Page;
 use Filament\Notifications\Notification;
 
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 
@@ -16,29 +15,22 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\DB;
-
-use Ramsey\Collection\Collection;
 use App\Models\TestClass;
 
 use App\Filament\Exports\BartleResultsExporter;
 use App\Filament\Resources\TurmaResource;
 
-use LaraZeus\InlineChart\Tables\Columns\InlineChart;
-
-use App\Filament\Resources\TurmasResource\Widgets\InlineTestResultChart;
 use App\Filament\Resources\TurmasResource\Widgets\TestResultChart;
 use App\Filament\Resources\TurmasResource\Widgets\TestStats;
 
 use App\Filament\Resources\TurmasResource\Widgets\HexadTestResultChart;
 use App\Filament\Resources\TurmasResource\Widgets\HexadTestStats;
+use App\Filament\Exports\HexadResultsExporter;
+
+use App\Filament\Resources\TurmasResource\Widgets\EGameFlowTestResultChart;
+use App\Filament\Resources\TurmasResource\Widgets\EGameFlowTestStats;
 
 use Webbingbrasil\FilamentCopyActions\Pages\Actions\CopyAction;
-
-use Filament\Actions\Action as FilamentAction;
-
 
 class ListResults extends Page implements HasTable
 {
@@ -49,6 +41,11 @@ class ListResults extends Page implements HasTable
     protected static string $view = 'filament.resources.turmas-resource.pages.list-results';
 
     protected $listeners = ['refreshPageComponents' => '$refresh'];
+
+    public static function canAccess(array $parameters = []): bool
+    {
+        return auth()->check() && auth()->user()->isVerified();
+    }
 
     public function getBreadcrumb(): string
     {
@@ -66,17 +63,21 @@ class ListResults extends Page implements HasTable
             ->join('classes', 'answers_classes.class_id', '=', 'classes.id')
             ->where('classes.url', $this->url);
 
-        $methodId = \App\Models\TestClass::where('url', $this->url)->value('method_id');
+        $methodId = TestClass::where('url', $this->url)->value('method_id');
 
-        $exporterClass = $methodId === 1
-            ? \App\Filament\Exports\BartleResultsExporter::class
-            : \App\Filament\Exports\HexadResultsExporter::class;
+        if($methodId == 1)
+            $exporterClass = BartleResultsExporter::class;
+        elseif($methodId == 2)
+            $exporterClass = HexadResultsExporter::class;
+        elseif($methodId == 3)
+            $exporterClass = EGameFlowExporter::class;
 
         return $table
             ->columns([
-            TextColumn::make('name')->label('Nome')->searchable(),
-            TextColumn::make('age')->label('Idade'),
+            TextColumn::make('name')->label('Nome')->searchable()->sortable(),
+            TextColumn::make('age')->label('Idade')->sortable(),
             ...$col
+            // ...$this->getAllColumns(),
         ])
             ->recordUrl(fn (Answer $answer): string => TestResult::getUrl(['id' => $answer->id]))
             ->query($query)
@@ -101,7 +102,7 @@ class ListResults extends Page implements HasTable
                             ->success()
                             ->send();
                         })
-                ]);
+                ])->striped();
     }
 
     public function getAllColumns(): array
@@ -125,6 +126,14 @@ class ListResults extends Page implements HasTable
             $columns,
             array_keys($columns)
         );
+    } elseif ($method === 'eGameFlow') {
+        $columns = ['Concentração', 'Desafios', 'Autonomia', 'Objetivos', 'Feedback', 'Imersão', 'Interação Social', 'Melhoria de Conhecimento'];
+        return array_map(fn ($column, $key) => 
+            TextColumn::make($column)
+                ->state(fn (Answer $answer) => $answer->eGameFlowResults->isNotEmpty() ? $answer->eGameFlowResults[$key]->value . "%" : ''),
+            $columns,
+            array_keys($columns)
+        );
     }
 
     return [];
@@ -134,7 +143,7 @@ protected function getAverageResults($answers)
 {
     $groupAverages = collect();
 
-    $method = \App\Models\TestClass::where('url', $this->url)->value('method_id');
+    $method = TestClass::where('url', $this->url)->value('method_id');
 
     if ($method === 1) {
         $answers->flatMap(fn($answer) => collect($answer->bartleResults))
@@ -156,7 +165,20 @@ protected function getAverageResults($answers)
                 $groupAverages->put($groupId, round($results->avg('value'), 2))
             );
 
-            $order = [5, 6, 7, 8, 9, 10]; // IDs corretos dos grupos
+            $order = [5, 6, 7, 8, 9, 10];
+
+            return collect($order)
+            ->map(fn($groupId) => $groupAverages->get($groupId, 0))
+            ->values()
+            ->all();
+    } elseif ($method === 3) {
+        $answers->flatMap(fn($answer) => collect($answer->eGameFlowResults))
+            ->groupBy('group_id')
+            ->each(fn($results, $groupId) => 
+                $groupAverages->put($groupId, round($results->avg('value'), 2))
+            );
+
+            $order = [11, 12, 13, 14, 15, 16, 17, 18];
 
             return collect($order)
             ->map(fn($groupId) => $groupAverages->get($groupId, 0))
@@ -174,7 +196,7 @@ protected function getHeaderWidgets(): array
         ->where('classes.url', $this->url)
         ->get();
 
-    $method = \App\Models\TestClass::where('url', $this->url)->value('method_id');
+    $method = TestClass::where('url', $this->url)->value('method_id');
 
     if ($method === 1) {
         $percentage = $this->getAverageResults($answers);
@@ -194,7 +216,7 @@ protected function getHeaderWidgets(): array
                 'socializador' => $percentage[3] . '%'
             ])
         ];
-    } else {
+    } elseif ($method === 2) {
         $percentage = $this->getAverageResults($answers);
         if (count($percentage) < 6) {
             $percentage = [0, 0, 0, 0, 0, 0];
@@ -214,6 +236,30 @@ protected function getHeaderWidgets(): array
                 'jogador' => $percentage[5] . '%',
             ])
         ];
+    } elseif ($method === 3) {
+        $percentage = $this->getAverageResults($answers);
+        if (count($percentage) < 8) {
+            $percentage = [0, 0, 0, 0, 0, 0, 0, 0];
+        }
+        return [
+            EGameFlowTestResultChart::make([
+                'result' => $percentage,
+                'title' => 'eGameFlow Test Results'
+            ]),
+            EGameFlowTestStats::make([
+                'items' => $answers->count(),
+                'concentracao' => $percentage[0] . '%',
+                'desafios' => $percentage[1] . '%',
+                'autonomia' => $percentage[2] . '%',
+                'objetivos' => $percentage[3] . '%',
+                'feedback' => $percentage[4] . '%',
+                'imersao' => $percentage[5] . '%',
+                'interacao_social' => $percentage[6] . '%',
+                'melhoria_de_conhecimento' => $percentage[7] . '%',
+            ])
+        ];
+    } else {
+        return [];
     }
 }
     public function getHeaderWidgetsColumns(): int|string|array
@@ -239,7 +285,7 @@ protected function getHeaderWidgets(): array
 
     public function getTitle(): string
     {
-        $turma = \App\Models\TestClass::where('url', $this->url)->value('name');
+        $turma = TestClass::where('url', $this->url)->value('name');
         return "Resultados gerais da turma: " . ($turma ?? "Desconhecida");
     }
 }

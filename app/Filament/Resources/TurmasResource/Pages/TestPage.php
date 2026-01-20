@@ -8,6 +8,7 @@ use App\Models\AnswerClass;
 use App\Models\BartleResult;
 use App\Models\HexadAnswer;
 use App\Models\HexadResult;
+use App\Models\EGameFlowResult;
 use App\Models\Group;
 use App\Models\Question;
 use App\Models\State;
@@ -108,10 +109,21 @@ class TestPage extends Page
 
             $allAnswers = AnswerClass::where('answer_id', $answer->id)->get();
 
+            // BARTLE calc
+            if ($this->testClass->method->name === 'Bartle') {
+                $bartleResults = collect(range(1, 4))
+                ->map(function ($groupId) use ($allAnswers, $answer) {
+                    $value = $allAnswers
+                    ->filter(fn ($answer) => $answer->answerOption->group_id === $groupId)
+                    ->count() * (100 / 15);
+                    
+                    return ['group_id' => $groupId, 'value' => $value, 'answer_id' => $answer->id];
+                })->map(fn (array $arr) => BartleResult::create($arr));
+            }
             // HEXAD calc
             if ($this->testClass->method->name === 'Hexad') {
 
-                $allHexadAnswers = \App\Models\HexadAnswer::where('answer_id', $answer->id)->get();
+                $allHexadAnswers = HexadAnswer::where('answer_id', $answer->id)->get();
                 $totalSum = $allHexadAnswers->sum('value');
             
                 $hexadGroups = DB::table('hexad_question_groups')
@@ -127,21 +139,88 @@ class TestPage extends Page
                     $score = round($rawScore, 2);
             
                     return ['group_id' => $groupId, 'value' => $score, 'answer_id' => $answer->id];
-                })->map(fn (array $arr) => \App\Models\HexadResult::create($arr));
+                })->map(fn (array $arr) => HexadResult::create($arr));
+            }
+            
+            // -------------------------------------------------------------
+            // CÁLCULO eGameFlow
+            // -------------------------------------------------------------
+            if ($this->testClass->method->name === 'eGameFlow') {
+                $answerClasses = AnswerClass::where('answer_id', $answer->id)
+                    ->with('answerOption')
+                    ->get();
+                
+                $qRange = range(38, 79);
+
+                $answersWithValues = $answerClasses->map(function ($ac, $index) use ($qRange) {
+                    $questionId = $qRange[$index] ?? null;
+                    return [
+                        'question_id' => $questionId,
+                        'value' => $ac->answer_option_id,
+                    ];
+                })->filter(fn($x) => $x['question_id'] !== null);
+
+                logger($answersWithValues);
+
+                $egfGroups = DB::table('e_game_flow_question_groups')
+                    ->get()
+                    ->groupBy('group_id');
+
+                // 1) calcula média por grupo
+                $groupMeans = [];
+
+                foreach ($egfGroups as $groupId => $questions) {
+                    $questionIds = $questions->pluck('question_id')->toArray();
+
+                    $values = $answersWithValues
+                        ->whereIn('question_id', $questionIds)
+                        ->pluck('value')
+                        ->filter(fn($v) => is_numeric($v))
+                        ->map(fn($v) => (float) $v)
+                        ->values()
+                        ->all();
+
+                    if (count($values) > 0) {
+                        // média simples: soma / número de respostas válidas
+                        $groupMeans[$groupId] = (array_sum($values) / count($values)) / 7 * 100;
+                    }
+                }
+
+                // // 2) normaliza as médias para percentuais que somam 100%
+                // $totalMean = array_sum($groupMeans);
+
+                // // calcula percentuais brutos (não arredondados ainda)
+                // $percentsRaw = [];
+                // foreach ($groupMeans as $groupId => $mean) {
+                //     $percentsRaw[$groupId] = ($mean / $totalMean) * 100.0;
+                // }
+
+                // // 3) arredonda cada um, ajustando o último para garantir soma = 100.00
+                // $rounded = [];
+                // $sumRounded = 0.0;
+                // $groupIds = array_keys($percentsRaw);
+                // $lastId = end($groupIds);
+
+                // foreach ($percentsRaw as $id => $val) {
+                //     if ($id === $lastId) {
+                //         $adj = round(100.00 - $sumRounded, 2);
+                //     } else {
+                //         $adj = round($val, 2);
+                //         $sumRounded += $adj;
+                //     }
+                //     $rounded[$id] = $adj;
+                // }
+
+                // 4) grava no DB
+                foreach ($groupMeans as $groupId => $percent) {
+                    EGameFlowResult::create([
+                        'answer_id' => $answer->id,
+                        'group_id'  => $groupId,
+                        'value'     => round($percent, 2),
+                    ]);
+                }
             }
 
-        
-        // BARTLE calc
-        if ($this->testClass->method->name === 'Bartle') {
-            $bartleResults = collect(range(1, 4))
-                ->map(function ($groupId) use ($allAnswers, $answer) {
-                    $value = $allAnswers
-                            ->filter(fn ($answer) => $answer->answerOption->group_id === $groupId)
-                            ->count() * (100 / 15);
-
-                    return ['group_id' => $groupId, 'value' => $value, 'answer_id' => $answer->id];
-                })->map(fn (array $arr) => BartleResult::create($arr));
-        }
 
         if ($states['sendEmail'] && $states['email']) {
             $testType = strtolower($this->testClass->method->name);
@@ -150,6 +229,8 @@ class TestPage extends Page
                 $results = HexadResult::where('answer_id', $answer->id)->get();
             } elseif ($testType === 'bartle') {
                 $results = BartleResult::where('answer_id', $answer->id)->get();
+            } elseif ($testType === 'egameflow') {
+                $results = EGameFlowResult::where('answer_id', $answer->id)->get();
             } else {
                 $results = collect();
             }
@@ -187,7 +268,7 @@ class TestPage extends Page
         ->get();
         
         $questions = $questions->map(function (Question $question, $index) {
-            if ($this->testClass->method->name === 'Hexad') {
+            if ($this->testClass->method->name === 'Hexad' || $this->testClass->method->name === 'eGameFlow') {
                     $options = [
                         1 => 'Discordo totalmente',
                         2 => 'Discordo',
@@ -218,7 +299,7 @@ class TestPage extends Page
                         Select::make('gender')
                             ->options([
                                 'M' => 'Masculino',
-                                'F' => 'Feminino'
+                                'F' => 'Feminino',
                             ])
                             ->native(false)
                             ->required()

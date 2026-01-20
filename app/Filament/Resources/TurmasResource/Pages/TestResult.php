@@ -6,6 +6,7 @@ use App\Filament\Resources\TurmaResource;
 use App\Filament\Resources\TurmasResource;
 use App\Models\BartleResult;
 use App\Models\HexadResult;
+use App\Models\EGameFlowResult;
 use App\Models\HexadAnswer;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
@@ -34,16 +35,22 @@ class TestResult extends Page
         if (auth()->user()?->isVerified()) {
             return 'Resultado do Teste de ' . $this->answer->name;
         }
-
-        if ($this->answer->method->name === 'Hexad') {
-            return 'Resultado do Teste Hexad';
-        }
         
-        if ($this->answer->method->name === 'Bartle') {
-            return 'Resultado do Teste de Bartle';
-        }
+        return 'Resultado do Teste '. $this->answer->method->name . '';
 
-        return 'Resultado do Teste';
+        // if ($this->answer->method->name === 'Hexad') {
+        //     return 'Resultado do Teste Hexad';
+        // }
+        
+        // if ($this->answer->method->name === 'Bartle') {
+        //     return 'Resultado do Teste de Bartle';
+        // }
+        
+        // if ($this->answer->method->name === 'eGameFlow') {
+        //     return 'Resultado do Teste de eGameFlow';
+        // }
+
+        // return 'Resultado do Teste';
     }
 
     /** @var BartleResult[] */
@@ -76,11 +83,16 @@ class TestResult extends Page
                 ->with(['group', 'answer'])
                 ->orderBy('group_id', 'ASC')
                 ->get();
+        } elseif ($this->answer->method->name === 'eGameFlow') {
+            $this->result = EGameFlowResult::where('answer_id', $id)
+                ->with(['group', 'answer'])
+                ->orderBy('group_id', 'ASC')
+                ->get();
         } elseif ($this->answer->method->name === 'Bartle') {
-                $this->result = BartleResult::where('answer_id', $id)
-                    ->with(['group', 'answer'])
-                    ->orderBy('group_id', 'ASC')
-                    ->get();
+            $this->result = BartleResult::where('answer_id', $id)
+                ->with(['group', 'answer'])
+                ->orderBy('group_id', 'ASC')
+                ->get();
         }
 
         if ($this->result->isEmpty()) {
@@ -118,7 +130,14 @@ class TestResult extends Page
                     'result' => $this->getTestValuesChart()
                 ])
             ];
-        }
+        } 
+        // elseif ($this->result->first()->answer->method->name === 'eGameFlow') {
+            return [
+                TurmasResource\Widgets\EGameFlowTestResultChart::make([
+                    'result' => $this->getTestValuesChart()
+                ])
+            ];
+        // }
     }
 
     public function getHeaderWidgetsColumns(): int|string|array
@@ -133,13 +152,18 @@ class TestResult extends Page
             ->label('Baixar PDF')
             ->color('primary')
             ->icon('heroicon-s-arrow-down-tray')
-              ->action(function () {
-                  return response()->streamDownload(function () {
-                        echo Pdf::loadHtml(
-                          Blade::render('mail.test.result', ['results' => $this->formatResult])
-                      )->stream();
-                  }, 'Resultados do Teste' . '.pdf');
-              }),
+            ->action(function () {
+                return response()->streamDownload(function () {
+                      echo Pdf::loadHtml(
+                        Blade::render('pdf.test.test-result-pdf', ['formatResult' => $this->formatResult])
+                    )->stream();
+                }, 'Resultados do Teste' . '.pdf');
+            }),
+            // ->url(function () {
+            //     $pdf = Pdf::loadView('pdf.test.test-result-pdf', ['formatResult' => $this->formatResult]);
+            //     return $pdf->download('invoice.pdf');
+            // })
+            // ->openUrlInNewTab(),
         ];
     }
 
@@ -153,10 +177,15 @@ class TestResult extends Page
 
             return HexadResult::formatTestResult($this->result);
 
-        } else {
+        } elseif ($this->result->first()->answer->method->name === 'Bartle') {
 
             return BartleResult::formatTestResult($this->result);
-        }
+
+        } 
+        // elseif ($this->result->first()->answer->method->name === 'eGameFlow') {
+
+            return EGameFlowResult::formatTestResult($this->result);
+        // }
     }
 
     public function getTestValuesChart()
@@ -165,10 +194,13 @@ class TestResult extends Page
 
             return $this->result->map(fn (HexadResult $result) => $result->value)->toArray();
 
-        } else {
+        } elseif ($this->result->first()->answer->method->name === 'Bartle') {
 
             return $this->result->map(fn (BartleResult $result) => $result->value)->toArray();
             
+        } elseif ($this->result->first()->answer->method->name === 'eGameFlow') {
+
+            return $this->result->map(fn (EGameFlowResult $result) => $result->value)->toArray();
         }
     }
 }
