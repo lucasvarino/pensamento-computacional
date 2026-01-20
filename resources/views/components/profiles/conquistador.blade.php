@@ -1,5 +1,5 @@
 @props(['result'])
-<div class="relative bg-conquistador rounded-2xl shadow-lg overflow-visivle mb-6
+<div class="relative bg-conquistador rounded-2xl shadow-lg overflow-visible mb-6
             h-auto sm:h-44 py-10 sm:py-0">
 
   <div class="absolute inset-y-0 right-0 flex items-center overflow-hidden">

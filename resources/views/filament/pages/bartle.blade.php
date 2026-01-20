@@ -68,7 +68,7 @@
                 <a href="#explorador" class="scroll-link px-3 py-1 mx-1 rounded-2xl">Explorador</a>
                 <a href="#empreendedor" class="scroll-link px-3 py-1 mx-1 rounded-2xl">Empreendedor</a>
                 <a href="#assassino" class="scroll-link px-3 py-1 mx-1 rounded-2xl">Assassino</a>
-                <a href="#referencias" class="scroll-link px-3 py-1 mx-1 rounded-2xl">Referências</a>
+                {{-- <a href="#referencias" class="scroll-link px-3 py-1 mx-1 rounded-2xl">Referências</a> --}}
             </div>
         </div>
     </nav>
@@ -363,18 +363,9 @@
                         EMPREENDEDOR
                     </h3>
                     <div class="font-semibold text-conquistador-txt w-full sm:px-32">
-                        Motivação principal: Interagir com outros Jogadores para construir relacionamentos. <br> <br>
+                        Motivação principal: Agir sobre o Mundo para obter recompensas e status. <br> <br>
 
-                        Para os Socializadores, o sistema é um palco para a interação humana. O que os engaja de verdade
-                        é a
-                        oportunidade de conversar, colaborar, ajudar e se conectar com outros participantes. As amizades
-                        e o
-                        senso de comunidade são a sua maior recompensa.
-                        Psicologia por Trás do Perfil: Sua motivação primária é a conexão e o pertencimento. Eles
-                        prosperam
-                        em ambientes que facilitam a formação de laços sociais e o trabalho em equipe. A validação vem
-                        do
-                        grupo e da qualidade de suas interações.
+                        Para os Empreendedor, o sistema é uma montanha a ser escalada. O que os engaja de verdade é a oportunidade de superar desafios, acumular provas de seu sucesso e alcançar o topo. As medalhas, os pontos e o reconhecimento por suas conquistas são a sua maior recompensa. Psicologia por Trás do Perfil: Sua motivação primária é a maestria e a competência visível. Eles prosperam em ambientes que possuem metas claras e recompensas tangíveis. A validação vem da superação dos objetivos e do status que isso lhes confere.
 
                         <br>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -382,23 +373,16 @@
                                 <span class="font-bold">COMO SE COMPORTAM NA PRÁTICA:</span> <br>
                                 <ul class="py-4 space-y-2">
                                     <li>
-                                        A força motriz de um Socializador é o senso de pertencimento. Eles prosperam
-                                        quando
-                                        se sentem parte de um grupo, uma equipe ou uma comunidade. A validação que eles
-                                        buscam é social: ser aceito, valorizado e conectado aos outros.
+                                        A força motriz de um Empreendedor é o desejo de provar sua competência através de feitos mensuráveis. Eles são orientados a objetivos e focados em completar tudo o que lhes é proposto com o máximo de eficiência.
                                     </li>
                                     <li>
-                                        São eles que quebram o gelo. Em uma reunião, plataforma online ou no café da
-                                        empresa, eles não hesitam
-                                        em iniciar uma conversa, perguntar como foi o final de semana de alguém ou
-                                        comentar
-                                        sobre um interesse em comum.
+                                        Em uma plataforma de treinamento, são os primeiros a completar todos os módulos, incluindo os opcionais, apenas para ganhar o certificado de "Especialista".
                                     </li>
-
                                     <li>
-                                        Diante da escolha entre uma tarefa solo e uma atividade em grupo, o Socializador
-                                        quase sempre preferirá a segunda.
-                                        Eles sentem mais energia e propósito quando trabalham em conjunto com outros.
+                                        Eles gerenciam meticulosamente suas tarefas em um software de projetos para garantir que sua barra de progresso esteja sempre em 100%, vendo cada tarefa concluída como uma pequena vitória.
+                                    </li>
+                                    <li>
+                                        Diante de um desafio, eles focam imediatamente em encontrar a maneira mais rápida e eficaz de resolvê-lo, buscando não apenas a solução, mas a melhor solução possível.
                                     </li>
                                 </ul>
                             </div>
@@ -406,23 +390,13 @@
                                 <span class="font-bold">ESTRATÉGIAS DE ENGAJAMENTO:</span> <br>
                                 <ul class="py-4 space-y-2">
                                     <li>
-                                        Implemente fóruns de discussão que permitem conversas mais profundas e
-                                        organizadas
-                                        que um chat. É o espaço ideal para os Socializadores compartilharem
-                                        experiências,
-                                        debaterem ideias e ajudarem uns aos outros de forma mais elaborada, criando um
-                                        registro de conhecimento para toda a comunidade.
+                                        Implemente barras de progresso e percentuais que mostrem visualmente o quão perto eles estão de completar um objetivo. Este feedback constante de avanço é um poderoso motivador para eles.
                                     </li>
                                     <li>
-                                        Agrupe usuários em equipes, criando um forte senso de identidade e
-                                        pertencimento. Um
-                                        Socializador se engaja muito mais defendendo o sucesso de sua "tribo" do que
-                                        buscando apenas objetivos individuais.
+                                        Crie certificados e níveis de status claros (Ex: Iniciante, Proficiente, Mestre). Para os Empreendedores, ter um título que exiba sua competência é muitas vezes mais valioso que a recompensa em si.
                                     </li>
                                     <li>
-                                        Faça placares, eles transformam a competição em colaboração. Em vez de focar na
-                                        posição individual, os Socializadores se unem para levar sua equipe ao topo,
-                                        celebrando o esforço coletivo e o orgulho do grupo.
+                                        Faça placares (leaderboards) que mostrem rankings de performance. Eles precisam de um palco para exibir suas conquistas e se comparar com os outros, alimentando seu impulso competitivo e seu desejo de chegar ao topo.
                                     </li>
                                 </ul>
                             </div>
@@ -468,18 +442,9 @@
                         ASSASSINO
                     </h3>
                     <div class="font-semibold text-assassino-txt w-full sm:px-32">
-                        Motivação principal: Interagir com outros Jogadores para construir relacionamentos. <br> <br>
+                        Motivação principal: Agir sobre outros Jogadores para impor sua vontade. <br> <br>
 
-                        Para os Socializadores, o sistema é um palco para a interação humana. O que os engaja de verdade
-                        é a
-                        oportunidade de conversar, colaborar, ajudar e se conectar com outros participantes. As amizades
-                        e o
-                        senso de comunidade são a sua maior recompensa.
-                        Psicologia por Trás do Perfil: Sua motivação primária é a conexão e o pertencimento. Eles
-                        prosperam
-                        em ambientes que facilitam a formação de laços sociais e o trabalho em equipe. A validação vem
-                        do
-                        grupo e da qualidade de suas interações.
+                        Para os Assassinos, o sistema é uma arena. O que os engaja de verdade é a oportunidade de competir diretamente, de dominar os oponentes e de provar sua superioridade de forma incontestável. A vitória sobre os outros e a sensação de poder são a sua maior recompensa. Psicologia por Trás do Perfil: Sua motivação primária é a dominação e a influência sobre os outros. Eles prosperam em ambientes de alta competitividade e confronto direto. A validação vem de estar no topo e de ser reconhecido como o mais forte.
 
                         <br>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -487,23 +452,18 @@
                                 <span class="font-bold">COMO SE COMPORTAM NA PRÁTICA:</span> <br>
                                 <ul class="py-4 space-y-2">
                                     <li>
-                                        A força motriz de um Socializador é o senso de pertencimento. Eles prosperam
-                                        quando
-                                        se sentem parte de um grupo, uma equipe ou uma comunidade. A validação que eles
-                                        buscam é social: ser aceito, valorizado e conectado aos outros.
+                                        A força motriz de um Assassino é o desejo de vencer os outros. Eles são movidos pela adrenalina do confronto e focam em qualquer mecânica que lhes permita interagir – e derrotar – seus rivais.
                                     </li>
                                     <li>
-                                        São eles que quebram o gelo. Em uma reunião, plataforma online ou no café da
-                                        empresa, eles não hesitam
-                                        em iniciar uma conversa, perguntar como foi o final de semana de alguém ou
-                                        comentar
-                                        sobre um interesse em comum.
+                                        Em uma competição de vendas, eles não se contentam em liderar o ranking; eles monitoram os concorrentes de perto e agem ativamente para garantir que sua liderança seja inalcançável e visível para todos.
                                     </li>
 
                                     <li>
-                                        Diante da escolha entre uma tarefa solo e uma atividade em grupo, o Socializador
-                                        quase sempre preferirá a segunda.
-                                        Eles sentem mais energia e propósito quando trabalham em conjunto com outros.
+                                        Eles buscam ativamente qualquer oportunidade de confronto direto, seja em um debate, em uma simulação de negócios ou em um desafio "um contra um", pois é onde sentem que podem realmente provar seu valor.
+                                    </li>
+
+                                    <li>
+                                        Focam em explorar as regras ao máximo para ganhar uma vantagem competitiva. Para eles, o objetivo não é apenas participar, mas dominar o jogo e garantir que os outros saibam quem está no controle.
                                     </li>
                                 </ul>
                             </div>
@@ -511,23 +471,13 @@
                                 <span class="font-bold">ESTRATÉGIAS DE ENGAJAMENTO:</span> <br>
                                 <ul class="py-4 space-y-2">
                                     <li>
-                                        Implemente fóruns de discussão que permitem conversas mais profundas e
-                                        organizadas
-                                        que um chat. É o espaço ideal para os Socializadores compartilharem
-                                        experiências,
-                                        debaterem ideias e ajudarem uns aos outros de forma mais elaborada, criando um
-                                        registro de conhecimento para toda a comunidade.
+                                        Implemente placares de performance (leaderboards) que sejam altamente visíveis e atualizados em tempo real. A necessidade de ver seu nome no topo é o principal gatilho para a sua participação.
                                     </li>
                                     <li>
-                                        Agrupe usuários em equipes, criando um forte senso de identidade e
-                                        pertencimento. Um
-                                        Socializador se engaja muito mais defendendo o sucesso de sua "tribo" do que
-                                        buscando apenas objetivos individuais.
+                                        Crie desafios diretos e opcionais, como "batalhas" ou competições "um contra um", onde os participantes possam se enfrentar. Isso canaliza seu espírito competitivo de forma saudável e controlada.
                                     </li>
                                     <li>
-                                        Faça placares, eles transformam a competição em colaboração. Em vez de focar na
-                                        posição individual, os Socializadores se unem para levar sua equipe ao topo,
-                                        celebrando o esforço coletivo e o orgulho do grupo.
+                                        Desenvolva mecânicas que permitam aos jogadores afetar uns aos outros. A possibilidade de impactar (positiva ou negativamente) o progresso de um rival é uma das formas de engajamento mais fortes para este perfil.
                                     </li>
                                 </ul>
                             </div>
@@ -537,7 +487,7 @@
             </div>
         </section>
 
-        <section id="referencias" class="scroll-mt-15" data-link-highlight="bg-gray-400 text-gray-800">
+        {{-- <section id="referencias" class="scroll-mt-15" data-link-highlight="bg-gray-400 text-gray-800">
 
             <x-filament::section id="painel">
                 <x-slot name="heading">Entendendo o Painel</x-slot>
@@ -626,27 +576,6 @@
                 </div>
 
             </x-filament::section>
-
-            <x-filament::section id="referencias">
-                <x-slot name="heading">Referências</x-slot>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-4">
-                    <div class="rounded-lg shadow-lg overflow-hidden border-gray-200">
-                        <img src="{{ asset(path: 'img/MetodosDisponiveis.png') }}" alt="Feature Image"
-                            class="w-full h-auto">
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex items-center space-x-3">
-                            <x-heroicon-o-information-circle class="w-6 h-6 text-gray-500" />
-                            <h2 class="ml-2 text-xl font-semibold text-gray-900">Métodos</h2>
-                        </div>
-                        <p class="text-gray-600">
-                            Para entender mais sobre os métodos, acesse a página de cada método na Barra Lateral em
-                            "Métodos
-                            Disponíveis"
-                        </p>
-                    </div>
-                </div>
-            </x-filament::section>
-        </section>
+        </section> --}}
     </div>
 </x-filament::page>
