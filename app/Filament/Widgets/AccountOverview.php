@@ -21,91 +21,90 @@ class AccountOverview extends BaseWidget
     {
         $user = auth()->user();
 
-        $verified = $user && $user->isVerified() ? true : false;
-        $admin = $user && $user->isAdmin() ? true : false;
-
-        if($verified && $admin){
-
-            $totalUsers = User::count();
-
-            $totalBartleAnswers = Answer::where('method_id', 1)->count();
-            $totalHexadAnswers = Answer::where('method_id', 2)->count();
-
+        // Se não houver usuário logado
+        if (! $user) {
             return [
-                Stat::make('Total de usuários', $totalUsers)
-                    ->icon('icon-user')
-                    ->chart([7, 2, 10, 3, 15, 4, 12])
+                Stat::make('Situação da conta', 'Não logado')
+                    ->icon('heroicon-o-x-circle')
                     ->iconPosition('start')
-                    ->description('Usuários Cadastrados')
-                    ->iconColor('primary')
-                    ->chartColor('primary'),
-                    //->backgroundColor('info')
-                    //->progress(69)
-                    //->progressBarColor('success')
-                    //->iconBackgroundColor('success')
-                    //->descriptionIcon('heroicon-o-chevron-up', 'before')
-                    //->descriptionColor('success'),
-
-                    Stat::make('Testes Bartle', $totalBartleAnswers)
-                        ->chart([12, 2, 7, 3, 10, 4, 5])
-                        ->chartColor('primary')
-                        ->icon('icon-user-group')
-                        ->description('Total de testes Bartle realizados')
-                        ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
-                        ->iconColor('primary'),
-                    
-                    Stat::make('Testes Hexad', $totalHexadAnswers)
-                        ->chart([5, 2, 10, 3, 8, 4, 12])
-                        ->chartColor('primary')
-                        ->icon('icon-trofeu')
-                        ->description('Total de testes Hexad realizados')
-                        ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
-                        ->iconColor('primary'),
-
+                    ->description('Faça login para ver as estatísticas')
+                    ->iconColor('danger'),
             ];
+        }
 
-        } elseif ($verified) {
+        $verified = $user->isVerified();
+        $admin = $user->isAdmin();
 
-            $classIds = $user->classes()->pluck('id');
-            $totalTestsApplied = AnswerClass::whereIn('class_id', $classIds)
-                ->distinct('answer_id')
-                ->count('answer_id');
+        // Estatísticas que serão retornadas
+        $stats = [];
+
+        // Se for usuário verificado e admin, adiciona estatísticas globais
+        if ($verified && $admin) {
+            $stats[] = Stat::make('Total de usuários', User::count())
+                ->icon('icon-user')
+                ->chart([7, 2, 10, 3, 15, 4, 12])
+                ->iconPosition('start')
+                ->description('Usuários Cadastrados')
+                ->iconColor('primary')
+                ->chartColor('primary');
+
+            $stats[] = Stat::make('Testes Bartle', Answer::where('method_id', 1)->count())
+                ->icon('icon-user-group')
+                ->chart([12, 2, 7, 3, 10, 4, 5])
+                ->description('Total de testes Bartle realizados')
+                ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
+                ->iconColor('primary')->chartColor('primary');
+
+            $stats[] = Stat::make('Testes Hexad', Answer::where('method_id', 2)->count())
+                ->icon('icon-trofeu')
+                ->chart([5, 2, 10, 3, 8, 4, 12])
+                ->description('Total de testes Hexad realizados')
+                ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
+                ->iconColor('primary')->chartColor('primary');
+        }
+
+        // Estatísticas do usuário verificado (apenas para usuários verificados)
+        if ($verified) {
+            // Recupera IDs das turmas do usuário (assumindo relação classes())
+            $classIds = $user->classes()->pluck('id')->toArray();
+
             $totalTurmas = TestClass::where('user_id', $user->id)
                 ->distinct('url')
                 ->count('url');
 
-            return[
-                Stat::make('Minhas Turmas', $totalTurmas)
-                    ->chart([5, 2, 10, 3, 8, 4, 12])
-                    ->chartColor('primary')
-                    ->icon('icon-user-group')
-                    ->iconPosition('start')
-                    ->description('Total de turmas')
-                    //->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
-                    ->iconColor('primary'),
-                    
-                Stat::make('Testes Aplicados', $totalTestsApplied)
-                    ->chart([12, 2, 7, 3, 10, 4, 5])
-                    ->chartColor('primary')
-                    ->icon('icon-trofeu')
-                    ->description('Total de testes Aplicados')
-                    ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
-                    ->iconColor('primary'),
-            ];
+            $totalTestsApplied = 0;
+            if (! empty($classIds)) {
+                $totalTestsApplied = AnswerClass::whereIn('class_id', $classIds)
+                    ->distinct('answer_id')
+                    ->count('answer_id');
+            }
 
-        } else {
+            $stats[] = Stat::make('Minhas Turmas', $totalTurmas)
+                ->icon('icon-user-group')
+                ->chart([5, 2, 10, 3, 8, 4, 12])
+                ->description('Total das Minhas Turmas')
+                ->iconColor('primary')->chartColor('primary');
 
-            $status = $verified ? 'Verificada' : 'Não Verificada';
-            $description = $verified ? '' : 'Aguarde sua conta ser verificada ou entre em contato com projeto.perfiljogador@ufjf.br';
+            $stats[] = Stat::make('Testes Aplicados', $totalTestsApplied)
+                ->icon('icon-trofeu')
+                ->chart([12, 2, 7, 3, 10, 4, 5])
+                ->description('Meus Testes Aplicados')
+                ->descriptionIcon('heroicon-o-inbox-arrow-down', 'before')
+                ->iconColor('primary')->chartColor('primary');
 
-            return [
-                Stat::make('Situação da conta', $status)
-                    ->icon('heroicon-o-x-circle')
-                    ->iconPosition('start')
-                    ->description($description)
-                    ->iconColor('danger'),
-            ];
-            
+            return $stats;
         }
+
+        // Se chegou aqui: usuário existe mas NÃO está verificado
+        $status = $verified ? 'Verificada' : 'Não Verificada';
+        $description = $verified ? '' : 'Aguarde sua conta ser verificada ou entre em contato com projeto.perfiljogador@ufjf.br';
+
+        return [
+            Stat::make('Situação da conta', $status)
+                ->icon('heroicon-o-x-circle')
+                ->iconPosition('start')
+                ->description($description)
+                ->iconColor('danger'),
+        ];
     }
 }
