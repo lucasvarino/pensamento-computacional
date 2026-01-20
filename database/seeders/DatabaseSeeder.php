@@ -3,10 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\AnswerOption;
 use App\Models\Method;
-use App\Models\Question;
-use App\Models\TestClass;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         Method::factory()->createMany([
             ['name' => 'Bartle'],
-            ['name' => 'Hexad']
+            ['name' => 'Hexad'],
         ]);
         
         $this->call([
@@ -38,7 +35,9 @@ class DatabaseSeeder extends Seeder
             HexadQuestionSeeder::class,
             HexadGroupSeeder::class,
             HexadQuestionGroupSeeder::class,
-            HexadAnswerSeeder::class,
+            // HexadAnswerSeeder::class,
+
+            // EGameFlowMethodSeeder::class,
 
             StateSeeder::class
             
